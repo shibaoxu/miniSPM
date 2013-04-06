@@ -1,0 +1,40 @@
+
+.sidebar-nav {
+    padding: 9px 0;
+}
+/*footer{*/
+    /*margin-left: 9px;*/
+/*}*/
+
+/*.pagination{*/
+    /*margin-top: 0px;*/
+    /*margin-bottom: 0px;*/
+/*}*/
+label.rlabel{
+    text-align: right;
+}
+label.clabel{
+    text-align: center;
+}
+
+div.modal div.controls-row{
+    padding: 5px;
+}
+
+.form-signin {
+    /*-webkit-box-shadow:rgba(0, 0, 0, 0.0470588) 0 1px 2px;*/
+    /*background-color:#FFFFFF;*/
+    /*border:1px solid #E5E5E5;*/
+    border-bottom-left-radius:5px;
+    border-bottom-right-radius:5px;
+    border-top-left-radius:5px;
+    border-top-right-radius:5px;
+    /*box-shadow:rgba(0, 0, 0, 0.0470588) 0 1px 2px;*/
+    margin:50px auto 20px;
+    max-width:300px;
+    /*padding:19px 29px 29px;*/
+}
+
+.form-signin .input-block-level{
+    width: 90%;
+}

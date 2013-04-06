@@ -1,0 +1,12 @@
+1-用户列表内需要把admin过滤掉
+2-url权限控制
+3-首页文字说明
+4-排序
+
+====Branch opp========
+1- ila_opportunity表需要增加plan_deal_date字段
+2- ila_action中的leads_id字段变为leads_base_id
+3- 千分位数字变换
+4- 销售机会权限
+5- 销售机会转换页面验证
+6- 销售活动界面输入验证

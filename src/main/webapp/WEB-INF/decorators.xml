@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<decorators defaultdir="/WEB-INF/decorators/">
+    <decorator name="login" page="login.jsp">
+        <pattern>/login</pattern>
+        <pattern>/security/user/chgpwd</pattern>
+        <pattern>/security/user/active</pattern>
+    </decorator>
+
+
+    <decorator name="admin" page="admin.jsp">
+        <pattern>/admin/*</pattern>
+        <pattern>/security/*</pattern>
+    </decorator>
+
+    <decorator name="sale" page="sale.jsp">
+        <pattern>/sale/*</pattern>
+    </decorator>
+
+    <decorator name="default" page="homepage.jsp">
+        <pattern>/*</pattern>
+    </decorator>
+</decorators>
