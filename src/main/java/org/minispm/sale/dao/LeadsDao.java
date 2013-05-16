@@ -21,7 +21,7 @@ public interface LeadsDao extends JpaRepository<Leads, String>, JpaSpecification
     void updateLastActionInfo(String id, String info, Date lastModifiedDate);
 
     @Modifying
-    @Query(value = "update ILA_LEADS l set l.opportunity = true , plan_deal_date = :planDealDate, " +
+    @Query(value = "update ila_leads l set l.opportunity = true , plan_deal_date = :planDealDate, " +
             "low_amount = :lowAmount, high_amount = :highAmount where id = :id", nativeQuery = true)
     void convertToOpportunity(@Param("id") String id,
                               @Param("planDealDate") Date planDealDate,

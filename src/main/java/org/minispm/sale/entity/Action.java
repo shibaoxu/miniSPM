@@ -28,6 +28,7 @@ public class Action extends IdEntity {
 
     public static final String CREATED = "CREATED";
     public static final String CONVERT = "CONVERT";
+    public static final String CLOSE = "CLOSE";
     public Action(){}
     public Action(String actionType){
         if(StringUtils.equals(actionType, Action.CREATED)){
@@ -36,12 +37,15 @@ public class Action extends IdEntity {
         }else if(StringUtils.equals(actionType, Action.CONVERT)){
             this.actionType = new ActionType(ActionType.SYSTEM_ACTIOM);
             this.brief = "转化成销售机会";
+        }else if(StringUtils.equals(actionType, Action.CLOSE)) {
+            this.actionType = new ActionType(ActionType.SYSTEM_ACTIOM);
+            this.brief = "关闭";
         }else{
 
         }
     }
 
-    public String buildLastActionInfo(){
+    public String buildActionInfo(){
         return DateUtils.formatDate(this.occurDate) + ":" + this.brief;
     }
     @ManyToOne

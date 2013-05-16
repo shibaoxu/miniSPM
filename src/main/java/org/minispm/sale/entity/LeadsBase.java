@@ -7,6 +7,7 @@ import org.springframework.format.annotation.NumberFormat;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -37,14 +38,22 @@ public class LeadsBase extends IdEntity{
     private double dealAmount;
     private User owner;
     private List<Action> actions = new ArrayList<Action>();
-    private LeadsStatus status;
+    private LeadsStatus status = LeadsStatus.OPENING;
     private ClosedReason closedReason;
     private String closeReasonDetail;
+    private Date closeDate;
     private String lastInfo;
     private Department department;
 
     public LeadsBase(){
         this.setStatus(LeadsStatus.OPENING);
+    }
+
+    public void close(ClosedReason reason, String closeReasonDetail){
+        this.setStatus(LeadsStatus.CLOSED);
+        this.setClosedReason(reason);
+        this.setCloseReasonDetail(closeReasonDetail);
+        this.setCloseDate(new Date());
     }
 
     public void addAction(Action action){
@@ -175,4 +184,14 @@ public class LeadsBase extends IdEntity{
     public void setDepartment(Department department) {
         this.department = department;
     }
+
+    public Date getCloseDate() {
+        return closeDate;
+    }
+
+    public void setCloseDate(Date closeDate) {
+        this.closeDate = closeDate;
+    }
+
+
 }

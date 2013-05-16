@@ -63,6 +63,10 @@
                         <shiro:hasPermission name="leads:convertToOpportunity:WHOLE">
                         <li><a href="${ctx}/sale/leads/convertToOpportunity/${leads.id}"><i class="icon-star"></i>转成销售机会...</a></li>
                         </shiro:hasPermission>
+
+                        <shiro:hasPermission name="leads:close:WHOLE">
+                        <li><a href="${ctx}/sale/leads/close/${leads.id}"><i class="icon-star"></i>关闭...</a></li>
+                        </shiro:hasPermission>
                     </ul>
                 </div>
             </td>

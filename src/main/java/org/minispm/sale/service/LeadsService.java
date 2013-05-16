@@ -33,7 +33,7 @@ import java.util.Date;
  */
 @Service
 @Transactional(readOnly = true)
-public class LeadsService {
+public class LeadsService extends LeadsBaseService {
     private LeadsDao leadsDao;
     private ActionDao actionDao;
     private SalePermissionFilterService salePermissionFilterService;
@@ -106,7 +106,7 @@ public class LeadsService {
         user.setId(shiroUser.getId());
         action.setOwner(user);
         leads.addAction(action);
-        leads.setLastInfo(action.buildLastActionInfo());
+        leads.setLastInfo(action.buildActionInfo());
         leads.setLastModifiedDate(new Date());
     }
 

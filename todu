@@ -10,3 +10,26 @@
 4- 销售机会权限
 5- 销售机会转换页面验证
 6- 销售活动界面输入验证
+
+====branch close =====
+1- 增加closeDate字段 ALTER TABLE `ila`.`ila_leads` ADD COLUMN `close_date` TIMESTAMP NULL DEFAULT NULL;
+
+2- closeReason表中调整主数据
+
+INSERT INTO ila_operation (ID, CREATED_DATE, LAST_MODIFIED_DATE, NAME, brief,domain_id) VALUES ('27','2012-12-15 00:00:00.0', '2012-12-15 00:00:00.0', 'close','关闭','3');
+INSERT INTO ila_operation (ID, CREATED_DATE, LAST_MODIFIED_DATE, NAME, brief,domain_id) VALUES ('36','2012-12-15 00:00:00.0', '2012-12-15 00:00:00.0', 'close','关闭','4');
+INSERT INTO ila_permission (ID, CREATED_DATE, LAST_MODIFIED_DATE, scope, operation_id) VALUES ('214','2012-12-15 00:00:00.0', '2012-12-15 00:00:00.0', 'WHOLE','27');
+
+INSERT INTO `ila`.`ila_closed_reason`
+(`ID`,
+`CREATED_DATE`,
+`LAST_MODIFIED_DATE`,
+`NAME`)
+VALUES
+(
+5,
+'2012-12-15 00:00:00',
+'2012-12-15 00:00:00',
+'我方放弃'
+);
+

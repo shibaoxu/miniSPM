@@ -9,6 +9,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
@@ -61,16 +62,10 @@
                         <li><a href="${ctx}/sale/${opportunity.id}/action/index"><i
                                 class="icon-eye-close"></i>查看活动记录</a>
                         </li>
-                            <%--<li>--%>
-                            <%--<li class="divider"/>--%>
-                            <%--</li>--%>
-                            <%--<li><a href="${ctx}/sale/opportunity/edit/${opportunity.id}"><i class="icon-edit"></i>转销售机会</a></li>--%>
-                            <%--<li><a href="${ctx}/sale/opportunity/del/${opportunity.id}"><i class="icon-remove"></i>成交</a></li>--%>
-                            <%--<li><a href="${ctx}/sale/opportunity/del/${opportunity.id}"><i class="icon-remove"></i>关闭</a></li>--%>
-                            <%--<li>--%>
-                            <%--<li class="divider"/>--%>
-                            <%--</li>--%>
-                            <%--<li><a href="${ctx}/sale/opportunity/del/${opportunity.id}"><i class="icon-remove"></i>删除</a></li>--%>
+                        <li class="divider"/>
+                        <shiro:hasPermission name="leads:close:WHOLE">
+                            <li><a href="${ctx}/sale/opportunity/close/${opportunity.id}"><i class="icon-star"></i>关闭...</a>
+                        </shiro:hasPermission>
                     </ul>
                 </div>
             </td>

@@ -36,7 +36,7 @@ public class ActionService {
 
     @Transactional(readOnly = false)
     public Action save(Action action){
-        leadsBaseService.updateLastActionBrief(action.getLeadsBase().getId(), action.buildLastActionInfo());
+        leadsBaseService.updateLastActionBrief(action.getLeadsBase().getId(), action.buildActionInfo());
         return actionDao.save(action);
     }
 

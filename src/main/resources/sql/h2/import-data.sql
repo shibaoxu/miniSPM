@@ -149,10 +149,11 @@ INSERT INTO ila_operation (ID, CREATED_DATE, LAST_MODIFIED_DATE, NAME, brief,dom
 INSERT INTO ila_operation (ID, CREATED_DATE, LAST_MODIFIED_DATE, NAME, brief,domain_id) VALUES ('24','2012-12-15 00:00:00.0', '2012-12-15 00:00:00.0', 'view','查看','3');
 INSERT INTO ila_operation (ID, CREATED_DATE, LAST_MODIFIED_DATE, NAME, brief,domain_id) VALUES ('25','2012-12-15 00:00:00.0', '2012-12-15 00:00:00.0', 'list','列表','3');
 INSERT INTO ila_operation (ID, CREATED_DATE, LAST_MODIFIED_DATE, NAME, brief,domain_id) VALUES ('26','2012-12-15 00:00:00.0', '2012-12-15 00:00:00.0', 'convertToOpportunity','转成销售机会','3');
+INSERT INTO ila_operation (ID, CREATED_DATE, LAST_MODIFIED_DATE, NAME, brief,domain_id) VALUES ('27','2012-12-15 00:00:00.0', '2012-12-15 00:00:00.0', 'close','关闭','3');
 --operation(opportunity)
 INSERT INTO ila_operation (ID, CREATED_DATE, LAST_MODIFIED_DATE, NAME, brief,domain_id) VALUES ('34','2012-12-15 00:00:00.0', '2012-12-15 00:00:00.0', 'view','查看','4');
 INSERT INTO ila_operation (ID, CREATED_DATE, LAST_MODIFIED_DATE, NAME, brief,domain_id) VALUES ('35','2012-12-15 00:00:00.0', '2012-12-15 00:00:00.0', 'list','列表','4');
-
+INSERT INTO ila_operation (ID, CREATED_DATE, LAST_MODIFIED_DATE, NAME, brief,domain_id) VALUES ('36','2012-12-15 00:00:00.0', '2012-12-15 00:00:00.0', 'close','关闭','4');
 
 --operation(market_action)
 INSERT INTO ila_operation (ID, CREATED_DATE, LAST_MODIFIED_DATE, NAME, brief,domain_id) VALUES ('1','2012-12-15 00:00:00.0', '2012-12-15 00:00:00.0', 'create','创建','1');
@@ -198,6 +199,8 @@ INSERT INTO ila_permission (ID, CREATED_DATE, LAST_MODIFIED_DATE, scope, operati
 INSERT INTO ila_permission (ID, CREATED_DATE, LAST_MODIFIED_DATE, scope, operation_id) VALUES ('212','2012-12-15 00:00:00.0', '2012-12-15 00:00:00.0', 'SELF','22');
 --convertToOpportunity
 INSERT INTO ila_permission (ID, CREATED_DATE, LAST_MODIFIED_DATE, scope, operation_id) VALUES ('213','2012-12-15 00:00:00.0', '2012-12-15 00:00:00.0', 'WHOLE','26');
+--close
+INSERT INTO ila_permission (ID, CREATED_DATE, LAST_MODIFIED_DATE, scope, operation_id) VALUES ('214','2012-12-15 00:00:00.0', '2012-12-15 00:00:00.0', 'WHOLE','27');
 
 --permission(opportunity)
 --list
@@ -212,6 +215,8 @@ INSERT INTO ila_permission (ID, CREATED_DATE, LAST_MODIFIED_DATE, scope, operati
 INSERT INTO ila_permission (ID, CREATED_DATE, LAST_MODIFIED_DATE, scope, operation_id) VALUES ('309','2012-12-15 00:00:00.0', '2012-12-15 00:00:00.0', 'BELONG','34');
 INSERT INTO ila_permission (ID, CREATED_DATE, LAST_MODIFIED_DATE, scope, operation_id) VALUES ('310','2012-12-15 00:00:00.0', '2012-12-15 00:00:00.0', 'BELONGANDLOW','34');
 INSERT INTO ila_permission (ID, CREATED_DATE, LAST_MODIFIED_DATE, scope, operation_id) VALUES ('311','2012-12-15 00:00:00.0', '2012-12-15 00:00:00.0', 'WHOLE','34');
+--close
+INSERT INTO ila_permission (ID, CREATED_DATE, LAST_MODIFIED_DATE, scope, operation_id) VALUES ('312','2012-12-15 00:00:00.0', '2012-12-15 00:00:00.0', 'WHOLE','36');
 
 INSERT INTO ILA_ROLE (ID, CREATED_DATE, LAST_MODIFIED_DATE, NAME, DESCRIPTION)
   VALUES ('administrator','2012-12-15 00:00:00.0', '2012-12-15 00:00:00.0', 'administrator', '系统管理员');

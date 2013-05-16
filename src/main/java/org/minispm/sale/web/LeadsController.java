@@ -1,5 +1,7 @@
 package org.minispm.sale.web;
 
+import org.apache.commons.lang3.StringUtils;
+import org.minispm.sale.service.LeadsBaseService;
 import org.minispm.security.service.UserService;
 import org.minispm.admin.organization.entity.AccountabilityType;
 import org.minispm.admin.organization.entity.Department;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -32,6 +35,7 @@ import java.util.Date;
  */
 @Controller
 public class LeadsController {
+    private LeadsBaseService leadsBaseService;
     private LeadsService leadsService;
     private SourceService sourceService;
     private ClosedReasonService closedReasonService;
@@ -109,6 +113,29 @@ public class LeadsController {
         return "redirect:/sale/leads/index";
     }
 
+    @RequestMapping(value = {"sale/leads/close/{leadsBaseId}","sale/opportunity/close/{leadsBaseId}"}, method = RequestMethod.GET)
+    public String closeLeadsBase(@PathVariable String leadsBaseId, Model model, ServletRequest request){
+        model.addAttribute("leadsBaseId", leadsBaseId);
+        model.addAttribute("closeReasons", closedReasonService.findAll());
+        String url = ((HttpServletRequest)request).getRequestURI();
+        if(StringUtils.contains(url, "leads")){
+            model.addAttribute("url", "leads");
+        }else{
+            model.addAttribute("url", "opportunity");
+        }
+        return "/sale/closeLeads";
+    }
+
+    @RequestMapping(value = {"sale/leads/close/{leadsBaseId}","sale/opportunity/close/{leadsBaseId}"}, method = RequestMethod.POST)
+    public String closeLeadsBase(@PathVariable String leadsBaseId, @RequestParam("closeReasonId") String closeReasonId, @RequestParam("closeReasonDetail") String closeReasonDetail, ServletRequest request){
+        leadsBaseService.close(leadsBaseId, closeReasonId, closeReasonDetail);
+        String url = ((HttpServletRequest)request).getRequestURI();
+        if(StringUtils.contains(url, "leads")){
+            return "redirect:/sale/leads/index";
+        }else{
+            return "redirect:/sale/opportunity/index";
+        }
+    }
 
     @InitBinder
     private void dateBinder(WebDataBinder binder) {
@@ -160,5 +187,10 @@ public class LeadsController {
     @Autowired
     public void setOrganizationService(OrganizationService organizationService) {
         this.organizationService = organizationService;
+    }
+
+    @Autowired
+    public void setLeadsBaseService(LeadsBaseService leadsBaseService) {
+        this.leadsBaseService = leadsBaseService;
     }
 }
