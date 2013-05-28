@@ -10,5 +10,5 @@ import java.util.List;
  * Time: 下午6:03
  */
 public interface MarketActionDaoCustom {
-    List<MarketAction> findAll();
+//    List<MarketAction> findAll();
 }

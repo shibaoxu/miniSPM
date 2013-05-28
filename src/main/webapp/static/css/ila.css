@@ -2,14 +2,6 @@
 .sidebar-nav {
     padding: 9px 0;
 }
-/*footer{*/
-    /*margin-left: 9px;*/
-/*}*/
-
-/*.pagination{*/
-    /*margin-top: 0px;*/
-    /*margin-bottom: 0px;*/
-/*}*/
 label.rlabel{
     text-align: right;
 }
@@ -22,19 +14,53 @@ div.modal div.controls-row{
 }
 
 .form-signin {
-    /*-webkit-box-shadow:rgba(0, 0, 0, 0.0470588) 0 1px 2px;*/
-    /*background-color:#FFFFFF;*/
-    /*border:1px solid #E5E5E5;*/
     border-bottom-left-radius:5px;
     border-bottom-right-radius:5px;
     border-top-left-radius:5px;
     border-top-right-radius:5px;
-    /*box-shadow:rgba(0, 0, 0, 0.0470588) 0 1px 2px;*/
     margin:50px auto 20px;
     max-width:300px;
-    /*padding:19px 29px 29px;*/
 }
 
 .form-signin .input-block-level{
     width: 90%;
+}
+
+.portlet{
+    /*background-color:#FFFFFF;*/
+    border:1px solid #DDDDDD;
+    border-bottom-left-radius:4px;
+    border-bottom-right-radius:4px;
+    border-top-left-radius:4px;
+    border-top-right-radius:4px;
+    /*margin:15px 0;*/
+    /*padding:39px 19px 14px;*/
+    /*position:relative;*/
+}
+.portlet-caption{
+    background-color: #F5F5F5;
+    border-bottom: 1px solid #DDDDDD;
+    border-radius: 4px 4px 0 0;
+    /*color: #0088CC;*/
+    /*font-weight: bold;*/
+
+}
+.portlet-caption .portlet_title{
+    padding-left: 3px;
+}
+.portlet-caption .portlet_subtitle{
+    text-align: right;
+    padding-right: 3px;
+}
+
+.portlet-caption a.active{
+    background-color: gold;
+}
+
+.portlet-content{
+    padding: 2px 2px 0 2px;
+}
+
+.portlet-content table{
+    margin-bottom: 0px;
 }

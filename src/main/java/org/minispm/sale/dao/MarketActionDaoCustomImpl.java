@@ -14,19 +14,19 @@ import java.util.List;
  */
 @Repository
 public class MarketActionDaoCustomImpl implements MarketActionDaoCustom {
-    private EntityManager em;
-
-    @Override
-    public List<MarketAction> findAll() {
-        return (List<MarketAction>) em.createQuery("select m from MarketAction m").getResultList();
-    }
-
-    public EntityManager getEm() {
-        return em;
-    }
-
-    @Autowired
-    public void setEm(EntityManager em) {
-        this.em = em;
-    }
+//    private EntityManager em;
+//
+//    @Override
+//    public List<MarketAction> findAll() {
+//        return (List<MarketAction>) em.createQuery("select m from MarketAction m").getResultList();
+//    }
+//
+//    public EntityManager getEm() {
+//        return em;
+//    }
+//
+//    @Autowired
+//    public void setEm(EntityManager em) {
+//        this.em = em;
+//    }
 }

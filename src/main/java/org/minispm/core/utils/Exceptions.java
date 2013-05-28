@@ -5,6 +5,8 @@
  */
 package org.minispm.core.utils;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
@@ -50,4 +52,11 @@ public class Exceptions {
 		}
 		return false;
 	}
+
+    public static RuntimeException createArgumentException(String msg){
+        if (StringUtils.isBlank(msg)){
+            msg = "传入参数错误";
+        }
+        return new RuntimeException(msg);
+    }
 }
