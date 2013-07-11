@@ -120,6 +120,7 @@ public class LeadsService extends LeadsBaseService {
         leads.addAction(action);
         leads.setLastModifiedDate(new Date());
         leads.setLastInfo(DateUtils.formatDate(new Date()) + ":转成销售机会");
+        leads.setCreatedDate(new Date());  //销售机会的创建日期更改成转化时间
         leadsDao.save(leads);
     }
 

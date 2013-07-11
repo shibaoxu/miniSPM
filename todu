@@ -43,3 +43,40 @@ VALUES
 以上通过portal方式进行展现
 7-销售机会编辑基本信息出错
 
+ALTER TABLE `ila`.`ila_leads` CHANGE COLUMN `CREATED_DATE` `CREATED_DATE` TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00'  ;
+
+drop procedure `ila`.`leads_update`;
+
+DELIMITER //
+create procedure  leads_update()
+begin
+  DECLARE done INT default false ;
+  declare l_id varchar(40);
+  declare l_opportunity varchar(1);
+  declare a_created_date TIMESTAMP;
+  declare l_cursor CURSOR for select id, opportunity from ila_leads;
+
+  DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
+
+  open l_cursor;
+  read_loop: LOOP
+	fetch l_cursor into l_id, l_opportunity;
+    IF done THEN
+      LEAVE read_loop;
+    END IF;
+	if l_opportunity = '0' then
+      update ila_leads
+	    set created_date = (select created_date from ila_action where leads_id = l_id and brief = '创建')
+	  where id = l_id;
+    end if;
+	if l_opportunity = '1' then
+      update ila_leads
+	    set created_date = (select created_date from ila_action where leads_id = l_id and brief = '转化成销售机会')
+	  where id = l_id;
+    end if;
+  END LOOP;
+  close l_cursor;
+end//
+call leads_update;
+
+insert into ila_closed_reason(id, created_date, last_modified_date, name) values(6, '2012-12-15 00:00:00','2012-12-15 00:00:00','成交');

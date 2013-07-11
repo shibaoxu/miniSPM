@@ -32,6 +32,43 @@ public class ReportController {
         return reportService.getSaleActivityReport(style, period);
     }
 
+    @RequestMapping(value = "/sale/report/portlet/customerActivity/{style}/{period}", method = RequestMethod.GET, produces = "application/json")
+    @ResponseBody
+    public List getCustomerActivity(@PathVariable String style,@PathVariable String period){
+        return reportService.getCustomerActivityReport(style, period);
+    }
+
+    @RequestMapping(value = "/sale/report/portlet/leadsActivity/{period}", method = RequestMethod.GET, produces = "application/json")
+    @ResponseBody
+    public List getCustomerActivity(@PathVariable String period){
+        return reportService.getLeadsActivity(period);
+    }
+
+    @RequestMapping(value = "/sale/report/portlet/corpse", method = RequestMethod.GET, produces = "application/json")
+    @ResponseBody
+    public List getCorpse(){
+        return reportService.getCorpseLeads();
+    }
+
+    @RequestMapping(value = "/sale/report/portlet/newLeads", method = RequestMethod.GET, produces = "application/json")
+    @ResponseBody
+    public List getNewLeads(){
+        return reportService.getNewLeads();
+    }
+
+    @RequestMapping(value = "/sale/report/portlet/newOpportunity", method = RequestMethod.GET, produces = "application/json")
+    @ResponseBody
+    public List getNewOpportunity(){
+        return reportService.getNewOpportunity();
+    }
+
+    @RequestMapping(value = "/sale/report/portlet/closedLeads", method = RequestMethod.GET, produces = "application/json")
+    @ResponseBody
+    public List getClosedLeads(){
+        return reportService.getClosedLeads();
+    }
+
+
     @Autowired
     public void setReportService(ReportService reportService) {
         this.reportService = reportService;

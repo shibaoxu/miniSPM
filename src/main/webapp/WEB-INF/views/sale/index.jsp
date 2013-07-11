@@ -11,93 +11,34 @@
     <title></title>
 </head>
 <body>
-<div>
+<div class="row-fluid portlet-row">
     <div class="span4">
         <jsp:include page="./report/portlet/saleActivity.jsp"></jsp:include>
     </div>
-    <div class="span4 portlet">
-        <div class="portlet-caption">
-            销售活动度
-        </div>
-        <div class="portlet-content">
-            <table class="table table-striped table-hover table-condensed">
-                <thead>
-                <tr>
-                    <td>姓名</td>
-                    <td>活动数量</td>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>时宝旭</td>
-                    <td>19</td>
-                </tr>
-                <tr>
-                    <td>时宝旭</td>
-                    <td>19</td>
-                </tr>
-                <tr>
-                    <td>时宝旭</td>
-                    <td>19</td>
-                </tr>
-                <tr>
-                    <td>时宝旭</td>
-                    <td>19</td>
-                </tr>
-                <tr>
-                    <td>时宝旭</td>
-                    <td>19</td>
-                </tr>
-                <tr>
-                    <td>时宝旭</td>
-                    <td>19</td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <div class="span4 portlet">
-        <div class="portlet-caption">
-            销售活动度
-        </div>
-        <div class="portlet-content">
-            <table class="table table-striped table-hover table-condensed">
-                <thead>
-                <tr>
-                    <td>姓名</td>
-                    <td>活动数量</td>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>时宝旭</td>
-                    <td>19</td>
-                </tr>
-                <tr>
-                    <td>时宝旭</td>
-                    <td>19</td>
-                </tr>
-                <tr>
-                    <td>时宝旭</td>
-                    <td>19</td>
-                </tr>
-                <tr>
-                    <td>时宝旭</td>
-                    <td>19</td>
-                </tr>
-                <tr>
-                    <td>时宝旭</td>
-                    <td>19</td>
-                </tr>
-                <tr>
-                    <td>时宝旭</td>
-                    <td>19</td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
+    <div class="span4">
+        <jsp:include page="./report/portlet/customerActivity.jsp"></jsp:include>
     </div>
 
 </div>
+
+<div class="row-fluid portlet-row">
+    <div class="span6">
+        <jsp:include page="./report/portlet/leadsActivity.jsp"></jsp:include>
+    </div>
+
+    <div class="span6">
+        <jsp:include page="./report/portlet/corpse.jsp"></jsp:include>
+    </div>
+</div>
+<div class="row-fluid portlet-row">
+    <div class="span6">
+        <jsp:include page="./report/portlet/newLeads.jsp"></jsp:include>
+    </div>
+
+    <div class="span6">
+        <jsp:include page="./report/portlet/newOpportunity.jsp"></jsp:include>
+    </div>
+</div>
+
 </body>
 </html>

@@ -23,6 +23,29 @@ public class ReportService {
         return reportDao.saleActivity(style, period);
     }
 
+    public List getCustomerActivityReport(String style, String period){
+        return reportDao.customerActivity(style, period);
+    }
+
+    public List getLeadsActivity(String period){
+        return reportDao.leadsActivity(period);
+    }
+    public List getCorpseLeads(){
+        return reportDao.corpse();
+    }
+
+    public List getNewLeads(){
+        return reportDao.newLeads();
+    }
+
+    public List getNewOpportunity(){
+        return reportDao.newOpportunity();
+    }
+
+    public List getClosedLeads(){
+        return reportDao.closedLeads();
+    }
+
     @Autowired
     public void setReportDao(ReportDao reportDao) {
         this.reportDao = reportDao;
