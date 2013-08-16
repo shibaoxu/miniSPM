@@ -2,6 +2,7 @@ package org.minispm.security.utils;
 
 import org.apache.shiro.subject.Subject;
 import org.minispm.security.service.ShiroDbRealm;
+import org.apache.shiro.mgt.SecurityManager;
 
 /**
  * User: shibaoxu
@@ -16,5 +17,9 @@ public class SecurityUtils {
 
     public static Subject getCurrentSubject(){
         return org.apache.shiro.SecurityUtils.getSubject();
+    }
+
+    public static SecurityManager getSecurityManager(){
+        return org.apache.shiro.SecurityUtils.getSecurityManager();
     }
 }

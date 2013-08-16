@@ -127,10 +127,11 @@ public class OrganizationService {
     }
 
     public UnitForTree getStructure(String accountabilityTypeId){
-//        Unit root = getRoot(accountabilityTypeId);
-//        UnitForTree unitTree  = UnitForTree.buildStructure(accountabilityDao.findByAccountabilityTypeId(accountabilityTypeId), orgAccountabilityType, root);
-//        return unitTree;
-        return null;
+        Unit root = getRoot(accountabilityTypeId);
+        AccountabilityType orgAccountabilityType = new AccountabilityType();
+        orgAccountabilityType.setId(accountabilityTypeId);
+        UnitForTree unitTree  = UnitForTree.buildStructure(accountabilityDao.findByAccountabilityTypeId(accountabilityTypeId), orgAccountabilityType, root);
+        return unitTree;
     }
 
     @Autowired

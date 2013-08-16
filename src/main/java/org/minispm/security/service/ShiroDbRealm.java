@@ -11,6 +11,7 @@ import org.apache.shiro.util.ByteSource;
 import org.minispm.core.utils.Encodes;
 import org.minispm.security.entity.User;
 import org.minispm.admin.organization.entity.Staff;
+import org.minispm.security.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;
