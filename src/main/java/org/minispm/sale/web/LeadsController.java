@@ -1,6 +1,8 @@
 package org.minispm.sale.web;
 
 import org.apache.commons.lang3.StringUtils;
+import org.minispm.core.utils.DateUtils;
+import org.minispm.sale.entity.LeadsBase;
 import org.minispm.sale.service.LeadsBaseService;
 import org.minispm.security.service.UserService;
 import org.minispm.admin.organization.entity.AccountabilityType;
@@ -96,10 +98,11 @@ public class LeadsController {
     @RequestMapping(value = {"sale/leads/convertToOpportunity/{leadsId}"}, method = RequestMethod.GET)
     public String convertToOpportunity(@PathVariable("leadsId") String leadsId, Model model){
         Leads leads = leadsService.findByIdView(leadsId);
+        model.addAttribute("leads", leads);
         model.addAttribute("id", leads.getId());
         model.addAttribute("lowAmount", leads.getLowAmount());
         model.addAttribute("highAmount", leads.getHighAmount());
-        model.addAttribute("planDealDate", new Date());
+        model.addAttribute("planDealDate", DateUtils.formatDate(new Date()));
 
         return "/sale/convertToOpportunity";
     }
@@ -115,7 +118,9 @@ public class LeadsController {
 
     @RequestMapping(value = {"sale/leads/close/{leadsBaseId}","sale/opportunity/close/{leadsBaseId}"}, method = RequestMethod.GET)
     public String closeLeadsBase(@PathVariable String leadsBaseId, Model model, ServletRequest request){
+        LeadsBase leadsBase = leadsBaseService.findById(leadsBaseId);
         model.addAttribute("leadsBaseId", leadsBaseId);
+        model.addAttribute("leadsBaseName", leadsBase.getName());
         model.addAttribute("closeReasons", closedReasonService.findAll());
         String url = ((HttpServletRequest)request).getRequestURI();
         if(StringUtils.contains(url, "leads")){

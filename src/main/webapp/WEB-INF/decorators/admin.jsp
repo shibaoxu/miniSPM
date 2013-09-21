@@ -11,15 +11,15 @@
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <c:set var="url" value="${pageContext.request.servletPath}"/>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
-    <title>TID管理工具</title>
+    <title>miniSPM</title>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
     <meta http-equiv="Cache-Control" content="no-store"/>
     <meta http-equiv="Pragma" content="no-cache"/>
     <meta http-equiv="Expires" content="0"/>
-    <link rel="shortcut icon" href="${ctx}/static/images/favicon.ico" />
+    <link rel="shortcut icon" href="${ctx}/static/images/favicon.ico"/>
     <link href="${ctx}/static/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
     <link href="${ctx}/static/css/ila.css" rel="stylesheet" media="screen">
     <link href="${ctx}/static/awesome/css/font-awesome.css" rel="stylesheet">
@@ -30,25 +30,21 @@
 
 <body>
 <%@ include file="/WEB-INF/decorators/header.jsp" %>
-<div class="container-fluid">
-    <div class="row-fluid">
-        <div class="span2">
-            <div class="well sidebar-nav">
-                <ul class="nav nav-list">
-                    <li class="nav-header">用户与角色</li>
-                    <li id='sidebar_user'><a href="${ctx}/security/user/index">用户</a></li>
-                    <li id='sidebar_role'><a href="${ctx}/security/role/index">角色</a></li>
-                    <li class="nav-header">组织管理</li>
-                    <li id='sidebar_org_company'><a href="${ctx}/admin/org/company/index">公司</a></li>
-                    <li id='sidebar_org_department'><a href="${ctx}/admin/org/department/index">部门</a></li>
-                    <li id='sidebar_org_staff'><a href="${ctx}/admin/org/staff/index">员工</a></li>
-                    <li id='sidebar_org_structure'><a href="${ctx}/admin/org/structure">结构</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="span10 ">
-            <sitemesh:body/>
-        </div>
+<div class="row body-content">
+    <div class="col-lg-2">
+        <ul class="nav nav-pills nav-stacked">
+            <li>用户与角色</li>
+            <li id='sidebar_user'><a href="${ctx}/security/user/index">用户</a></li>
+            <li id='sidebar_role'><a href="${ctx}/security/role/index">角色</a></li>
+            <li>组织管理</li>
+            <li id='sidebar_org_company'><a href="${ctx}/admin/org/company/index">公司</a></li>
+            <li id='sidebar_org_department'><a href="${ctx}/admin/org/department/index">部门</a></li>
+            <li id='sidebar_org_staff'><a href="${ctx}/admin/org/staff/index">员工</a></li>
+            <li id='sidebar_org_structure'><a href="${ctx}/admin/org/structure">结构</a></li>
+        </ul>
+    </div>
+    <div class="col-lg-10 ">
+        <sitemesh:body/>
     </div>
 </div>
 

@@ -14,11 +14,24 @@
 <head>
 </head>
 <body>
-<h3><i class="icon-shopping-cart"></i>&nbsp客户</h3>
-<div class="row-fluid">
-    <form class="form-search" action="#">
-        <input type="text" class="search-query input-large" name="search_LIKE_name" placeholder="请输入客户名称..." value="${param.search_LIKE_name}">
-        <button type="submit" class="btn" id="search_btn">搜索</button>
+<ol class="breadcrumb">
+    <li><a href="${ctx}/index">首页</a></li>
+    <li><a href="${ctx}/sale/index">销售</a></li>
+    <li><a href="${ctx}/sale/customer/index">客户</a></li>
+</ol>
+
+<div>
+    <form class="form-horizontal" action="#">
+        <div class="form-group">
+            <div class="input-group col-lg-4">
+                <input type="text" class="form-control" name="search_LIKE_name" placeholder="请输入客户名称..."
+                       value="${param.search_LIKE_name}">
+                <span class="input-group-btn">
+                    <button type="submit" class="btn btn-default" id="search_btn"><span class="icon-search"/></button>
+                </span>
+            </div>
+            <a class="btn btn-primary" href="${ctx}/sale/customer/new"><i class="icon-plus"></i>增加新的客户</a>
+        </div>
     </form>
 </div>
 
@@ -51,12 +64,11 @@
             </td>
 
             <td>
-                <div class="btn-group">
-                    <button class="btn btn-mini">操作</button>
-                    <button class="btn btn btn-mini dropdown-toggle" data-toggle="dropdown">
-                        &nbsp<span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu pull-right">
+                <div class="dropdown">
+                    <a class="relate_menu dropdown-toggle" data-toggle="dropdown">
+                        <i class="icon-list"></i>
+                    </a>
+                    <ul class="dropdown-menu pull-right" role="menu">
                         <li><a href="${ctx}/sale/customer/${customer.id}"><i class="icon-edit"></i>修改</a></li>
                         <li><a href="${ctx}/sale/customer/${customer.id}/remove"><i class="icon-remove"></i>删除</a></li>
                     </ul>
@@ -67,12 +79,6 @@
     </tbody>
 </table>
 <tags:pagination page="${customers}"></tags:pagination>
-<div class="row-fluid">
-    <div class="span6">
-        <a class="btn" href="${ctx}/sale/customer/new"><i class="icon-plus"></i>增加新的客户</a>
-    </div>
-</div>
-
 </body>
 </html>
 

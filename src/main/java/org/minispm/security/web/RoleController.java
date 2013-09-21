@@ -39,6 +39,7 @@ public class RoleController {
         roleService.save(role);
         return "redirect:/security/role/index";
     }
+
     @RequestMapping(value = {"test"}, method = RequestMethod.POST)
     public String Test(@RequestBody Role role){
         System.out.println("");

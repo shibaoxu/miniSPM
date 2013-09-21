@@ -26,7 +26,8 @@ public class MarketActionService {
     private MarketActionDao marketActionDao;
     private SalePermissionFilterService salePermissionFilterService;
 
-    @RequiresPermissions(logical = Logical.OR, value = {"market_action:list:SELF", "market_action:list:SELFANDLOW", "market_action:list:BELONG", "market_action:list:BELONGANDLOW", "market_action:list:WHOLE"})
+//    @RequiresPermissions(logical = Logical.OR, value = {"market_action:list:SELF", "market_action:list:SELFANDLOW", "market_action:list:BELONG", "market_action:list:BELONGANDLOW", "market_action:list:WHOLE"})
+    @RequiresPermissions("market_action:list:*")
     public Page<MarketAction> getAll(int pageNumber, String conditions) {
         return marketActionDao.findAll(buildListSpecification(conditions), buildPageRequest(pageNumber));
     }

@@ -1,6 +1,7 @@
 package org.minispm.sale.web;
 
 import org.minispm.sale.entity.Action;
+import org.minispm.sale.entity.Leads;
 import org.minispm.sale.entity.LeadsBase;
 import org.minispm.sale.service.ActionService;
 import org.minispm.sale.service.ActionTypeService;
@@ -32,47 +33,49 @@ public class ActionController {
     private ActionTypeService actionTypeService;
     private UserService userService;
 
-    @RequestMapping("/sale/{leadsBaseid}/action/index")
-    public String list(@PathVariable String leadsBaseid, Model model){
-        model.addAttribute("actions", actionService.findAll(leadsBaseid));
-        model.addAttribute("leadsBase", leadsBaseService.findById(leadsBaseid));
+    @RequestMapping(value = {"/sale/leads/{leadsBaseId}/action/index","/sale/opportunity/{leadsBaseId}/action/index"})
+    public String list(@PathVariable String leadsBaseId, Model model){
+        initDictionary(model,leadsBaseId);
+        model.addAttribute("actions", actionService.findAll(leadsBaseId));
         return "/sale/actionList";
     }
 
-    @RequestMapping(value = "/sale/{leadsBaseid}/action/new", method = RequestMethod.GET)
-    public String add(Model model, @PathVariable String leadsBaseid){
+    @RequestMapping(value = "/sale/{leadsBaseId}/action/new", method = RequestMethod.GET)
+    public String add(Model model, @PathVariable String leadsBaseId){
+        initDictionary(model, leadsBaseId);
         Action action = new Action();
-        LeadsBase leadsBase = new LeadsBase();
-        leadsBase.setId(leadsBaseid);
+        LeadsBase leadsBase = leadsBaseService.findById(leadsBaseId);
         action.setLeadsBase(leadsBase);
         User owner = new User();
         owner.setId(SecurityUtils.getCurrentShiroUser().getId());
         action.setOwner(owner);
         model.addAttribute("action", action);
         model.addAttribute("operation", "add");
-        this.initDictionary(model, leadsBaseid);
         return "/sale/action";
     }
 
-    @RequestMapping(value = "/sale/{leadsBaseid}/action/view/{actionId}", method = RequestMethod.GET)
-    public String view(Model model, @PathVariable String leadsBaseid, @PathVariable String actionId){
+    @RequestMapping(value = "/sale/{leadsBaseId}/action/view/{actionId}", method = RequestMethod.GET)
+    public String view(Model model, @PathVariable String leadsBaseId, @PathVariable String actionId){
+        initDictionary(model, leadsBaseId);
         model.addAttribute("action", actionService.findByIdView(actionId));
         model.addAttribute("operation", "view");
-        this.initDictionary(model, leadsBaseid);
+        this.initDictionary(model, leadsBaseId);
         return "/sale/action";
     }
 
 
-    @RequestMapping(value = "/sale/{leadsId}/action/edit/{actionId}", method = RequestMethod.GET)
-    public String edit(Model model, @PathVariable String leadsId, @PathVariable String actionId){
+    @RequestMapping(value = "/sale/{leadsBaseId}/action/edit/{actionId}", method = RequestMethod.GET)
+    public String edit(Model model, @PathVariable String leadsBaseId, @PathVariable String actionId){
+        initDictionary(model, leadsBaseId);
         model.addAttribute("action", actionService.findByIdEdit(actionId));
         model.addAttribute("operation", "edit");
-        this.initDictionary(model, leadsId);
+        this.initDictionary(model, leadsBaseId);
         return "/sale/action";
     }
 
     @RequestMapping(value = {"/sale/{leadsBaseId}/action/edit/{actionId}", "/sale/{leadsBaseId}/action/new"}, method = RequestMethod.POST)
     public String save(@ModelAttribute Action action, @PathVariable String leadsBaseId, Model model){
+        initDictionary(model, leadsBaseId);
         actionService.save(action);
         return list(leadsBaseId, model);
     }
@@ -80,7 +83,14 @@ public class ActionController {
     private void initDictionary(Model model, String leadsId){
         model.addAttribute("actionTypes", actionTypeService.findAll());
         model.addAttribute("users", userService.findAll());
-        model.addAttribute("leads", leadsBaseService.findById(leadsId));
+        LeadsBase leadsBase = leadsBaseService.findById(leadsId);
+        model.addAttribute("leadsBase", leadsBase);
+        if(leadsBase instanceof Leads){
+            model.addAttribute("type", "leads");
+        }else{
+            model.addAttribute("type", "opportunity");
+        }
+
     }
 
     @InitBinder

@@ -33,42 +33,55 @@
     </script>
 </head>
 <body>
+<ol class="breadcrumb">
+    <li><a href="${ctx}/index">首页</a></li>
+    <li><a href="${ctx}/sale/index">销售</a></li>
+    <c:if test="${url == 'leads'}">
+        <li><a href="${ctx}/sale/${url}/index">销售线索</a></li>
+    </c:if>
+    <c:if test="${url == 'opportunity'}">
+        <li><a href="${ctx}/sale/${url}/index">销售机会</a></li>
+    </c:if>
+    <li><a href="${ctx}/sale/${url}/view/${leadsBaseId}">${leadsBaseName}</a></li>
+    <li><a href="">关闭</a></li>
+</ol>
 
-<div class="row-fluid">
+<div>
     <form action="#" method="post" id="closeLeads" class="form-horizontal">
         <fieldset>
-            <legend><h3><i class="icon-star"></i>&nbsp关闭销售线索或销售机会</h3></legend>
-            <div id="error" class="alert alert-block hide"></div>
+            <%--<legend><h3><i class="icon-star"></i>&nbsp关闭销售线索或销售机会</h3></legend>--%>
+            <div id="error" class="alert alert-warning hidden"></div>
+
             <input type="hidden" name="leadsId" value="${leadsBaseId}">
 
-            <div class="control-group">
-                <label class="control-label">关闭原因</label>
+            <div class="form-group">
+                <label class="col-lg-1 text-right">关闭原因</label>
 
-                <div class="controls">
-                    <select name="closeReasonId">
+                <div class="col-lg-2">
+                    <select name="closeReasonId" class="form-control">
                         <c:forEach items="${closeReasons}" var="reason">
                             <option value="${reason.id}">${reason.name}</option>
                         </c:forEach>
                     </select>
                 </div>
             </div>
-            <div class="control-group">
-                <label class="control-label" for="closeReasonDetail">关闭原因详情</label>
+            <div class="form-group">
+                <label class="col-lg-1 text-right" for="closeReasonDetail">关闭详情</label>
 
-                <div class="controls">
-                    <textarea id="closeReasonDetail" name="closeReasonDetail" rows="10" class="span12"></textarea>
+                <div class="col-lg-6">
+                    <textarea id="closeReasonDetail" name="closeReasonDetail" rows="10" class="form-control"></textarea>
                 </div>
             </div>
-            <div class="form-actions">
+            <div class="controls-row form-action row">
+                <div class="col-lg-10 col-lg-offset-1">
                 <input class="btn btn-primary" type="submit" value="确定">
                 <c:if test='${url == "leads"}'>
-                    <a class="btn" href="${ctx}/sale/leads/index">返回</a>
+                    <a class="btn btn-default" href="${ctx}/sale/leads/index">返回</a>
                 </c:if>
                 <c:if test='${url == "opportunity"}'>
-                    <a class="btn" href="${ctx}/sale/opportunity/index">返回</a>
+                    <a class="btn btn-default" href="${ctx}/sale/opportunity/index">返回</a>
                 </c:if>
-
-
+                </div>
             </div>
         </fieldset>
     </form>

@@ -13,7 +13,25 @@
 <head>
 </head>
 <body>
-<h3><i class="icon-coffee"></i>&nbsp销售活动：${leadsBase.customer.name}/${leadsBase.name}</h3>
+<%--<h3><i class="icon-coffee"></i>&nbsp销售活动：${leadsBase.customer.name}/${leadsBase.name}</h3>--%>
+
+<ol class="breadcrumb">
+    <li><a href="${ctx}/index">首页</a></li>
+    <li><a href="${ctx}/sale/index">销售</a></li>
+    <c:if test="${type =='leads'}">
+        <li><a href="${ctx}/sale/leads/index">销售线索</a></li>
+    </c:if>
+    <c:if test="${type =='opportunity'}">
+        <li><a href="${ctx}/sale/opportunity/index">销售机会</a></li>
+    </c:if>
+    <li><a href="${ctx}/sale/${type}/view/${leadsBase.id}">${leadsBase.name}</a></li>
+
+    <li><a href="">销售活动</a></li>
+</ol>
+<div class="form-group">
+    <a class="btn btn-primary" href="${ctx}/sale/${leadsBase.id}/action/new"><i class="icon-plus"></i>增加销售活动</a>
+</div>
+
 <table class="table table-striped table-bordered table-hover table-condensed">
     <thead>
     <tr>
@@ -34,9 +52,9 @@
                     <c:when test="${action.actionType.id=='mail'}"><i class="icon-envelope"></c:when>
                         <c:when test="${action.actionType.id=='meeting'}"><i class="icon-group"></c:when>
                             <c:when test="${action.actionType.id=='message'}"><i class="icon-facebook-sign"></c:when>
-                                    <c:when test="${action.actionType.id=='system'}"><i class="icon-lightbulb"></c:when>
-                                <c:otherwise><i class="icon-question-sign"></c:otherwise>
-                                    </c:choose>
+                                <c:when test="${action.actionType.id=='system'}"><i class="icon-lightbulb"></c:when>
+                                    <c:otherwise><i class="icon-question-sign"></c:otherwise>
+                                        </c:choose>
             </td>
             <td><a href="${ctx}/sale/${leadsBase.id}/action/view/${action.id}">${action.brief}</a>
             </td>
@@ -47,11 +65,6 @@
     </c:forEach>
     </tbody>
 </table>
-<div class="row-fluid">
-    <div class="span6">
-        <a class="btn" href="${ctx}/sale/${leadsBase.id}/action/new"><i class="icon-plus"></i>增加销售活动</a>
-    </div>
-</div>
 
 </body>
 </html>

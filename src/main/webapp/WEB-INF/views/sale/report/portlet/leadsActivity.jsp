@@ -9,9 +9,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <div id="leadsActivityPortlet" class="portlet">
-    <div class="portlet-caption row-fluid">
-        <div class="portlet_title span6"><h5>线索及机会活跃度</h5></div>
-        <div class="span3">
+    <div class="portlet-caption row body-content">
+        <div class="portlet_title col-lg-6"><h5>线索及机会活跃度</h5></div>
+        <div class="col-lg-3">
         </div>
         <div class="portlet_subtitle span3"><h5><a class="period active" value="WEEK" href="#">周</a>|<a class="period"
                                                                                                         value="MONTH"

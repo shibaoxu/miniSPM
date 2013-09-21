@@ -16,7 +16,9 @@
     <title></title>
     <script type="text/javascript">
         $(document).ready(function () {
-            $('#datepicker').datepicker();
+            $('#planDealDate').datepicker({
+                format: 'yyyy-mm-dd'
+            });
             $('#convertToOpportunityForm').validate({
                 errorLabelContainer: $("div#error"),
                 rules: {
@@ -33,42 +35,49 @@
     </script>
 </head>
 <body>
+<ol class="breadcrumb">
+    <li><a href="${ctx}/index">首页</a></li>
+    <li><a href="${ctx}/sale/index">销售</a></li>
+    <li><a href="${ctx}/sale/leads/index">销售线索</a></li>
+    <li><a href="${ctx}/sale/leads/view/${leads.id}">${leads.name}</a></li>
+    <li><a href='#'>转化成销售机会</a></li>
+</ol>
 
-<div class="row-fluid">
+<div>
     <form action="#" method="post" id="convertToOpportunityForm" class="form-horizontal">
         <fieldset>
-            <legend><h3><i class="icon-star"></i>&nbsp创建销售机会</h3></legend>
             <div id="error" class="alert alert-block hide"></div>
             <input type="hidden" name="leadsId" value="${leadsId}">
-            <div class="control-group">
-                <label class="control-label" for="lowAmount">签约额下限</label>
 
-                <div class="controls">
-                    <input type="number" min="0" name="lowAmount" id="lowAmount" step="any" value="${lowAmount}">
+            <div class="form-group">
+                <label class="col-lg-2 control-label" for="lowAmount">签约额下限</label>
+
+                <div class="col-lg-4">
+                    <input class="form-control" type="number" min="0" name="lowAmount" id="lowAmount" step="any"
+                           value="${lowAmount}">
                 </div>
             </div>
-            <div class="control-group">
-                <label class="control-label" for="highAmount">签约额上限</label>
+            <div class="form-group">
+                <label class="col-lg-2 control-label" for="highAmount">签约额上限</label>
 
-                <div class="controls">
-                    <input type="number" min="0" name="highAmount" id="highAmount" step="any" value="${highAmount}">
+                <div class="col-lg-4">
+                    <input class="form-control" type="number" min="0" name="highAmount" id="highAmount" step="any"
+                           value="${highAmount}">
                 </div>
             </div>
-            <div class="control-group">
-                <label class="control-label" for="planDealDate">预计签约时间</label>
+            <div class="form-group">
+                <label class="col-lg-2 control-label" for="planDealDate">预计签约时间</label>
 
-                <div class="controls">
-                    <div class="input-append date" id="datepicker" data-date="${planDealDate}"
-                         data-date-format="yyyy-mm-dd" data-date-autoclose="true">
-                        <input type="text" required="required" name="planDealDate" class="span12" id='planDealDate'
-                               readonly="true"/>
-                        <span class="add-on"><i class="icon-th"></i></span>
-                    </div>
+                <div class="col-lg-2">
+                    <input type="text" required="required" name="planDealDate" class="form-control" id='planDealDate'
+                           readonly="true" value="${planDealDate}"/>
                 </div>
             </div>
-            <div class="form-actions">
+            <div class="row form-action">
+                <div class="col-lg-10 col-lg-offset-2">
                 <input class="btn btn-primary" type="submit" value="确定">
-                <a class="btn" href="${ctx}/sale/leads/index">返回</a>
+                <a class="btn btn-default" href="${ctx}/sale/leads/index">返回</a>
+                </div>
             </div>
         </fieldset>
     </form>

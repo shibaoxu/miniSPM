@@ -11,76 +11,144 @@
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
+<!DOCTYPE html>
 <html>
 <head>
 </head>
 <body>
-<h3><i class="icon-bullhorn"></i>&nbsp市场活动</h3>
-<div class="row-fluid">
-    <form class="form-search" action="#">
-        <input type="text" class="search-query input-large" name="search_condition" placeholder="请输入简述..." value="${param.search_condition}">
-        <button type="submit" class="btn" id="search_btn">搜索</button>
+<ol class="breadcrumb">
+    <li><a href="${ctx}/index">首页</a></li>
+    <li><a href="${ctx}/sale/index">销售</a></li>
+    <li><a href="${ctx}/sale/market_action/index">市场活动</a></li>
+</ol>
+<div>
+    <form class="form-horizontal" action="#">
+        <div class="form-group">
+            <div class="input-group col-lg-4">
+                <input type="text" class="form-control" name="search_condition" placeholder="请输入简述..."
+                       value="${param.search_condition}">
+                <span class="input-group-btn">
+                    <button type="submit" class="btn btn-default" id="search_btn"><i class="icon-search"></i>
+                    </button>
+                </span>
+            </div>
+            <shiro:hasPermission name="market_action:create:self">
+                <a class="btn btn-primary" href="${ctx}/sale/market_action/new"><i class="icon-plus"></i>增加市场活动</a>
+            </shiro:hasPermission>
+
+        </div>
     </form>
 </div>
-<table class="table table-striped table-bordered table-hover table-condensed">
-    <thead>
-    <tr>
-        <td>类型</td>
-        <td>简述</td>
-        <td>客户</td>
-        <td>时间</td>
-        <td>所有者</td>
-        <td>所属部门</td>
-        <td></td>
-    </tr>
-    </thead>
-    <tbody>
-    <c:forEach items="${marketActions.content}" var="action">
-        <tr <c:if test="${action.important}">class='success'</c:if>>
-            <td>
-                <c:choose>
-                <c:when test="${action.actionType.id=='telephone'}"><i class="icon-phone"></c:when>
-                <c:when test="${action.actionType.id=='visit'}"><i class="icon-plane"></c:when>
-                    <c:when test="${action.actionType.id=='mail'}"><i class="icon-envelope"></c:when>
-                        <c:when test="${action.actionType.id=='meeting'}"><i class="icon-group"></c:when>
-                            <c:when test="${action.actionType.id=='message'}"><i class="icon-facebook-sign"></c:when>
-                                <c:otherwise><i class="icon-question-sign"></c:otherwise>
-                                    </c:choose>
-            </td>
-            <td><a href="${ctx}/sale/market_action/view/${action.id}">${action.brief}</a>
-            </td>
-            </td>
-            <td>${action.customer.name}
-            </td>
-            <td><fmt:formatDate value="${action.eventDate}" pattern="yyyy-MM-dd"></fmt:formatDate></td>
-            <td>${action.owner.name}</td>
-            <td>${action.department.name}</td>
-            <td>
-                <div class="btn-group">
-                    <button class="btn btn-mini">操作</button>
-                    <button class="btn btn btn-mini dropdown-toggle" data-toggle="dropdown">
-                        &nbsp<span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu pull-right">
-                        <li><a href="${ctx}/sale/market_action/view/${action.id}"><i class="icon-eye-close"></i>查看详情</a></li>
-                        <li><a href="${ctx}/sale/market_action/edit/${action.id}"><i class="icon-edit"></i>修改</a></li>
-                        <%--<li><a href="${ctx}/sale/market_action/remove/${action.id}"><i class="icon-remove"></i>删除</a>--%>
-                        </li>
-                    </ul>
-                </div>
-            </td>
+
+<%--<div class="breadcrumb">--%>
+<%--<div class="navbar-header">--%>
+<%--<a class="navbar-brand"><i class="icon-bullhorn"></i>市场活动 </a>--%>
+<%--</div>--%>
+<%--<div class="collapse navbar-collapse">--%>
+<%--<form class="navbar-form navbar-left" action="#">--%>
+<%--<div class="input-group search-group">--%>
+<%--<input type="text" class="form-control" name="search_condition" placeholder="请输入简述..."--%>
+<%--value="${param.search_condition}">--%>
+<%--<span class="input-group-btn">--%>
+<%--<button type="submit" class="btn btn-default" id="search_btn"><i class="icon-search"></i>--%>
+<%--</button>--%>
+<%--</span>--%>
+<%--</div>--%>
+<%--</form>--%>
+<%--<div class="navbar-btn navbar-right">--%>
+<%--<shiro:hasPermission name="market_action:create:self">--%>
+<%--<a class="btn btn-primary" href="${ctx}/sale/market_action/new"><i class="icon-plus"></i>增加市场活动</a>--%>
+<%--</shiro:hasPermission>--%>
+<%--</div>--%>
+<%--</div>--%>
+<%--</div>--%>
+<div>
+    <table class="table table-striped table-condensed table-hover table-bordered">
+        <thead>
+        <tr>
+            <td>类型</td>
+            <td>简述</td>
+            <td>客户</td>
+            <td>时间</td>
+            <td>所有者</td>
+            <td>所属部门</td>
+            <td></td>
         </tr>
-    </c:forEach>
-    </tbody>
-</table>
-<tags:pagination page="${marketActions}"></tags:pagination>
-<shiro:hasPermission name="market_action:create:self">
-    <div class="row-fluid">
-        <div class="span6">
-            <a class="btn" href="${ctx}/sale/market_action/new"><i class="icon-plus"></i>增加市场活动</a>
+        </thead>
+        <tbody>
+        <c:forEach items="${marketActions.content}" var="action">
+            <tr <c:if test="${action.important}">class='success'</c:if>>
+                <td>
+                    <c:choose>
+                    <c:when test="${action.actionType.id=='telephone'}"><i class="icon-phone"></c:when>
+                    <c:when test="${action.actionType.id=='visit'}"><i class="icon-plane"></c:when>
+                        <c:when test="${action.actionType.id=='mail'}"><i class="icon-envelope"></c:when>
+                            <c:when test="${action.actionType.id=='meeting'}"><i class="icon-group"></c:when>
+                                <c:when test="${action.actionType.id=='message'}"><i
+                                        class="icon-facebook-sign"></c:when>
+                                    <c:otherwise><i class="icon-question-sign"></c:otherwise>
+                                        </c:choose>
+                </td>
+                <td><a href="${ctx}/sale/market_action/view/${action.id}">${action.brief}</a>
+                </td>
+                </td>
+                <td>${action.customer.name}
+                </td>
+                <td><fmt:formatDate value="${action.eventDate}" pattern="yyyy-MM-dd"></fmt:formatDate></td>
+                <td>${action.owner.name}</td>
+                <td>${action.department.name}</td>
+                <td>
+                    <div class="dropdown">
+                        <a class="relate_menu dropdown-toggle" data-toggle="dropdown">
+                            <i class="icon-list"></i>
+                        </a>
+                        <ul class="dropdown-menu pull-right" role="menu">
+
+                            <li><a
+                                    href="${ctx}/sale/market_action/view/${action.id}"><i class="icon-eye-close"></i>查看详情</a>
+                            </li>
+                            <li><a
+                                    href="${ctx}/sale/market_action/edit/${action.id}"><i
+                                    class="icon-edit"></i>修改</a>
+                            </li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>
+</div>
+<div class="row body-content">
+    <tags:pagination page="${marketActions}"></tags:pagination>
+    <div class="content-toolbar btn-toolbar pull-right clearfix">
+        <div class="btn-group">
+            <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
+                <i class="icon-share"></i>导出<span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu pull-right" role="menu">
+                <li>
+                    <a href="?">
+                        <i class="icon-table"></i>
+                        Excel
+                    </a>
+                </li>
+                <li>
+                    <a href="?">
+                        <i class="icon-table"></i>
+                        Excel
+                    </a>
+                </li>
+            </ul>
+
         </div>
+        <button class="btn btn-default btn-sm pull-right" type="button">
+            <i class="icon-fullscreen"></i>
+        </button>
     </div>
-</shiro:hasPermission>
+
+</div>
+
 </body>
 </html>
 

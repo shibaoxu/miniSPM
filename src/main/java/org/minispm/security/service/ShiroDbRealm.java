@@ -5,6 +5,7 @@ import org.apache.shiro.authc.*;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
+import org.apache.shiro.authz.permission.PermissionResolver;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
@@ -46,6 +47,12 @@ public class ShiroDbRealm extends AuthorizingRealm {
         info.addStringPermissions(accountService.getPermissionsByUserId(shiroUser.getId()));
         return info;
     }
+
+    @Override
+    public void setPermissionResolver(PermissionResolver permissionResolver) {
+        super.setPermissionResolver(permissionResolver);    //To change body of overridden methods use File | Settings | File Templates.
+    }
+
     /**
      * 设定Password校验的Hash算法与迭代次数.
      */

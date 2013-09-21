@@ -9,10 +9,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sitemesh" uri="http://www.opensymphony.com/sitemesh/decorator" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
     <title>TID管理工具<sitemesh:title/></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
     <meta http-equiv="Cache-Control" content="no-store"/>
     <meta http-equiv="Pragma" content="no-cache"/>
@@ -27,7 +28,10 @@
 </head>
 
 <body>
+
+
 <%@ include file="/WEB-INF/decorators/header.jsp" %>
+
 <sitemesh:body/>
 
 <%@ include file="/WEB-INF/decorators/footer.jsp" %>

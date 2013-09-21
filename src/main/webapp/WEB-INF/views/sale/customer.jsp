@@ -15,85 +15,98 @@
 <head>
     <title></title>
     <script type="text/javascript">
-        $(document).ready(function(){
+        $(document).ready(function () {
             $('#customer_form').validate({
-                errorLabelContainer:$("div#error"),
-                rules:{
-                    name:"required"
+                invalidHandler: function(event, validator){
+                    if(validator.numberOfInvalids()){
+                        $('div#error').removeClass('hidden');
+                        $('div#error').show();
+                    }else{
+                        $('div#error').hide();
+                    }
                 },
-                messages:{
-                    name:'客户名称必须输入'
+                errorLabelContainer: $("div#error"),
+                rules: {
+                    name: "required"
                 },
-                wrapper:"li",
+                messages: {
+                    name: '客户名称必须输入'
+                },
+                wrapper: "li",
                 errorElement: "em"
             });
         })
     </script>
 </head>
 <body>
-<div class="row-fluid">
+<ol class="breadcrumb">
+    <li><a href="${ctx}/index">首页</a></li>
+    <li><a href="${ctx}/sale/index">销售</a></li>
+    <li><a href="${ctx}/sale/customer/index">客户</a></li>
+    <li><a href="${ctx}/sale/customer/119">${customer.name}</a></li>
+</ol>
+<div>
     <form:form commandName="customer" id='customer_form' cssClass="form-horizontal">
         <fieldset>
-            <legend><h3><i class="icon-shopping-cart"></i>&nbsp客户:${customer.name}</h3></legend>
-            <div id='error' class="error alert alert-block hide"></div>
+            <div id='error' class="error alert alert-warning hidden"></div>
             <form:hidden path="id"></form:hidden>
-            <div class="control-group">
-                <label class="control-label" for="customer_name">名称</label>
+            <div class="form-group">
+                <label class="control-label col-lg-1 text-right" for="customer_name">名称</label>
 
-                <div class="controls">
-                    <form:input id='customer_name' path="name" cssClass="span5"></form:input>
+                <div class="col-lg-4">
+                    <form:input id='customer_name' path="name" cssClass="form-control"></form:input>
                 </div>
             </div>
 
-            <div class="control-group">
-                <label class="control-label" for="customer_industry">行业</label>
+            <div class="form-group">
+                <label class="control-label col-lg-1 text-right" for="customer_industry">行业</label>
 
-                <div class="controls">
+                <div class="col-lg-4">
                     <form:select path="industry.id" id='customer_industry' items="${industries}" itemLabel="name"
-                                 itemValue="id"></form:select>
+                                 itemValue="id" cssClass="form-control"></form:select>
                 </div>
             </div>
-            <div class="control-group">
-                <label class="control-label" for="customer_scale">规模</label>
+            <div class="form-group">
+                <label class="control-label col-lg-1 text-right" for="customer_scale">规模</label>
 
-                <div class="controls">
+                <div class="col-lg-2">
                     <form:select path="scale.id" id='customer_scale' items="${scales}" itemLabel="name"
-                                 itemValue="id"></form:select>
+                                 itemValue="id" cssClass="form-control"></form:select>
                 </div>
             </div>
-            <div class="control-group">
-                <label class="control-label" for="customer_ownerShip">所有制</label>
+            <div class="form-group">
+                <label class="control-label col-lg-1 text-right" for="customer_ownerShip">所有制</label>
 
-                <div class="controls">
+                <div class="col-lg-2">
                     <form:select path="ownership.id" id='customer_ownerShip' items="${ownerships}" itemLabel="name"
-                                 itemValue="id"></form:select>
+                                 itemValue="id" cssClass="form-control"></form:select>
                 </div>
             </div>
-            <div class="control-group">
-                <div class="controls">
-                    <label><form:checkbox path="develop"></form:checkbox>&nbsp;新客户</label>
-                </div>
-            </div>
-
-            <%--<div class="control-group">--%>
-                <%--<div class="controls">--%>
-                    <%--<label><form:checkbox path="important"></form:checkbox>&nbsp;重要</label>--%>
-                <%--</div>--%>
-            <%--</div>--%>
-
-            <div class="control-group">
-                <label class="control-label" for="customer_des">备注</label>
-
-                <div class="controls">
-                    <form:textarea path="des" id='customer_des' cssClass="span8" rows="8"></form:textarea>
+            <div class="form-group">
+                <div class="col-lg-2 col-lg-offset-1">
+                    <div class="checkbox">
+                        <label><form:checkbox path="develop"></form:checkbox>新客户</label>
+                    </div>
                 </div>
             </div>
 
-            <div class="form-actions">
-                <input class="btn btn-primary" type="submit" value="保存">
-                <a class="btn" href="${ctx}/sale/customer/index">返回</a>
+            <div class="form-group">
+                <label class="control-label col-lg-1 text-right" for="customer_des">备注</label>
+
+                <div class="col-lg-8">
+                    <form:textarea path="des" id='customer_des' cssClass="form-control" rows="8"></form:textarea>
+                </div>
             </div>
+
         </fieldset>
+        <div class="row controls-row body-content form-action">
+            <div class="col-lg-10 col-lg-offset-1">
+                <div class="form-group">
+                    <input class="btn btn-primary" type="submit" value="保存">
+                    <a class="btn btn-default" href="${ctx}/sale/customer/index">返回</a>
+                </div>
+            </div>
+        </div>
     </form:form>
 </div>
 

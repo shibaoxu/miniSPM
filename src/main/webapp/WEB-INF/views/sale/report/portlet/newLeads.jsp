@@ -9,8 +9,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <div id="newLeadsPortlet" class="portlet">
-    <div class="portlet-caption row-fluid">
-        <div class="portlet_title span6"><h5>最近一月新增销售线索</h5></div>
+    <div class="portlet-caption row body-content">
+        <div class="portlet_title col-lg-6"><h5>最近一月新增销售线索</h5></div>
     </div>
     <div class="portlet-content">
         <table id="newLeads" class="table table-striped table-hover table-condensed">

@@ -16,92 +16,131 @@
     <title></title>
     <script type="text/javascript">
         $(document).ready(function () {
-            $('#datepicker').datepicker();
+            $('#action_occur_date').datepicker({
+                format: 'yyyy-mm-dd'
+            });
+            $('#action_form').validate({
+                invalidHandler: function(event, validator){
+                    if(validator.numberOfInvalids()){
+                        $('div#error').removeClass('hidden');
+                        $('div#error').show();
+                    }else{
+                        $('div#error').hide();
+                    }
+                },
+                rules:{
+                    brief: "required",
+                    customerParticipants: "required",
+                    detail:"required"
+                },
+                messages:{
+                    brief: "简述必须录入",
+                    customerParticipants: "客户方的参入者必须录入",
+                    detail:"请尽可能详细录入信息"
+                },
+                errorLabelContainer: $("div#error"),
+                wrapper: "li",
+                errorElement: "em"
+            });
         });
     </script>
 </head>
 <body>
 
-<div id="action_error">
+<ol class="breadcrumb">
+    <li><a href="${ctx}/index">首页</a></li>
+    <li><a href="${ctx}/sale/index">销售</a></li>
+    <c:if test="${type == 'opportunity'}">
+        <li><a href="${ctx}/sale/opportunity/index">销售机会</a></li>
+    </c:if>
+    <c:if test="${type == 'leads'}">
+        <li><a href="${ctx}/sale/leads/index">销售线索</a></li>
+    </c:if>
 
-</div>
-<div class="row-fluid">
+    <li><a href="${ctx}/sale/leads/view/${leadsBase.id}">${leadsBase.name}</a></li>
+    <li><a href="${ctx}/sale/${leadsBase.id}/action/index">销售活动</a></li>
+    <li><a href="">${action.brief}</a></li>
+</ol>
+
+<div>
     <form:form commandName="action" cssClass="form-horizontal" id="action_form">
         <fieldset>
-            <legend><h3><i class="icon-coffee"></i>&nbsp销售线索:${leadsBase.customer.name}/${leadsBase.name}</h3></legend>
             <form:hidden path="id"></form:hidden>
             <form:hidden path="leadsBase.id"></form:hidden>
-            <div class="control-group">
-                <label class="control-label" for="action_type">活动类型</label>
+            <div id='error' class="alert alert-warning hidden"></div>
+            <div class="form-group">
+                <label class="control-label col-lg-2" for="action_type">活动类型</label>
 
-                <div class="controls">
+                <div class="col-lg-4">
                     <form:select id='action_type' path="actionType.id" items="${actionTypes}" itemLabel="name"
-                                 itemValue="id"></form:select>
+                                 itemValue="id" cssClass="form-control"></form:select>
                 </div>
             </div>
-            <div class="control-group">
-                <label class="control-label" for="action_brief">简述</label>
 
-                <div class="controls">
+            <div class="form-group">
+                <label class="control-label col-lg-2" for="action_brief">简述</label>
+
+                <div class="col-lg-4">
                     <form:input id='action_brief' path="brief"
-                                cssClass="span5 {required:true,minlength:3}"></form:input>
+                                cssClass="form-control"></form:input>
                 </div>
             </div>
-            <div class="control-group">
-                <label class="control-label" for="action_occur_date">发生时间</label>
+            <div class="form-group">
+                <label class="col-lg-2 control-label" for="action_occur_date">发生时间</label>
 
-                <div class="controls">
-                    <div class="input-append date" id="datepicker" data-date="${action.occurDate}"
-                         data-date-format="yyyy-mm-dd" data-date-autoclose="true">
-                        <form:input path="occurDate" cssClass="span6" id='action_occur_date'
-                                    readonly="true"></form:input>
-                        <span class="add-on"><i class="icon-th"></i></span>
-                    </div>
+                <div class="col-lg-2">
+                    <form:input path="occurDate" cssClass="datepicker form-control" id='action_occur_date'
+                                readonly="true"></form:input>
                 </div>
             </div>
-            <div class="control-group">
-                <label class="control-label" for="action_owner">所有者</label>
 
-                <div class="controls">
+            <div class="form-group">
+                <label class="col-lg-2 control-label" for="action_owner">所有者</label>
+
+                <div class="col-lg-2">
                     <form:select path="owner.id" id='action_owner' items="${users}" itemLabel="name"
-                                 itemValue="id"></form:select>
+                                 itemValue="id" cssClass="form-control"></form:select>
                 </div>
             </div>
-            <div class="control-group">
-                <label class="control-label" for="action_customer_participants">客户方参入者</label>
+            <div class="form-group">
+                <label class="col-lg-2 control-label" for="action_customer_participants">客户方参入者</label>
 
-                <div class="controls">
-                    <form:input path="customerParticipants" cssClass="span8"
+                <div class="col-lg-4">
+                    <form:input path="customerParticipants" cssClass="form-control"
                                 id='action_customer_participants'></form:input>
                 </div>
             </div>
-            <div class="control-group">
-                <label class="control-label" for="action_self_participants">我方参入者</label>
+            <div class="form-group">
+                <label class="col-lg-2 control-label" for="action_self_participants">我方参入者</label>
 
-                <div class="controls">
-                    <form:input path="selfParticipants" cssClass="span8" id='action_self_participants'></form:input>
+                <div class="col-lg-4">
+                    <form:input path="selfParticipants" cssClass="form-control"
+                                id='action_self_participants'></form:input>
                 </div>
             </div>
-            <div class="control-group">
-                <div class="controls">
-                        <%--<label><input type="checkbox" name="milestone" checked="${action.milestone}">&nbsp;里程碑事件</label>--%>
-                    <label><form:checkbox path="milestone"></form:checkbox>&nbsp;里程碑事件</label>
+            <div class="form-group">
+                <div class="col-lg-2 col-lg-offset-2">
+                    <div class="checkbox">
+                        <label><form:checkbox path="milestone"></form:checkbox>&nbsp;里程碑事件</label>
+                    </div>
                 </div>
             </div>
 
-            <div class="control-group">
-                <label class="control-label" for="action_detail">详情</label>
+            <div class="form-group">
+                <label class="control-label col-lg-2" for="action_detail">详情</label>
 
-                <div class="controls">
-                    <form:textarea path="detail" id='action_detail' cssClass="span10" rows="7"></form:textarea>
+                <div class="col-lg-6">
+                    <form:textarea path="detail" id='action_detail' cssClass="form-control" rows="7"></form:textarea>
                 </div>
             </div>
-            <c:if test="${operation == 'add' || operation == 'edit'}">
-                <div class="form-actions">
+            <div class="row controls-row form-action">
+                <div class="col-lg-10 col-lg-offset-2">
+                <c:if test="${operation == 'add' || operation == 'edit'}">
                     <input class="btn btn-primary" type="submit" value="保存">
-                    <a class="btn" href="${ctx}/sale/leads/${action.leadsBase.id}/action/index">返回</a>
+                </c:if>
+                <a class="btn btn-default" href="${ctx}/sale/${type}/${action.leadsBase.id}/action/index">返回</a>
                 </div>
-            </c:if>
+            </div>
         </fieldset>
     </form:form>
 </div>

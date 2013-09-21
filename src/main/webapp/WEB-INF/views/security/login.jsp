@@ -20,23 +20,19 @@
     <form action="${ctx}/login" method="post" class="form-signin">
         <h3 class="form-signin-heading">请登录</h3>
 
-        <div class="control-group">
-            <div class="controls">
-                <div class="input-prepend">
-            <span class="add-on">
-                <i class="icon-user"></i>
-            </span>
-                    <input name="username" class="input-block-level" placeholder="工号" type="text" value="${username}">
-                </div>
+        <div class="form-group">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="icon-user"></i></span>
+                <input name="username" class="form-control" placeholder="工号" type="text" value="${username}">
             </div>
         </div>
-        <div class="input-prepend">
-            <span class="add-on">
-                <i class="icon-key"></i>
-            </span>
-
-            <input name="password" class="input-block-level" placeholder="密码" type="password">
+        <div class="form-group">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="icon-lock"></i></span>
+                <input name="password" class="form-control" placeholder="密码" type="password">
+            </div>
         </div>
+
         <label class="checkbox">
             <input type="checkbox" name="rememberMe"/>
             记住我

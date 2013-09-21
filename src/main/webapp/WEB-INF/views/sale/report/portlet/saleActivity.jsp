@@ -9,14 +9,14 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <div id="saleActivityPortlet" class="portlet">
-    <div class="portlet-caption row-fluid">
-        <div class="portlet_title span6"><h5>销售活跃度</h5></div>
-        <div class="span3">
+    <div class="portlet-caption row body-content">
+        <div class="portlet_title col-lg-6"><h5>销售活跃度</h5></div>
+        <div class="col-lg-3">
             <h5><a class="plate active" value="RED" href="#" style="color: red">高调</a>|<a class="plate" value="BLACK"
                                                                                          href="#"
                                                                                          style="color: black">低调</a></h5>
         </div>
-        <div class="portlet_subtitle span3"><h5><a class="period active" value="WEEK" href="#">周</a>|<a class="period"
+        <div class="portlet_subtitle col-lg-3"><h5><a class="period active" value="WEEK" href="#">周</a>|<a class="period"
                                                                                                         value="MONTH"
                                                                                                         href="#">月</a>|<a
                 class="period" value="ALL" href="#">总</a></h5></div>

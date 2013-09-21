@@ -15,14 +15,24 @@
 <head>
 </head>
 <body>
-<h3><i class="icon-star"></i>&nbsp销售机会</h3>
-
-<form class="form-search" action="#">
-    <input type="text" class="search-query input-large" name="search_condition" placeholder="请输入搜索条件..."
-           value="${param.search_condition}">
-    <button type="submit" class="btn" id="search_btn">搜索</button>
-</form>
-
+<ol class="breadcrumb">
+    <li><a href="${ctx}/index">首页</a></li>
+    <li><a href="${ctx}/sale/index">销售</a></li>
+    <li><a href="">销售机会</a></li>
+</ol>
+<div>
+    <form class="form-horizontal" action="#">
+        <div class="form-group">
+            <div class="input-group col-lg-4">
+                <input type="text" class="form-control" name="search_condition" placeholder="请输入搜索条件..."
+                       value="${param.search_condition}">
+                <span class="input-group-btn">
+                    <button type="submit" class="btn btn-default" id="search_btn"><span class="icon-search"/></button>
+                </span>
+            </div>
+        </div>
+    </form>
+</div>
 <table class="table table-striped table-bordered table-hover table-condensed">
     <thead>
     <tr>
@@ -44,19 +54,18 @@
             <td><fmt:formatNumber value="${opportunity.lowAmount}" type="number"/></td>
             <td><fmt:formatNumber value="${opportunity.highAmount}" type="number"/></td>
             <td>
-                <a href="${ctx}/sale/${opportunity.id}/action/index">
+                <a href="${ctx}/sale/opportunity/${opportunity.id}/action/index">
                         ${opportunity.lastInfo}
                 </a>
             </td>
             <td>${opportunity.owner.name}</td>
             <td>${opportunity.department.name}</td>
             <td>
-                <div class="btn-group">
-                    <button class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#">
-                        操作
-                        <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu pull-right">
+                <div class="dropdown">
+                    <a class="relate_menu dropdown-toggle" data-toggle="dropdown">
+                        <i class="icon-list"></i>
+                    </a>
+                    <ul class="dropdown-menu pull-right" role="menu">
                         <li><a href="${ctx}/sale/opportunity/edit/${opportunity.id}"><i class="icon-edit"></i>修改基本信息</a>
                         </li>
                         <li><a href="${ctx}/sale/${opportunity.id}/action/index"><i
@@ -64,8 +73,8 @@
                         </li>
                         <li class="divider"/>
                         <shiro:hasPermission name="leads:close:WHOLE">
-                            <li><a href="${ctx}/sale/opportunity/close/${opportunity.id}"><i class="icon-star"></i>关闭...</a>
-                        </shiro:hasPermission>
+                        <li><a href="${ctx}/sale/opportunity/close/${opportunity.id}"><i class="icon-star"></i>关闭...</a>
+                            </shiro:hasPermission>
                     </ul>
                 </div>
             </td>
@@ -74,6 +83,5 @@
     </tbody>
 </table>
 <tags:pagination page="${opportunities}"></tags:pagination>
-
 </body>
 </html>

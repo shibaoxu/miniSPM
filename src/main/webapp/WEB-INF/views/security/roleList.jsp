@@ -39,7 +39,7 @@
                     <ul class="dropdown-menu pull-right">
                         <li><a href="${ctx}/security/role/edit/${role.id}"><i class="icon-edit"></i>修改</a></li>
                         <li><a href="${ctx}/security/edit-user/${role.id}"><i class="icon-user"></i>修改所属用户</a></li>
-                        <li><a href="${ctx}/security/edit-permission/${role.id}"><i class="icon-ok-circle"></i>修改权限</a>
+                        <li><a href="${ctx}/security/role/permissions/${role.id}"><i class="icon-ok-circle"></i>修改权限</a>
                         </li>
                     </ul>
                 </div>

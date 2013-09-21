@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <body>
-<div class="span10 offset1">
+<div class="col-md-10 col-md-offset-1 row">
     <div>
         <h2 class="pagination-centered">销售机会管理相关说明</h2>
         <h5 class="pagination-centered">过程决定结果，细节决定成败</h5>
@@ -53,7 +53,7 @@
     </p>
     <h3>使用说明</h3>
     <h4>市场活动</h4>
-    <img src="${ctx}/static/images/introduce/market_action_list.png">
+    <img class="img-responsive" src="${ctx}/static/images/introduce/market_action_list.png">
 
     <p>
         进入市场活动页面后，根据权限每个人可以看到系统允许看到的市场活动。
@@ -63,7 +63,7 @@
         点击简述超链接可以查看市场活动的详情，但不能修改。如果要修改自己的市场活动则必须在“操作”中点击“修改”
     </p>
 
-    <img src="${ctx}/static/images/introduce/market_action.png">
+    <img class="img-responsive" src="${ctx}/static/images/introduce/market_action.png">
 
     <p>
         在录入市场活动时以下几点需要注意：
@@ -79,7 +79,7 @@
     </ul>
     </p>
     <h4>销售线索</h4>
-    <img src="${ctx}/static/images/introduce/leads.png">
+    <img class="img-responsive" src="${ctx}/static/images/introduce/leads.png">
 
     <p>
         销售线索是指我们有机会签约的销售机会，但签约几率还不确定或者还不是很高，需要进一步跟踪。增加销售线索是需要填写一下基本信息：
@@ -96,18 +96,18 @@
     </ul>
     </p>
     <h4>销售线索跟踪</h4>
-    <img src="${ctx}/static/images/introduce/leads_list.png">
+    <img class="img-responsive" src="${ctx}/static/images/introduce/leads_list.png">
 
     <p>
         在上面的销售线索列表界面，点击“最近活动”的超链接或者点击“操作->查看“销售活动，就会进入到和此销售线索相关联的销售活动列表页面。如下图：
     </p>
-    <img src="${ctx}/static/images/introduce/action_list.png">
+    <img class="img-responsive" src="${ctx}/static/images/introduce/action_list.png">
 
     <p>
         在以上页面中可以看到所有和此销售线索相关的销售活动，也可以增加销售活动。销售活动包括各种和此销售线索相关的事项，包括售前，电话沟通等等内容。以不同颜色标示
         的是重要的或里程碑的销售活动，例如：售前交流，商务谈判，招投标，或者其他推动项目进展的活动或消息；销售活动的详细信息如下：
     </p>
-    <img src="${ctx}/static/images/introduce/action.png">
+    <img class="img-responsive" src="${ctx}/static/images/introduce/action.png">
 
     <p>
     <ul>

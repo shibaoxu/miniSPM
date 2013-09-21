@@ -1,6 +1,7 @@
 package org.minispm.security.service;
 
 import org.minispm.security.dao.PermissionDao;
+import org.minispm.security.entity.Domain;
 import org.minispm.security.entity.Permission;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -27,6 +28,14 @@ public class PermissionService {
         sorts.add("operation.name");
         sorts.add("scope");
         return permissionDao.findAll(new Sort(Sort.Direction.ASC, sorts)) ;
+    }
+
+    public List<Permission> getByDomain(String id){
+        return permissionDao.findByOperationDomainId(id);
+    }
+
+    public void removePermissionFromRole(String roleId, String permissionId){
+
     }
 
     @Autowired

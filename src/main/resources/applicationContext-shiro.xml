@@ -11,8 +11,11 @@
         <!--<property name="cacheManager" ref="shiroEhcacheManager" />-->
     </bean>
 
+    <bean id='permissionResolver' class="org.minispm.security.service.PermissionResolverCustom"></bean>
+
     <!-- 項目自定义的Realm -->
     <bean id="shiroDbRealm" class="org.minispm.security.service.ShiroDbRealm" depends-on="userDao">
+        <property name="permissionResolver" ref="permissionResolver"/>
     </bean>
 
     <!-- Shiro Filter -->

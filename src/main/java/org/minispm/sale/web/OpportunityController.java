@@ -8,15 +8,16 @@ import org.minispm.sale.service.OpportunityService;
 import org.minispm.sale.service.SourceService;
 import org.minispm.security.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.ServletRequest;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created with IntelliJ IDEA.
@@ -51,6 +52,13 @@ public class OpportunityController {
         model.addAttribute("opportunity", opportunityService.findByIdView(id));
         return "sale/opportunity";
     }
+    @InitBinder
+    private void dateBinder(WebDataBinder binder) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        CustomDateEditor editor = new CustomDateEditor(dateFormat, true);
+        binder.registerCustomEditor(Date.class, editor);
+    }
+
     @ExceptionHandler
     public ModelAndView exceptionHandler(Exception ex){
         ModelAndView mv = new ModelAndView();

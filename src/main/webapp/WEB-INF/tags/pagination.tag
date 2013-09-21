@@ -21,9 +21,7 @@ request.setAttribute("totalPages", total);
 request.setAttribute("totalElements", totalElements);
 %>
 
-<div class="pagination pagination-small">
-
-	<ul>
+	<ul class="pagination pagination-sm">
         <li class="disabled"><a href="#">共 ${totalPages} 页 , 第 ${current} 页, 共 ${page.totalElements} 条记录</a></li>
 		 <% if (page.hasPreviousPage()){%>
                	<li><a href="?page=1&sortType=${sortType}&${searchParams}">&lt;&lt;</a></li>
@@ -53,5 +51,4 @@ request.setAttribute("totalElements", totalElements);
          <%} %>
 
 	</ul>
-</div>
 
