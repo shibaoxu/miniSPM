@@ -31,9 +31,11 @@ public class ShiroDbRealm extends AuthorizingRealm {
         User user = accountService.findByJobNumber(token.getUsername());
         if (user != null) {
             byte[] salt = Encodes.decodeHex(user.getSalt());
+            System.out.println("authentication success!!!");
             return new SimpleAuthenticationInfo(new ShiroUser(user.getId(), user.getJobNumber(), user.getName(), user.getStaff()),
                     user.getPassword(), ByteSource.Util.bytes(salt), getName());
         } else {
+            System.out.println("authentication fail!!!");
             return null;
         }
     }

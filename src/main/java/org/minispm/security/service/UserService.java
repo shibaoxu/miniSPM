@@ -41,12 +41,17 @@ public class UserService {
         return userDao.findAll();
     }
 
+    public List<User> findByCondition(String condition){
+        String cond = "%" + condition + "%";
+        return userDao.findByJobNumberLikeOrNameLikeOrStaffNameLike(cond, cond, cond);
+    }
     public User findById(String id) {
         return userDao.findOne(id);
     }
 
     public User findByJobNumber(String jobNumber) {
-        return userDao.findByJobNumber(jobNumber);
+//        return userDao.findByJobNumber(jobNumber);
+        return userDao.findByJobNumberAndStatus(jobNumber, User.ENABLED);
     }
 
     public List<Role> getRolesByUserId(String id) {
@@ -125,6 +130,33 @@ public class UserService {
     @Transactional(readOnly = false)
     public void delete(String id) {
         userDao.delete(id);
+    }
+
+    @Transactional(readOnly = false)
+    public void lock(String id){
+        User user = userDao.findOne(id);
+        if(StringUtils.equalsIgnoreCase(user.getStatus(),User.ENABLED)){
+            user.setStatus(User.LOCKED);
+            save(user);
+        }
+    }
+
+    @Transactional(readOnly = false)
+    public void unlock(String id){
+        User user = userDao.findOne(id);
+        if(StringUtils.equalsIgnoreCase(user.getStatus(),User.LOCKED)){
+            user.setStatus(User.ENABLED);
+            save(user);
+        }
+    }
+
+    @Transactional(readOnly = false)
+    public void active(String id){
+        User user = userDao.findOne(id);
+        if(StringUtils.equalsIgnoreCase(user.getStatus(),User.NOT_ACTIVE)){
+            user.setStatus(User.ENABLED);
+            save(user);
+        }
     }
 
     private void encryptPassword(User user) {

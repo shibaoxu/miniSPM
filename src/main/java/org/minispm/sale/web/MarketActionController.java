@@ -76,6 +76,7 @@ public class MarketActionController {
 
     @RequestMapping(value = "new", method = RequestMethod.GET)
     public String add(Model model){
+        marketActionService.create();
         initDictionary(model);
         model.addAttribute("operation", "new");
         MarketAction action = new MarketAction();
@@ -110,7 +111,7 @@ public class MarketActionController {
     }
 
     private Department getBelongDepartment(){
-        return  (Department)organizationService.getBelongOrg(AccountabilityType.SALE_ORG, SecurityUtils.getCurrentShiroUser().getStaff().getId());
+        return  (Department)organizationService.getBelongOrg(SecurityUtils.getCurrentShiroUser().getStaff().getId(),AccountabilityType.SALE_ORG);
     }
 
     public MarketActionService getMarketActionService() {

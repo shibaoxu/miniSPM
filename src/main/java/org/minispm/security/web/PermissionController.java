@@ -5,12 +5,10 @@ import org.minispm.security.service.DomainService;
 import org.minispm.security.service.PermissionService;
 import org.minispm.security.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -34,24 +32,27 @@ public class PermissionController {
         return permissionService.getAll();
     }
 
-    @RequestMapping(value = "/security/domain/{DomainId}/permission/index", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/security/role/{roleId}/domain/{domainId}/permission/index", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
-    public List<Permission> getByDomain(@PathVariable("DomainId") String id){
-       return permissionService.getByDomain(id);
+    public List<Permission> getPermissionsByRoleIdAndDomainId(@PathVariable("roleId") String roleId, @PathVariable("domainId") String domainId){
+        return permissionService.getPermissionsByRoleIdAndDomainId(roleId, domainId);
     }
 
-    @RequestMapping(value = "/security/role/permissions/{roleId}")
-    public String getRolePermission(@PathVariable("roleId") String roleId, Model model){
-        model.addAttribute("role", roleService.getById(roleId));
-        model.addAttribute("domains", domainService.getAll());
-        return "security/role-permissions";
+    @RequestMapping(value = "/security/role/{roleId}/removePermission/{permissionId}", method = RequestMethod.POST)
+    @ResponseBody
+    public String removePermissionFromRole(@PathVariable("roleId") String roleId, @PathVariable("permissionId") String permissionId){
+        permissionService.removePermissionFromRole(roleId, permissionId);
+        return "success";
     }
+
+
 
 
     @Autowired
     public void setPermissionService(PermissionService permissionService) {
         this.permissionService = permissionService;
     }
+
     @Autowired
     public void setRoleService(RoleService roleService) {
         this.roleService = roleService;

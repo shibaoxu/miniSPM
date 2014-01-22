@@ -5,9 +5,8 @@ import org.minispm.admin.organization.entity.Department;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -51,18 +50,30 @@ public class DepartmentController {
         return showDepartment(id, model, true);
     }
 
-    @RequestMapping(value = "edit/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.POST)
     public String update(Department department){
         departmentService.save(department);
         return "redirect:../index";
     }
 
-    @RequestMapping(value = "del/{id}")
+    @RequestMapping(value = "/del/{id}")
     public String delete(@PathVariable String id){
         departmentService.removeById(id);
         return "redirect:../index";
     }
 
+    @RequestMapping(value = "/unassigned/{orgTypeId}", produces = "application/json")
+    @ResponseBody
+    public List<Department> getUnassignedDepartments(@PathVariable("orgTypeId") String orgTypeId){
+        return departmentService.getUnassignedDepartments(orgTypeId);
+    }
+    @ExceptionHandler
+    public ModelAndView exceptionHandler(Exception ex) {
+        ModelAndView mv = new ModelAndView();
+        mv.getModel().put("message", ex.getMessage());
+        mv.setViewName("exception");
+        return mv;
+    }
     private String showDepartment(String id, Model model, boolean updatable){
         Department department = departmentService.findById(id);
         model.addAttribute("department", department);

@@ -40,7 +40,7 @@ public class ActionController {
         return "/sale/actionList";
     }
 
-    @RequestMapping(value = "/sale/{leadsBaseId}/action/new", method = RequestMethod.GET)
+    @RequestMapping(value = {"/sale/leads/{leadsBaseId}/action/new","/sale/opportunity/{leadsBaseId}/action/new"}, method = RequestMethod.GET)
     public String add(Model model, @PathVariable String leadsBaseId){
         initDictionary(model, leadsBaseId);
         Action action = new Action();
@@ -54,7 +54,7 @@ public class ActionController {
         return "/sale/action";
     }
 
-    @RequestMapping(value = "/sale/{leadsBaseId}/action/view/{actionId}", method = RequestMethod.GET)
+    @RequestMapping(value = {"/sale/leads/{leadsBaseId}/action/view/{actionId}","/sale/opportunity/{leadsBaseId}/action/view/{actionId}"}, method = RequestMethod.GET)
     public String view(Model model, @PathVariable String leadsBaseId, @PathVariable String actionId){
         initDictionary(model, leadsBaseId);
         model.addAttribute("action", actionService.findByIdView(actionId));
@@ -64,7 +64,7 @@ public class ActionController {
     }
 
 
-    @RequestMapping(value = "/sale/{leadsBaseId}/action/edit/{actionId}", method = RequestMethod.GET)
+    @RequestMapping(value = {"/sale/leads/{leadsBaseId}/action/edit/{actionId}", "/sale/opportunity/{leadsBaseId}/action/edit/{actionId}"}, method = RequestMethod.GET)
     public String edit(Model model, @PathVariable String leadsBaseId, @PathVariable String actionId){
         initDictionary(model, leadsBaseId);
         model.addAttribute("action", actionService.findByIdEdit(actionId));
@@ -73,7 +73,13 @@ public class ActionController {
         return "/sale/action";
     }
 
-    @RequestMapping(value = {"/sale/{leadsBaseId}/action/edit/{actionId}", "/sale/{leadsBaseId}/action/new"}, method = RequestMethod.POST)
+    @RequestMapping(value = {
+                        "/sale/leads/{leadsBaseId}/action/edit/{actionId}",
+                        "/sale/leads/{leadsBaseId}/action/new",
+                        "/sale/opportunity/{leadsBaseId}/action/new",
+                        "/sale/opportunity/{leadsBaseId}/action/edit/{actionId}"
+                            },
+            method = RequestMethod.POST)
     public String save(@ModelAttribute Action action, @PathVariable String leadsBaseId, Model model){
         initDictionary(model, leadsBaseId);
         actionService.save(action);

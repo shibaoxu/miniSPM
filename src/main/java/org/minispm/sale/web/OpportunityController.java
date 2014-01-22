@@ -1,8 +1,11 @@
 package org.minispm.sale.web;
 
+import org.apache.commons.lang3.StringUtils;
 import org.minispm.admin.organization.service.DepartmentService;
 import org.minispm.admin.organization.service.OrganizationService;
 import org.minispm.core.web.WebUtils;
+import org.minispm.sale.entity.Leads;
+import org.minispm.sale.entity.Opportunity;
 import org.minispm.sale.service.ClosedReasonService;
 import org.minispm.sale.service.OpportunityService;
 import org.minispm.sale.service.SourceService;
@@ -40,18 +43,51 @@ public class OpportunityController {
     @RequestMapping("index")
     public String index(@RequestParam(value = "page", defaultValue = "1")int pageNumber,
                         @RequestParam(value = "search_condition", defaultValue = "")String condition,
+                        @RequestParam(value = "filter_self", defaultValue = "false") String filterSelf,
+                        @RequestParam(value = "filter_closed", defaultValue = "false") String filterClosed,
                         Model model, ServletRequest request){
+        boolean bFilterSelf = false;
+        boolean bFilterClosed = false;
+        if(StringUtils.equalsIgnoreCase(filterSelf, "true")){
+            bFilterSelf = true;
+        }
+        if(StringUtils.equalsIgnoreCase(filterClosed,"true")){
+            bFilterClosed = true;
+        }
         model.addAttribute("searchParams", WebUtils.transParamsWithPrefix(request, "search_"));
-        model.addAttribute("opportunities", opportunityService.findAll(pageNumber, condition));
+        model.addAttribute("filterParams", WebUtils.transParamsWithPrefix(request, "filter_"));
+        model.addAttribute("opportunities", opportunityService.findAll(pageNumber, condition, bFilterSelf, bFilterClosed));
         return "sale/opportunityList";
     }
 
-    @RequestMapping("view/{id}")
+    @RequestMapping(value = "view/{id}", method = RequestMethod.GET)
     public String view(@PathVariable String id, Model model){
         initDictionary(model);
         model.addAttribute("opportunity", opportunityService.findByIdView(id));
         return "sale/opportunity";
     }
+
+    @RequestMapping(value = "edit/{id}", method = RequestMethod.GET)
+    public String edit(@PathVariable String id, Model model){
+        initDictionary(model);
+        model.addAttribute("opportunity", opportunityService.findByIdEdit(id));
+        return "sale/opportunity";
+    }
+
+    @RequestMapping(value = {"{id}/close" }, method = RequestMethod.GET)
+    public String getCloseInfo(@PathVariable String id, Model model) {
+        Opportunity opportunity = opportunityService.findByIdClose(id);
+        model.addAttribute("leadsBaseId", id);
+        model.addAttribute("leadsBaseName", opportunity.getName());
+        model.addAttribute("closeReasons", closedReasonService.findAll());
+        return "/sale/closeLeads";
+    }
+    @RequestMapping(value = {"{id}/close"}, method = RequestMethod.POST)
+    public String close(@PathVariable String id, @RequestParam("closeReasonId") String closeReasonId, @RequestParam("closeReasonDetail") String closeReasonDetail, ServletRequest request) {
+        opportunityService.close(id, closeReasonId, closeReasonDetail);
+        return "redirect:/sale/opportunity/index";
+    }
+
     @InitBinder
     private void dateBinder(WebDataBinder binder) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");

@@ -3,6 +3,8 @@ package org.minispm.security.entity;
 import org.minispm.core.persistence.IdEntity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * User: shibaoxu
@@ -42,6 +44,4 @@ public class Permission extends IdEntity {
     public void setScope(String scope) {
         this.scope = scope;
     }
-
-
 }

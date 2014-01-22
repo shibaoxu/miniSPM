@@ -15,9 +15,7 @@ import java.util.List;
  * Date: 12-12-16
  * Time: 下午5:33
  */
-enum LeadsStatus{
-    OPENING, CLOSED
-}
+
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(

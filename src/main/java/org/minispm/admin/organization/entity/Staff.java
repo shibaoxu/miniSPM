@@ -11,4 +11,11 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "ila_staff")
 public class Staff extends Unit implements java.io.Serializable {
+    public Staff(){
+        this.setTags("staff");
+    }
+    public Staff(String name){
+        super(name);
+        this.setTags("staff");
+    }
 }

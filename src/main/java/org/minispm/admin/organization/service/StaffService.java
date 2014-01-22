@@ -43,6 +43,15 @@ public class StaffService {
         return staffDao.findAll();
     }
 
+    @Transactional(readOnly = false)
+    public void removeStaffById(String id){
+        staffDao.delete(id);
+    }
+
+    public List<Staff> getUnassigned(String orgTypeId){
+        return staffDao.getUnassignedStaffs(orgTypeId);
+    }
+
     public OrganizationService getOrganizationService() {
         return organizationService;
     }

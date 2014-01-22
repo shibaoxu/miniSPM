@@ -44,26 +44,38 @@ public class LeadsController {
     private UserService userService;
     private DepartmentService departmentService;
     private OrganizationService organizationService;
+
     @RequestMapping("sale/index")
-    public String index(){
+    public String index() {
         return "/sale/index";
     }
 
     @RequestMapping("sale/leads/index")
     public String getLeads(@RequestParam(value = "search_condition", defaultValue = "") String condition,
                            @RequestParam(value = "page", defaultValue = "1") int pageNumber,
-                           Model model, ServletRequest request){
-        Page<Leads> leadses = leadsService.findAll(pageNumber, condition);
+                           @RequestParam(value = "filter_self", defaultValue = "false") String filterSelf,
+                           @RequestParam(value = "filter_closed", defaultValue = "false") String filterClosed,
+                           Model model, ServletRequest request) {
+        boolean bFilterSelf = false;
+        boolean bFilterClosed = false;
+        if(StringUtils.equalsIgnoreCase(filterSelf, "true")){
+            bFilterSelf = true;
+        }
+        if(StringUtils.equalsIgnoreCase(filterClosed,"true")){
+            bFilterClosed = true;
+        }
+        Page<Leads> leadses = leadsService.findAll(pageNumber, condition, bFilterSelf, bFilterClosed);
         model.addAttribute("searchParams", WebUtils.transParamsWithPrefix(request, "search_"));
+        model.addAttribute("filterParams", WebUtils.transParamsWithPrefix(request, "filter_"));
         model.addAttribute("leadses", leadses);
         return "/sale/leadsList";
     }
 
     @RequestMapping(value = "sale/leads/new", method = RequestMethod.GET)
-    public String add(Model model){
+    public String add(Model model) {
         initDictionary(model);
         Leads leads = new Leads();
-        leads.setDepartment((Department)organizationService.getBelongOrg(AccountabilityType.SALE_ORG, SecurityUtils.getCurrentShiroUser().getStaff().getId()));
+        leads.setDepartment((Department) organizationService.getBelongOrg(SecurityUtils.getCurrentShiroUser().getStaff().getId(), AccountabilityType.SALE_ORG));
         User owner = new User();
         owner.setId(SecurityUtils.getCurrentShiroUser().getId());
         leads.setOwner(owner);
@@ -73,7 +85,7 @@ public class LeadsController {
     }
 
     @RequestMapping("sale/leads/view/{id}")
-    public String view(@PathVariable String id, Model model){
+    public String view(@PathVariable String id, Model model) {
         initDictionary(model);
         Leads leads = leadsService.findByIdView(id);
         model.addAttribute("leads", leads);
@@ -82,22 +94,29 @@ public class LeadsController {
     }
 
     @RequestMapping(value = "sale/leads/edit/{id}", method = RequestMethod.GET)
-    public String edit(@PathVariable String id, Model model){
+    public String edit(@PathVariable String id, Model model) {
         initDictionary(model);
         Leads leads = leadsService.findByIdEdit(id);
         model.addAttribute("leads", leads);
         model.addAttribute("operation", "edit");
         return "/sale/leads";
     }
-    @RequestMapping(value = {"sale/leads/new", "sale/leads/edit/{id}"}, method = RequestMethod.POST)
-    public String save(@ModelAttribute Leads leads){
+
+    @RequestMapping(value = {"sale/leads/new"}, method = RequestMethod.POST)
+    public String save(@ModelAttribute Leads leads) {
         leadsService.save(leads);
         return "redirect:/sale/leads/index";
     }
 
-    @RequestMapping(value = {"sale/leads/convertToOpportunity/{leadsId}"}, method = RequestMethod.GET)
-    public String convertToOpportunity(@PathVariable("leadsId") String leadsId, Model model){
-        Leads leads = leadsService.findByIdView(leadsId);
+    @RequestMapping(value = {"sale/leads/edit/{id}"}, method = RequestMethod.POST)
+    public String update(@ModelAttribute Leads leads) {
+        leadsService.update(leads);
+        return "redirect:/sale/leads/index";
+    }
+
+    @RequestMapping(value = {"sale/leads/{leadsId}/convertToOpportunity"}, method = RequestMethod.GET)
+    public String convertToOpportunity(@PathVariable("leadsId") String leadsId, Model model) {
+        Leads leads = leadsService.findByIdConvert(leadsId);
         model.addAttribute("leads", leads);
         model.addAttribute("id", leads.getId());
         model.addAttribute("lowAmount", leads.getLowAmount());
@@ -107,39 +126,29 @@ public class LeadsController {
         return "/sale/convertToOpportunity";
     }
 
-    @RequestMapping(value = {"sale/leads/convertToOpportunity/{leadsId}"}, method = RequestMethod.POST)
+    @RequestMapping(value = {"sale/leads/{leadsId}/convertToOpportunity"}, method = RequestMethod.POST)
     public String convertToOpportunity(@RequestParam("leadsId") String leadsId,
-                                       @RequestParam("lowAmount")double lowAmount,
-                                       @RequestParam("highAmount")double highAmount,
-                                       @RequestParam("planDealDate") Date planDealDate){
+                                       @RequestParam("lowAmount") double lowAmount,
+                                       @RequestParam("highAmount") double highAmount,
+                                       @RequestParam("planDealDate") Date planDealDate) {
+        leadsService.findByIdConvert(leadsId);
         leadsService.convertToOpportunity(leadsId, planDealDate, lowAmount, highAmount);
         return "redirect:/sale/leads/index";
     }
 
-    @RequestMapping(value = {"sale/leads/close/{leadsBaseId}","sale/opportunity/close/{leadsBaseId}"}, method = RequestMethod.GET)
-    public String closeLeadsBase(@PathVariable String leadsBaseId, Model model, ServletRequest request){
-        LeadsBase leadsBase = leadsBaseService.findById(leadsBaseId);
-        model.addAttribute("leadsBaseId", leadsBaseId);
-        model.addAttribute("leadsBaseName", leadsBase.getName());
+    @RequestMapping(value = {"sale/leads/{id}/close" }, method = RequestMethod.GET)
+    public String getCloseInfo(@PathVariable String id, Model model) {
+        Leads leads = leadsService.findByIdClose(id);
+        model.addAttribute("leadsBaseId", id);
+        model.addAttribute("leadsBaseName", leads.getName());
         model.addAttribute("closeReasons", closedReasonService.findAll());
-        String url = ((HttpServletRequest)request).getRequestURI();
-        if(StringUtils.contains(url, "leads")){
-            model.addAttribute("url", "leads");
-        }else{
-            model.addAttribute("url", "opportunity");
-        }
         return "/sale/closeLeads";
     }
 
-    @RequestMapping(value = {"sale/leads/close/{leadsBaseId}","sale/opportunity/close/{leadsBaseId}"}, method = RequestMethod.POST)
-    public String closeLeadsBase(@PathVariable String leadsBaseId, @RequestParam("closeReasonId") String closeReasonId, @RequestParam("closeReasonDetail") String closeReasonDetail, ServletRequest request){
-        leadsBaseService.close(leadsBaseId, closeReasonId, closeReasonDetail);
-        String url = ((HttpServletRequest)request).getRequestURI();
-        if(StringUtils.contains(url, "leads")){
-            return "redirect:/sale/leads/index";
-        }else{
-            return "redirect:/sale/opportunity/index";
-        }
+    @RequestMapping(value = {"sale/leads/{leadsBaseId}/close"}, method = RequestMethod.POST)
+    public String close(@PathVariable String leadsBaseId, @RequestParam("closeReasonId") String closeReasonId, @RequestParam("closeReasonDetail") String closeReasonDetail, ServletRequest request) {
+        leadsService.close(leadsBaseId, closeReasonId, closeReasonDetail);
+        return "redirect:/sale/leads/index";
     }
 
     @InitBinder
@@ -150,13 +159,14 @@ public class LeadsController {
     }
 
     @ExceptionHandler
-    public ModelAndView exceptionHandler(Exception ex){
+    public ModelAndView exceptionHandler(Exception ex) {
         ModelAndView mv = new ModelAndView();
         mv.getModel().put("message", ex.getMessage());
         mv.setViewName("exception");
         return mv;
     }
-    private void initDictionary(Model model){
+
+    private void initDictionary(Model model) {
         model.addAttribute("sources", sourceService.findAll());
         model.addAttribute("closedReasons", closedReasonService.findAll());
         model.addAttribute("users", userService.findAll());

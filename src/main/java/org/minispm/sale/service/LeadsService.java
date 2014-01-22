@@ -1,13 +1,13 @@
 package org.minispm.sale.service;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.minispm.sale.entity.Leads;
 import org.minispm.core.utils.DateUtils;
 import org.minispm.sale.dao.ActionDao;
 import org.minispm.sale.dao.LeadsDao;
 import org.minispm.sale.entity.Action;
+import org.minispm.sale.entity.LeadsStatus;
 import org.minispm.security.entity.User;
 import org.minispm.security.service.ShiroDbRealm;
 import org.minispm.security.utils.AuthorizationException;
@@ -36,48 +36,56 @@ import java.util.Date;
 public class LeadsService extends LeadsBaseService {
     private LeadsDao leadsDao;
     private ActionDao actionDao;
-    private SalePermissionFilterService salePermissionFilterService;
+    private SpecificationBuilder specificationBuilder;
 
-    @RequiresPermissions(logical = Logical.OR, value = {"leads:list:SELF", "leads:list:SELFANDLOW", "leads:list:BELONG", "leads:list:BELONGANDLOW", "leads:list:WHOLE"})
-    public Page<Leads> findAll(int pageNumber, String condition) {
-        return leadsDao.findAll(buildListSpecification(condition), buildPageRequest(pageNumber));
+    @RequiresPermissions("leads:list:*")
+    public Page<Leads> findAll(int pageNumber, String condition, boolean filterSelf, boolean filterClosed) {
+//        return leadsDao.findAll(specificationBuilder.<Leads>build("leads", "list","name", condition), buildPageRequest(pageNumber));
+        return leadsDao.findAll(this.packagingSpecification(condition, filterSelf, filterClosed), buildPageRequest(pageNumber));
     }
 
-    @RequiresPermissions(logical = Logical.OR, value = {"leads:view:SELF", "leads:view:SELFANDLOW", "leads:view:BELONG", "leads:view:BELONGANDLOW", "leads:view:WHOLE"})
+    @RequiresPermissions("leads:view:*")
     public Leads findByIdView(final String id) {
-        Leads Leads = leadsDao.findOne(
-                new Specification<Leads>() {
-                    @Override
-                    public Predicate toPredicate(Root<Leads> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
-                        return cb.and(cb.equal(root.get("id"), id), salePermissionFilterService.viewLeads().toPredicate(root, query, cb));
-                    }
-                });
-        if(null == Leads){
-            throw new AuthorizationException("你没有权限编辑该销售线索或者你所指定的销售线索不存在!");
+        Leads leads = leadsDao.findOne(specificationBuilder.<Leads>build("leads","view",id));
+        if(null == leads){
+            throw new AuthorizationException("你没有权限查看该销售线索，或者你所指定的销售线索不存在!");
         }else {
-            return Leads;
+            return leads;
         }
     }
 
-    @RequiresPermissions(logical = Logical.OR, value = {"leads:edit:SELF", "leads:edit:SELFANDLOW", "leads:edit:BELONG", "leads:edit:BELONGANDLOW", "leads:edit:WHOLE"})
+    @RequiresPermissions("leads:edit:*")
     public Leads findByIdEdit(final String id) {
-        Leads Leads = leadsDao.findOne(
-                new Specification<Leads>() {
-                    @Override
-                    public Predicate toPredicate(Root<Leads> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
-                        return cb.and(cb.equal(root.get("id"), id), salePermissionFilterService.editLeads().toPredicate(root, query, cb));
-                    }
-                });
-        if(null == Leads){
-            throw new AuthorizationException("你没有权限编辑该销售线索或者你所指定的销售线索不存在!");
+        Leads leads = leadsDao.findOne(specificationBuilder.<Leads>build("leads","edit",id));
+        if(null == leads){
+            throw new AuthorizationException("你没有权限编辑该销售线索，或者你所指定的销售线索不存在!");
         }else{
-            return Leads;
+            return leads;
         }
+    }
 
+    @RequiresPermissions("leads:close:*")
+    public Leads findByIdClose(String id){
+        Leads leads = leadsDao.findOne(specificationBuilder.<Leads>build("leads","close",id));
+        if(null == leads){
+            throw new AuthorizationException("你没有权限关闭该销售线索，或者你所指定的销售线索不存在!");
+        }else{
+            return leads;
+        }
+    }
+
+    @RequiresPermissions("leads:convertToOpportunity:*")
+    public Leads findByIdConvert(String id){
+        Leads leads = leadsDao.findOne(specificationBuilder.<Leads>build("leads","convertToOpportunity",id));
+        if(null == leads){
+            throw new AuthorizationException("你没有权限把该销售线索转化成销售机会，或者你所指定的销售线索不存在!");
+        }else{
+            return leads;
+        }
     }
 
     @Transactional(readOnly = false)
-    @RequiresPermissions("Leads:create:self")
+    @RequiresPermissions("Leads:create:*")
     public Leads save(Leads Leads) {
         if (StringUtils.isBlank(Leads.getId())) {
             addCreateAction(Leads);
@@ -86,19 +94,77 @@ public class LeadsService extends LeadsBaseService {
     }
 
     @Transactional(readOnly = false)
+    @RequiresPermissions("leads:edit:*")
     public Leads update(Leads Leads) {
         findByIdEdit(Leads.getId());
         return leadsDao.save(Leads);
     }
 
 
-    @RequiresPermissions({"leads:convertToOpportunity:WHOLE"})
+    @RequiresPermissions({"leads:convertToOpportunity:*"})
     @Transactional(readOnly = false)
     public void convertToOpportunity(String id, Date planDealDate, double lowAmount, double highAmount){
+        findByIdConvert(id);
         addConvertMsg(id);
         leadsDao.convertToOpportunity(id, planDealDate, lowAmount, highAmount);
     }
 
+    @RequiresPermissions("leads:close:*")
+    @Override
+    @Transactional(readOnly = false)
+    public void close(String leadsBaseId, String closedReasonId, String closedDetail) {
+        if(null == leadsDao.findOne(specificationBuilder.<Leads>build("leads","close",leadsBaseId))){
+           throw new AuthorizationException("你没有权限关闭该销售线索，或者你所指定的销售线索不存在!");
+        }
+        super.close(leadsBaseId, closedReasonId, closedDetail);
+    }
+
+    private Specification<Leads> buildFilterSpecification(final boolean filterSelf, final boolean filterClosed){
+        if(!filterSelf && filterClosed)
+            return null;
+
+        return new Specification<Leads>() {
+            @Override
+            public Predicate toPredicate(Root<Leads> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+                Predicate pSelf = null;
+                Predicate pClosed = null;
+                if(filterSelf){
+                    String userId = SecurityUtils.getCurrentShiroUser().getId();
+                    pSelf = cb.equal(root.get("owner").get("id"), userId);
+                }
+                if(!filterClosed){
+                    pClosed = cb.equal(root.get("status"), LeadsStatus.OPENING);
+                }
+                if(pSelf != null &&  pClosed != null){
+                    return cb.and(pSelf, pClosed);
+                }
+                if(pSelf != null && pClosed == null){
+                    return pSelf;
+                }
+                if(pSelf == null && pClosed != null){
+                    return pClosed;
+                }
+                return null;
+            }
+        };
+    }
+
+    private Specification<Leads> packagingSpecification(final String condition, final boolean filterSelf, final boolean filterClosed){
+
+        return new Specification<Leads>() {
+            @Override
+            public Predicate toPredicate(Root<Leads> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+                Specification<Leads> authorizeSpecification = specificationBuilder.<Leads>build("leads", "list","name", condition);
+                Specification<Leads> filterSpecification = buildFilterSpecification(filterSelf, filterClosed);
+                if(filterSpecification == null){
+                    return authorizeSpecification.toPredicate(root, query, cb);
+                }else{
+                    return cb.and(authorizeSpecification.toPredicate(root,query,cb), filterSpecification.toPredicate(root, query,cb));
+                }
+            }
+        };
+//        return authorizeSpecification;
+    }
     private void addCreateAction(Leads leads){
         Action action = new Action(Action.CREATED);
         ShiroDbRealm.ShiroUser shiroUser = SecurityUtils.getCurrentShiroUser();
@@ -124,18 +190,6 @@ public class LeadsService extends LeadsBaseService {
         leadsDao.save(leads);
     }
 
-    private Specification<Leads> buildListSpecification(final String condition){
-        final Specification<Leads> permissionSpecification = salePermissionFilterService.listLeads();
-        return new Specification<Leads>() {
-            @Override
-            public Predicate toPredicate(Root<Leads> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
-                String likePattern = "%" + condition + "%";
-                Predicate likePredicate = cb.or(cb.like(root.<String>get("name"), likePattern), cb.like(root.<String>get("des"), likePattern));
-                return cb.and(likePredicate, permissionSpecification.toPredicate(root, query, cb));
-            }
-        };
-    }
-
     private PageRequest buildPageRequest(int pageNumber){
         return new PageRequest(pageNumber - 1, 10 , new Sort(Sort.Direction.DESC, "lastModifiedDate"));
     }
@@ -146,12 +200,12 @@ public class LeadsService extends LeadsBaseService {
     }
 
     @Autowired
-    public void setSalePermissionFilterService(SalePermissionFilterService salePermissionFilterService) {
-        this.salePermissionFilterService = salePermissionFilterService;
+    public void setActionDao(ActionDao actionDao) {
+        this.actionDao = actionDao;
     }
 
     @Autowired
-    public void setActionDao(ActionDao actionDao) {
-        this.actionDao = actionDao;
+    public void setSpecificationBuilder(SpecificationBuilder specificationBuilder) {
+        this.specificationBuilder = specificationBuilder;
     }
 }

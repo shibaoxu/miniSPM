@@ -3,8 +3,10 @@ package org.minispm.sale.service;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.minispm.sale.dao.OpportunityDao;
+import org.minispm.sale.entity.LeadsStatus;
 import org.minispm.sale.entity.Opportunity;
 import org.minispm.security.utils.AuthorizationException;
+import org.minispm.security.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -27,26 +29,50 @@ import javax.persistence.criteria.Root;
  */
 @Service
 @Transactional(readOnly = true)
-public class OpportunityService {
+public class OpportunityService extends LeadsBaseService {
     private OpportunityDao opportunityDao;
     private SalePermissionFilterService salePermissionFilterService;
+    private SpecificationBuilder specificationBuilder;
 
-    public Page<Opportunity> findAll(int pageNumber, String condition) {
-        return opportunityDao.findAll(buildListSpecification(condition), buildPageRequest(pageNumber));
+    @RequiresPermissions("opportunity:list:*")
+    public Page<Opportunity> findAll(int pageNumber, String condition, boolean filterSelf, boolean filterClosed) {
+//        return opportunityDao.findAll(specificationBuilder.<Opportunity>build("opportunity","list","name",condition), buildPageRequest(pageNumber));
+        return opportunityDao.findAll(packagingSpecification(condition, filterSelf, filterClosed), buildPageRequest(pageNumber));
+//        return leadsDao.findAll(this.packagingSpecification(condition, filterSelf, filterClosed), buildPageRequest(pageNumber));
     }
 
-    @RequiresPermissions(logical = Logical.OR, value = {"opportunity:list:SELF", "opportunity:list:SELFANDLOW", "opportunity:list:BELONG", "opportunity:list:BELONGANDLOW", "opportunity:list:WHOLE"})
+    @RequiresPermissions("opportunity:view:*")
     public Opportunity findByIdView(final String id) {
-        Opportunity opportunity =  opportunityDao.findOne(
-            new Specification<Opportunity>() {
-                @Override
-                public Predicate toPredicate(Root<Opportunity> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
-                    return cb.and(cb.equal(root.get("id"), id), salePermissionFilterService.viewOpportunity().toPredicate(root, query,cb));  //To change body of implemented methods use File | Settings | File Templates.
-                }
-            }
-        );
+        Opportunity opportunity =  opportunityDao.findOne(specificationBuilder.<Opportunity>build("opportunity","view",id));
         if (null == opportunity){
-            throw new AuthorizationException("你没有权限编辑该销售机会或者你所指定的销售机会不存在!");
+            throw new AuthorizationException("你没有权限查看该销售机会,或者你所指定的销售机会不存在!");
+        }else{
+            return opportunity;
+        }
+    }
+    @RequiresPermissions("opportunity:close:*")
+    public Opportunity findByIdClose(String id){
+        Opportunity opportunity = opportunityDao.findOne(specificationBuilder.<Opportunity>build("opportunity","close",id));
+        if(null == opportunity){
+            throw new AuthorizationException("你没有权限关闭该销售线索，或者你所指定的销售线索不存在!");
+        }else{
+            return opportunity;
+        }
+    }
+    @RequiresPermissions("opportunity:close:*")
+    @Override
+    @Transactional(readOnly = false)
+    public void close(String leadsBaseId, String closedReasonId, String closedDetail) {
+        if(null == opportunityDao.findOne(specificationBuilder.<Opportunity>build("opportunity","close",leadsBaseId))){
+            throw new AuthorizationException("你没有权限关闭该销售机会，或者你所指定的销售机会不存在!");
+        }
+        super.close(leadsBaseId, closedReasonId, closedDetail);
+    }
+
+    public Opportunity findByIdEdit(String id){
+        Opportunity opportunity =  opportunityDao.findOne(specificationBuilder.<Opportunity>build("opportunity","edit",id));
+        if (null == opportunity){
+            throw new AuthorizationException("你没有权限查看该销售机会,或者你所指定的销售机会不存在!");
         }else{
             return opportunity;
         }
@@ -56,18 +82,52 @@ public class OpportunityService {
         return new PageRequest(pageNumber - 1, 10, new Sort(Sort.Direction.DESC, "lastModifiedDate"));
     }
 
-    private Specification<Opportunity> buildListSpecification(final String condition) {
-        final Specification<Opportunity> listSpecification = salePermissionFilterService.listOpportunity();
+    private Specification<Opportunity> buildFilterSpecification(final boolean filterSelf, final boolean filterClosed){
+        if(!filterSelf && filterClosed)
+            return null;
+
         return new Specification<Opportunity>() {
             @Override
             public Predicate toPredicate(Root<Opportunity> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
-                String likePattern = "%" + condition + "%";
-                Predicate likePredicate = cb.or(cb.like(root.<String>get("name"), likePattern), cb.like(root.<String>get("des"), likePattern));
-                return cb.and(likePredicate, listSpecification.toPredicate(root, query, cb));
+                Predicate pSelf = null;
+                Predicate pClosed = null;
+                if(filterSelf){
+                    String userId = SecurityUtils.getCurrentShiroUser().getId();
+                    pSelf = cb.equal(root.get("owner").get("id"), userId);
+                }
+                if(!filterClosed){
+                    pClosed = cb.equal(root.get("status"), LeadsStatus.OPENING);
+                }
+                if(pSelf != null &&  pClosed != null){
+                    return cb.and(pSelf, pClosed);
+                }
+                if(pSelf != null && pClosed == null){
+                    return pSelf;
+                }
+                if(pSelf == null && pClosed != null){
+                    return pClosed;
+                }
+                return null;
             }
         };
     }
 
+    private Specification<Opportunity> packagingSpecification(final String condition, final boolean filterSelf, final boolean filterClosed){
+
+        return new Specification<Opportunity>() {
+            @Override
+            public Predicate toPredicate(Root<Opportunity> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+                Specification<Opportunity> authorizeSpecification = specificationBuilder.<Opportunity>build("opportunity", "list","name", condition);
+                Specification<Opportunity> filterSpecification = buildFilterSpecification(filterSelf, filterClosed);
+                if(filterSpecification == null){
+                    return authorizeSpecification.toPredicate(root, query, cb);
+                }else{
+                    return cb.and(authorizeSpecification.toPredicate(root,query,cb), filterSpecification.toPredicate(root, query,cb));
+                }
+            }
+        };
+//        return authorizeSpecification;
+    }
     @Autowired
     public void setOpportunityDao(OpportunityDao opportunityDao) {
         this.opportunityDao = opportunityDao;
@@ -76,5 +136,10 @@ public class OpportunityService {
     @Autowired
     public void setSalePermissionFilterService(SalePermissionFilterService salePermissionFilterService) {
         this.salePermissionFilterService = salePermissionFilterService;
+    }
+
+    @Autowired
+    public void setSpecificationBuilder(SpecificationBuilder specificationBuilder) {
+        this.specificationBuilder = specificationBuilder;
     }
 }

@@ -11,7 +11,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "ila_company")
 public class Company extends Unit {
-    public Company(){}
+    public Company(){
+    }
     public Company(String name){
         super(name);
     }

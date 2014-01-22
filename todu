@@ -80,3 +80,9 @@ end//
 call leads_update;
 
 insert into ila_closed_reason(id, created_date, last_modified_date, name) values(6, '2012-12-15 00:00:00','2012-12-15 00:00:00','成交');
+/*************/
+ALTER TABLE `ila`.`ila_staff` ADD COLUMN `tags` VARCHAR(100) NULL DEFAULT ''  AFTER `NAME` ;
+ALTER TABLE `ila`.`ila_department` ADD COLUMN `tags` VARCHAR(100) NULL DEFAULT ''  AFTER `NAME` ;
+ALTER TABLE `ila`.`ila_company` ADD COLUMN `tags` VARCHAR(100) NULL DEFAULT ''  AFTER `NAME` ;
+
+insert into ila_operation (id, created_date, last_modified_date, name, brief, domain_id) values('40','2012-12-15 00:00:00','2012-12-15 00:00:00','edit','修改','4');

@@ -15,4 +15,5 @@ import java.util.List;
  */
 public interface PermissionDao extends JpaRepository<Permission, String> {
     List<Permission> findByOperationDomainId(String id);
+    List<Permission> findByOperationIdAndScope(String operationId, String scope);
 }

@@ -5,7 +5,7 @@ import org.minispm.admin.organization.entity.Department;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+import java.lang.Exception;
 import java.util.List;
 
 @Service
@@ -30,7 +30,14 @@ public class DepartmentService {
 
     @Transactional(readOnly = false)
     public void removeById(String id) {
-        departmentDao.delete(id);
+        try {
+            departmentDao.delete(id);
+        }finally {
+            throw new RuntimeException("组织已经被使用，不能删除。");
+        }
+    }
+    public List<Department> getUnassignedDepartments(String org_type){
+        return departmentDao.getUnassignedDepartments(org_type);
     }
 
     public DepartmentDao getDepartmentDao() {

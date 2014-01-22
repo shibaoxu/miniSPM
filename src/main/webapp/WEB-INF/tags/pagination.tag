@@ -24,8 +24,8 @@ request.setAttribute("totalElements", totalElements);
 	<ul class="pagination pagination-sm">
         <li class="disabled"><a href="#">共 ${totalPages} 页 , 第 ${current} 页, 共 ${page.totalElements} 条记录</a></li>
 		 <% if (page.hasPreviousPage()){%>
-               	<li><a href="?page=1&sortType=${sortType}&${searchParams}">&lt;&lt;</a></li>
-                <li><a href="?page=${current-1}&sortType=${sortType}&${searchParams}">&lt;</a></li>
+               	<li><a href="?page=1&sortType=${sortType}&${searchParams}&${filterParams}">&lt;&lt;</a></li>
+                <li><a href="?page=${current-1}&sortType=${sortType}&${searchParams}&${filterParams}">&lt;</a></li>
          <%}else{%>
                 <li class="disabled"><a href="#">&lt;&lt;</a></li>
                 <li class="disabled"><a href="#">&lt;</a></li>
@@ -34,17 +34,17 @@ request.setAttribute("totalElements", totalElements);
 		<c:forEach var="i" begin="${begin}" end="${end}">
             <c:choose>
                 <c:when test="${i == current}">
-                    <li class="active"><a href="?page=${i}&sortType=${sortType}&${searchParams}">${i}</a></li>
+                    <li class="active"><a href="?page=${i}&sortType=${sortType}&${searchParams}&${filterParams}">${i}</a></li>
                 </c:when>
                 <c:otherwise>
-                    <li><a href="?page=${i}&sortType=${sortType}&${searchParams}">${i}</a></li>
+                    <li><a href="?page=${i}&sortType=${sortType}&${searchParams}&${filterParams}">${i}</a></li>
                 </c:otherwise>
             </c:choose>
         </c:forEach>
 	  
 	  	 <% if (page.hasNextPage()){%>
-               	<li><a href="?page=${current+1}&sortType=${sortType}&${searchParams}">&gt;</a></li>
-                <li><a href="?page=${page.totalPages}&sortType=${sortType}&${searchParams}">&gt;&gt;</a></li>
+               	<li><a href="?page=${current+1}&sortType=${sortType}&${searchParams}&${filterParams}">&gt;</a></li>
+                <li><a href="?page=${page.totalPages}&sortType=${sortType}&${searchParams}&${filterParams}">&gt;&gt;</a></li>
          <%}else{%>
                 <li class="disabled"><a href="#">&gt;</a></li>
                 <li class="disabled"><a href="#">&gt;&gt;</a></li>

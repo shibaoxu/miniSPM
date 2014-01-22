@@ -7,10 +7,16 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="ctx" value="${pageContext.request.contextPath}"/>
+<script src="${ctx}/static/require/require.js" type="text/javascript"></script>
+<script src="${ctx}/js/common.js"></script>
+
 
 <div class="navbar navbar-default" role="navigation">
     <div class="navbar-header">
         <a class="navbar-brand" href="#">miniSPM</a>
+        <%--<img src="${ctx}/static/images/logo.png" class="navbar-brand" >--%>
     </div>
     <div class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
