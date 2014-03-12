@@ -63,8 +63,8 @@
 
         <!-- 嵌入式内存中数据库 -->
         <jdbc:embedded-database id="dataSource" type="H2">
-            <jdbc:script location="classpath:sql/h2/schema.sql" />
-            <jdbc:script location="classpath:sql/h2/import-data.sql" />
+            <jdbc:script location="classpath:sql/h2/h2.sql" />
+            <!--<jdbc:script location="classpath:sql/h2/import-data.sql" />-->
         </jdbc:embedded-database>
     </beans>
 

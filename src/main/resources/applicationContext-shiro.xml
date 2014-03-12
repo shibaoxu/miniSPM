@@ -27,7 +27,7 @@
             <value>
                 /login = authc
                 /logout = logout
-                /security/user/chgpwd = authc
+                /security/user/chgpwd = user
                 /security/** = roles[administrator]
                 /static/** = anon
                 /** = user

@@ -7,12 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ActiveProfiles;
 
 /**
- * Created with IntelliJ IDEA.
- * User: shibaoxu
- * Date: 13-3-17
- * Time: 下午2:31
- * To change this template use File | Settings | File Templates.
- */
+* Created with IntelliJ IDEA.
+* User: shibaoxu
+* Date: 13-3-17
+* Time: 下午2:31
+* To change this template use File | Settings | File Templates.
+*/
 @ActiveProfiles("dev")
 public class LeadsTest extends SpringTransactionalTestCase {
 
@@ -21,7 +21,5 @@ public class LeadsTest extends SpringTransactionalTestCase {
 
     @Test
     public void testConvert(){
-
-
     }
 }

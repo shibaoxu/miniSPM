@@ -10,10 +10,10 @@ import org.springframework.test.context.ActiveProfiles;
 import java.util.List;
 
 /**
- * User: shibaoxu
- * Date: 13-1-19
- * Time: 下午6:51
- */
+* User: shibaoxu
+* Date: 13-1-19
+* Time: 下午6:51
+*/
 @ActiveProfiles("dev")
 public class SecurityTest extends SpringTransactionalTestCase {
     @Autowired
@@ -21,8 +21,8 @@ public class SecurityTest extends SpringTransactionalTestCase {
 //
 @org.junit.Test
     public void testUserAndRole(){
-        User user = userService.findByJobNumber("12040");
-        List<Role> roles = user.getRoles();
-        org.junit.Assert.assertEquals(roles.size(), 1);
+//        User user = userService.findByJobNumber("12040");
+//        List<Role> roles = user.getRoles();
+//        org.junit.Assert.assertEquals(roles.size(), 1);
     }
 }

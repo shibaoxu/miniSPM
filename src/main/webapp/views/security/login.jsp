@@ -33,10 +33,10 @@
             </div>
         </div>
 
-        <label class="checkbox">
-            <input type="checkbox" name="rememberMe"/>
-            记住我
-        </label>
+        <%--<label class="checkbox">--%>
+            <%--<input type="checkbox" name="rememberMe"/>--%>
+            <%--记住我--%>
+        <%--</label>--%>
         <input type="submit" class="btn btn-large btn-primary" value="登录">
     </form>
 </div>

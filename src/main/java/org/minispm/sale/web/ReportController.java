@@ -68,6 +68,12 @@ public class ReportController {
         return reportService.getClosedLeads();
     }
 
+//    @RequestMapping(value = "/sale/report/week/{startDate}/{endDate}/html")
+//    public String getWeekReport(){
+//        List newLeads = reportService.getNewLeads();
+//        String
+//
+//    }
 
     @Autowired
     public void setReportService(ReportService reportService) {
