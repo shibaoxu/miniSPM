@@ -240,18 +240,6 @@
             <version>1.1.1</version>
         </dependency>
         <!-- LOGGING end -->
-        <dependency>
-            <groupId>com.itextpdf</groupId>
-            <artifactId>itextpdf</artifactId>
-            <version>5.2.0</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.itextpdf</groupId>
-            <artifactId>itext-asian</artifactId>
-            <version>5.2.0</version>
-            <scope>compile</scope>
-        </dependency>
 
         <!-- google java library -->
         <dependency>
@@ -274,22 +262,6 @@
             <scope>runtime</scope>
         </dependency>
         <!-- WEB end -->
-
-        <!-- jetty -->
-        <dependency>
-            <groupId>org.eclipse.jetty.aggregate</groupId>
-            <artifactId>jetty-webapp</artifactId>
-            <version>${jetty.version}</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-jsp</artifactId>
-            <version>${jetty.version}</version>
-            <!--<scope>test</scope>-->
-        </dependency>
-
         <!-- h2 -->
         <dependency>
             <groupId>com.h2database</groupId>
