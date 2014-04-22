@@ -27,7 +27,7 @@ define(['jquery'], function($){
     $('#cDialog').on('show.bs.modal', controller.show );
 
     $('#customer_dialog_search').click(function () {
-        $.getJSON('${ctx}/sale/customer/index?search_LIKE_name=' + $('#customer_dialog_condition').val(), function (data) {
+        $.getJSON(appContext + '/sale/customer/index?search_LIKE_name=' + $('#customer_dialog_condition').val(), function (data) {
             $('#customer_list option').each(function () {
                 $(this).remove();
             });

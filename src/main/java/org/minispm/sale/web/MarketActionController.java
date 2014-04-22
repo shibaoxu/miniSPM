@@ -111,7 +111,8 @@ public class MarketActionController {
     }
 
     private Department getBelongDepartment(){
-        return  (Department)organizationService.getBelongOrg(SecurityUtils.getCurrentShiroUser().getStaff().getId(),AccountabilityType.SALE_ORG);
+        User user = userService.findByJobNumber(SecurityUtils.getCurrentShiroUser().getLoginName());
+        return  (Department)organizationService.getBelongOrg(user.getStaff().getId(),AccountabilityType.SALE_ORG);
     }
 
     public MarketActionService getMarketActionService() {

@@ -1,14 +1,19 @@
 package org.minispm.admin.organization.web;
 
+import org.apache.commons.lang3.StringUtils;
 import org.minispm.admin.organization.entity.Company;
 import org.minispm.admin.organization.service.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -17,66 +22,52 @@ import java.util.List;
  * Time: 下午4:36
  */
 @Controller
-@RequestMapping("/admin/org/company")
+@RequestMapping("/admin/companies")
 public class CompanyController {
+    @Autowired
     private CompanyService companyService;
 
-    @RequestMapping("/index")
-    public String index(Model model) {
+    @RequestMapping()
+    public String getAll(Model model) {
         List<Company> companies = companyService.findAll();
         model.addAttribute("companies", companies);
-        return "admin/org/companyList";
-    }
-
-    @RequestMapping(value = "/new", method = RequestMethod.GET)
-    public String add(Model model){
-        Company company = new Company();
-        model.addAttribute("company", company);
-        model.addAttribute("updatable", true);
-        return "admin/org/company";
+        return "admin/companyList";
     }
 
     @RequestMapping(value = "/new", method = RequestMethod.POST)
-    public String add(Company company){
+    public String create(@Validated @ModelAttribute Company company, BindingResult result) {
+        if (result.hasErrors()){
+
+            return "/admin/company";
+        }
         companyService.save(company);
-        return "redirect:index";
+        return "redirect:/admin/companies";
     }
-
-    @RequestMapping("/view/{id}")
-    public String view(@PathVariable String id, Model model) {
-        return showCompany(id, model, false);
-    }
-
-    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
-    public String edit(@PathVariable String id, Model model) {
-        return showCompany(id, model, true);
-    }
-
-    @RequestMapping(value = "edit/{id}", method = RequestMethod.POST)
-    public String update(Company company){
+    @RequestMapping(value = "/{id}/edit", method = RequestMethod.PUT)
+    public String update(@Valid Company company, BindingResult result) {
+        if(result.hasErrors()){
+            return "/admin/company";
+        }
         companyService.save(company);
-        return "redirect:../index";
+        return "redirect:/admin/companies";
     }
 
-    @RequestMapping(value = "del/{id}")
-    public String delete(@PathVariable String id){
+    @RequestMapping(value = "/new", method = RequestMethod.GET)
+    public String initCreationForm(Model model) {
+        model.addAttribute("company", new Company());
+        return "admin/company";
+    }
+
+    @RequestMapping(value = "/{id}/edit", method = RequestMethod.GET)
+    public String initUpdateForm(@PathVariable String id, Model model) {
+        model.addAttribute("company", companyService.findById(id));
+        return "admin/company";
+    }
+
+
+    @RequestMapping(value = "/{id}/delete", method = RequestMethod.DELETE)
+    public String delete(@PathVariable String id) {
         companyService.removeById(id);
-        return "redirect:../index";
-    }
-
-    private String showCompany(String id, Model model, boolean updatable){
-        Company company = companyService.findById(id);
-        model.addAttribute("company", company);
-        model.addAttribute("updatable", updatable);
-        return "admin/org/company";
-    }
-
-    public CompanyService getCompanyService() {
-        return companyService;
-    }
-
-    @Autowired
-    public void setCompanyService(CompanyService companyService) {
-        this.companyService = companyService;
+        return "redirect:/admin/companies";
     }
 }

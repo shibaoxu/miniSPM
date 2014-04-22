@@ -1,0 +1,121 @@
+
+ol.breadcrumb {
+    margin-bottom: 8px;
+}
+
+ul.pagination {
+    margin: 0 0;
+}
+
+td a.context-menu {
+    padding: 0px;
+}
+
+#topbar {
+    background-color: #563D7C;
+    border-color: #463265;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1);
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.15);
+}
+
+#topbar .navbar-brand {
+    color: #FFFFFF;
+}
+
+#topbar .navbar-nav > li > a {
+    color: #CDBFE3;
+}
+
+#topbar .navbar-nav > .open > a, #topbar .navbar-nav > .active > a, #topbar .navbar-nav > .active > a:hover {
+    background-color: #463265;
+    color: #FFFFFF;
+}
+
+#content.container {
+    margin-top: 60px;
+}
+
+.side-nav {
+    background-color: #F7F5FA;
+    border-radius: 5px;
+    margin-bottom: 30px;
+    padding-bottom: 10px;
+    text-shadow: 0 1px 0 #FFFFFF;
+}
+
+.side-bar .nav > .active > a, .side-bar .nav > .active:hover > a, .side-bar .nav > .active:focus > a {
+    background-color: rgba(0, 0, 0, 0);
+    color: #563D7C;
+    font-weight: bold;
+}
+
+.side-bar .nav > li > a {
+    color: #716B7A;
+    display: block;
+    padding: 5px 20px;
+}
+
+.side-bar .nav > .active > ul {
+    display: block;
+}
+
+.bs-sidebar .nav .nav {
+    display: none;
+    margin-bottom: 8px;
+}
+
+.side-bar .nav .nav > li > a {
+    font-size: 90%;
+    padding-bottom: 3px;
+    padding-left: 30px;
+    padding-top: 3px;
+}
+
+.side-bar .nav > li > a {
+    color: #716B7A;
+    display: block;
+    padding: 5px 20px;
+}
+
+.side-bar .nav .nav {
+    display: none;
+    margin-bottom: 8px;
+}
+
+.side-bar .nav > li > a:hover, .side-bar .nav > li > a:focus {
+    background-color: #E5E3E9;
+    border-right: 1px solid #DBD8E0;
+    text-decoration: none;
+}
+
+.side-bar .nav > .active > a, .side-bar .nav > .active:hover > a, .side-bar .nav > .active:focus > a {
+    background-color: rgba(0, 0, 0, 0);
+    /*border-right: 1px solid #563D7C;*/
+    color: #563D7C;
+    font-weight: bold;
+}
+
+td.operation{
+    width: 40px;
+    text-align: center;
+}
+
+div.error{
+    color: red;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-style: italic;
+}
+
+div.error > span:before{
+    content: "\f06a ";
+    font-family: FontAwesome;
+}
+
+div.toolbar{
+    margin-bottom: 8px;
+}
+
+ul.dropdown-menu > li{
+    text-align: left;
+}

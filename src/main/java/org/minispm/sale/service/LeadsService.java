@@ -8,6 +8,7 @@ import org.minispm.sale.dao.ActionDao;
 import org.minispm.sale.dao.LeadsDao;
 import org.minispm.sale.entity.Action;
 import org.minispm.sale.entity.LeadsStatus;
+import org.minispm.security.dao.UserDao;
 import org.minispm.security.entity.User;
 import org.minispm.security.service.ShiroDbRealm;
 import org.minispm.security.utils.AuthorizationException;
@@ -34,9 +35,14 @@ import java.util.Date;
 @Service
 @Transactional(readOnly = true)
 public class LeadsService extends LeadsBaseService {
+    @Autowired
     private LeadsDao leadsDao;
+    @Autowired
     private ActionDao actionDao;
+    @Autowired
     private SpecificationBuilder specificationBuilder;
+    @Autowired
+    private UserDao userDao;
 
     @RequiresPermissions("leads:list:*")
     public Page<Leads> findAll(int pageNumber, String condition, boolean filterSelf, boolean filterClosed) {
@@ -167,10 +173,7 @@ public class LeadsService extends LeadsBaseService {
     }
     private void addCreateAction(Leads leads){
         Action action = new Action(Action.CREATED);
-        ShiroDbRealm.ShiroUser shiroUser = SecurityUtils.getCurrentShiroUser();
-        User user = new User();
-        user.setId(shiroUser.getId());
-        action.setOwner(user);
+        action.setOwner(userDao.findByJobNumber(SecurityUtils.getCurrentShiroUser().getLoginName()));
         leads.addAction(action);
         leads.setLastInfo(action.buildActionInfo());
         leads.setLastModifiedDate(new Date());
@@ -178,10 +181,7 @@ public class LeadsService extends LeadsBaseService {
 
     private void addConvertMsg(String id){
         Action action = new Action(Action.CONVERT);
-        ShiroDbRealm.ShiroUser shiroUser = SecurityUtils.getCurrentShiroUser();
-        User user = new User();
-        user.setId(shiroUser.getId());
-        action.setOwner(user);
+        action.setOwner(userDao.findByJobNumber(SecurityUtils.getCurrentShiroUser().getLoginName()));
         Leads leads = leadsDao.findOne(id);
         leads.addAction(action);
         leads.setLastModifiedDate(new Date());
@@ -194,18 +194,4 @@ public class LeadsService extends LeadsBaseService {
         return new PageRequest(pageNumber - 1, 10 , new Sort(Sort.Direction.DESC, "lastModifiedDate"));
     }
 
-    @Autowired
-    public void setLeadsDao(LeadsDao leadsDao) {
-        this.leadsDao = leadsDao;
-    }
-
-    @Autowired
-    public void setActionDao(ActionDao actionDao) {
-        this.actionDao = actionDao;
-    }
-
-    @Autowired
-    public void setSpecificationBuilder(SpecificationBuilder specificationBuilder) {
-        this.specificationBuilder = specificationBuilder;
-    }
 }

@@ -10,7 +10,7 @@
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <div id="newOpportunityPortlet" class="portlet">
     <div class="portlet-caption row body-content">
-        <div class="portlet_title col-lg-6"><h5>最近一月新增销售机会</h5></div>
+        <div class="portlet_title col-md-6"><h5>最近一月新增销售机会</h5></div>
     </div>
     <div class="portlet-content">
         <table id="newOpportunity" class="table table-striped table-hover table-condensed">

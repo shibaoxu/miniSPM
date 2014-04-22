@@ -37,7 +37,7 @@ public class ActionController {
     public String list(@PathVariable String leadsBaseId, Model model){
         initDictionary(model,leadsBaseId);
         model.addAttribute("actions", actionService.findAll(leadsBaseId));
-        return "/sale/actionList";
+        return "sale/actionList";
     }
 
     @RequestMapping(value = {"/sale/leads/{leadsBaseId}/action/new","/sale/opportunity/{leadsBaseId}/action/new"}, method = RequestMethod.GET)
@@ -51,7 +51,7 @@ public class ActionController {
         action.setOwner(owner);
         model.addAttribute("action", action);
         model.addAttribute("operation", "add");
-        return "/sale/action";
+        return "sale/action";
     }
 
     @RequestMapping(value = {"/sale/leads/{leadsBaseId}/action/view/{actionId}","/sale/opportunity/{leadsBaseId}/action/view/{actionId}"}, method = RequestMethod.GET)
@@ -60,7 +60,7 @@ public class ActionController {
         model.addAttribute("action", actionService.findByIdView(actionId));
         model.addAttribute("operation", "view");
         this.initDictionary(model, leadsBaseId);
-        return "/sale/action";
+        return "sale/action";
     }
 
 
@@ -70,7 +70,7 @@ public class ActionController {
         model.addAttribute("action", actionService.findByIdEdit(actionId));
         model.addAttribute("operation", "edit");
         this.initDictionary(model, leadsBaseId);
-        return "/sale/action";
+        return "sale/action";
     }
 
     @RequestMapping(value = {

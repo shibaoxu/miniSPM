@@ -1,88 +1,88 @@
-.sidebar-nav {
-    padding: 9px 0;
-}
-label.rlabel{
-    text-align: right;
-}
-label.clabel{
-    text-align: center;
-}
+/*.sidebar-nav {*/
+    /*padding: 9px 0;*/
+/*}*/
+/*label.rlabel{*/
+    /*text-align: right;*/
+/*}*/
+/*label.clabel{*/
+    /*text-align: center;*/
+/*}*/
 
-div.modal div.controls-row{
-    padding: 5px;
-}
+/*div.modal div.controls-row{*/
+    /*padding: 5px;*/
+/*}*/
 
-ul.pagination{
-    margin-top: 0;
-    margin-bottom: 5px;
-}
+/*ul.pagination{*/
+    /*margin-top: 0;*/
+    /*margin-bottom: 5px;*/
+/*}*/
 /*.input-group .search-group*/
-.search-group{
-    width: 300px;
-}
-.body-content{
-    margin-left: 0;
-    margin-right: 0;
-}
-.form-signin {
-    margin:50px auto 20px;
-    max-width:300px;
-}
+/*.search-group{*/
+    /*width: 300px;*/
+/*}*/
+/*.body-content{*/
+    /*margin-left: 0;*/
+    /*margin-right: 0;*/
+/*}*/
+/*.form-signin {*/
+    /*margin:50px auto 20px;*/
+    /*max-width:300px;*/
+/*}*/
 
-.form-signin .input-block-level{
-    width: 90%;
-}
-.controls-row{
-    margin-bottom: 5px;
-}
-.form-action{
-    border-top-style: solid;
-    border-top-width: 1px;
-    padding-top: 5px;
-    border-color: #E5E5E5;
-}
-.portlet{
+/*.form-signin .input-block-level{*/
+    /*width: 90%;*/
+/*}*/
+/*.controls-row{*/
+    /*margin-bottom: 5px;*/
+/*}*/
+/*.form-action{*/
+    /*border-top-style: solid;*/
+    /*border-top-width: 1px;*/
+    /*padding-top: 5px;*/
+    /*border-color: #E5E5E5;*/
+/*}*/
+/*.portlet{*/
     /*background-color:#FFFFFF;*/
-    border:1px solid #DDDDDD;
-    border-bottom-left-radius:4px;
-    border-bottom-right-radius:4px;
-    border-top-left-radius:4px;
-    border-top-right-radius:4px;
+    /*border:1px solid #DDDDDD;*/
+    /*border-bottom-left-radius:4px;*/
+    /*border-bottom-right-radius:4px;*/
+    /*border-top-left-radius:4px;*/
+    /*border-top-right-radius:4px;*/
     /*margin:15px 0;*/
     /*padding:39px 19px 14px;*/
     /*position:relative;*/
-}
-.portlet-caption{
-    background-color: #F5F5F5;
-    border-bottom: 1px solid #DDDDDD;
-    border-radius: 4px 4px 0 0;
+/*}*/
+/*.portlet-caption{*/
+    /*background-color: #F5F5F5;*/
+    /*border-bottom: 1px solid #DDDDDD;*/
+    /*border-radius: 4px 4px 0 0;*/
     /*color: #0088CC;*/
     /*font-weight: bold;*/
 
-}
-.portlet-caption .portlet_title{
-    padding-left: 3px;
-}
-.portlet-caption .portlet_subtitle{
-    text-align: right;
-    padding-right: 3px;
-}
+/*}*/
+/*.portlet-caption .portlet_title{*/
+    /*padding-left: 3px;*/
+/*}*/
+/*.portlet-caption .portlet_subtitle{*/
+    /*text-align: right;*/
+    /*padding-right: 3px;*/
+/*}*/
 
-.portlet-caption a.active{
-    background-color: gold;
-}
+/*.portlet-caption a.active{*/
+    /*background-color: gold;*/
+/*}*/
 
-.portlet-content{
-    padding: 2px 2px 0 2px;
-}
+/*.portlet-content{*/
+    /*padding: 2px 2px 0 2px;*/
+/*}*/
 
-.portlet-content table{
-    margin-bottom: 0px;
-}
+/*.portlet-content table{*/
+    /*margin-bottom: 0px;*/
+/*}*/
 
-div.portlet-row{
-    padding-bottom: 5px;
-}
+/*div.portlet-row{*/
+    /*padding-bottom: 5px;*/
+/*}*/
 /*div.panel-container{*/
     /*padding-left: 0px;*/
     /*padding-right: 0px;*/

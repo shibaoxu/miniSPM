@@ -11,22 +11,26 @@
 <%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
+<div>
 <ol class="breadcrumb">
     <li><a href="${ctx}/index">首页</a></li>
     <li><a href="${ctx}/sale/index">销售</a></li>
     <li><a href="">销售机会</a></li>
 </ol>
-<div>
-    <form class="form-horizontal" action="#">
-        <div class="form-group">
-            <div class="input-group col-lg-4">
+</div>
+<div class="row toolbar clearfix">
+    <form class="" action="#">
+        <div class="col-md-6">
+            <div class="input-group">
                 <input type="text" class="form-control" name="search_condition" placeholder="请输入搜索条件..."
                        value="${param.search_condition}">
                 <span class="input-group-btn">
-                    <button type="submit" class="btn btn-default" id="search_btn"><span class="icon-search"/></button>
+                    <button type="submit" class="btn btn-default" id="search_btn"><i class="fa fa-search fa-fw"></i></button>
                 </span>
             </div>
-            <div class="btn-group btn-group-sm">
+        </div>
+        <div class="col-md-3">
+            <div class="btn-group">
                 <c:choose>
                     <c:when test="${param.filter_self == true}">
                         <button class="btn btn-default active" id='btnFilterSelf'>只看自己</button>
@@ -44,6 +48,8 @@
                     </c:otherwise>
                 </c:choose>
             </div>
+        </div>
+        <div class="col-md-3 text-right">
             <input type="hidden" name="filter_self" id="chkFilterSelf" value="${param.filter_self}" class="">
             <input type="hidden" name="filter_closed" id='chkFilterClosed' value="${param.filter_closed}">
         </div>
@@ -66,7 +72,7 @@
     <c:forEach items="${opportunities.content}" var="opportunity">
         <tr>
             <td><a href="${ctx}/sale/opportunity/view/${opportunity.id}">${opportunity.name}</a></td>
-            <td>${opportunity.customer.name}</td>
+            <td style="width: 80px">${opportunity.customer.name}</td>
             <td><fmt:formatNumber value="${opportunity.lowAmount}" type="number"/></td>
             <td><fmt:formatNumber value="${opportunity.highAmount}" type="number"/></td>
             <td>
@@ -74,26 +80,26 @@
                         ${opportunity.lastInfo}
                 </a>
             </td>
-            <td>${opportunity.owner.name}</td>
-            <td>${opportunity.department.name}</td>
-            <td>
+            <td style="width: 55px">${opportunity.owner.name}</td>
+            <td style="width: 70px">${opportunity.department.name}</td>
+            <td style="width: 40px" class="text-center">
                 <div class="dropdown">
-                    <a class="relate_menu dropdown-toggle" data-toggle="dropdown">
-                        <i class="icon-list"></i>
+                    <a class="btn dropdown-toggle context-menu" data-toggle="dropdown">
+                        <i class="fa fa-list fa-fw"></i>
                     </a>
                     <ul class="dropdown-menu pull-right" role="menu">
                         <shiro:hasPermission name="opportunity:edit:*">
-                            <li><a href="${ctx}/sale/opportunity/edit/${opportunity.id}"><i class="icon-edit"></i>修改基本信息</a>
+                            <li><a href="${ctx}/sale/opportunity/edit/${opportunity.id}"><i class="fa fa-edit fa-fw"></i> 修改基本信息</a>
                             </li>
                         </shiro:hasPermission>
                         <shiro:hasPermission name="opportunity:view:*">
                             <li><a href="${ctx}/sale/opportunity/${opportunity.id}/action/index"><i
-                                    class="icon-eye-close"></i>查看活动记录</a>
+                                    class="fa fa-sort-amount-asc fa-fw"></i> 查看活动记录</a>
                             </li>
                         </shiro:hasPermission>
                         <li class="divider"/>
                         <shiro:hasPermission name="opportunity:close:*">
-                        <li><a href="${ctx}/sale/opportunity/${opportunity.id}/close"><i class="icon-star"></i>关闭...</a>
+                        <li><a href="${ctx}/sale/opportunity/${opportunity.id}/close"><i class="fa fa-star fa-fw"></i> 关闭...</a>
                             </shiro:hasPermission>
                     </ul>
                 </div>

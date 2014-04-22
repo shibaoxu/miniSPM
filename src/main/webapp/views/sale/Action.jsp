@@ -32,57 +32,57 @@
             <form:hidden path="leadsBase.id"></form:hidden>
             <div id='error' class="alert alert-warning hidden"></div>
             <div class="form-group">
-                <label class="control-label col-lg-2" for="action_type">活动类型</label>
+                <label class="control-label col-md-2" for="action_type">活动类型</label>
 
-                <div class="col-lg-4">
+                <div class="col-md-4">
                     <form:select id='action_type' path="actionType.id" items="${actionTypes}" itemLabel="name"
                                  itemValue="id" cssClass="form-control"></form:select>
                 </div>
             </div>
 
             <div class="form-group">
-                <label class="control-label col-lg-2" for="action_brief">简述</label>
+                <label class="control-label col-md-2" for="action_brief">简述</label>
 
-                <div class="col-lg-4">
+                <div class="col-md-4">
                     <form:input id='action_brief' path="brief"
                                 cssClass="form-control"></form:input>
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-lg-2 control-label" for="action_occur_date">发生时间</label>
+                <label class="col-md-2 control-label" for="action_occur_date">发生时间</label>
 
-                <div class="col-lg-2">
+                <div class="col-md-2">
                     <form:input path="occurDate" cssClass="datepicker form-control" id='action_occur_date'
                                 readonly="true"></form:input>
                 </div>
             </div>
 
             <div class="form-group">
-                <label class="col-lg-2 control-label" for="action_owner">所有者</label>
+                <label class="col-md-2 control-label" for="action_owner">所有者</label>
 
-                <div class="col-lg-2">
+                <div class="col-md-2">
                     <form:select path="owner.id" id='action_owner' items="${users}" itemLabel="name"
                                  itemValue="id" cssClass="form-control"></form:select>
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-lg-2 control-label" for="action_customer_participants">客户方参入者</label>
+                <label class="col-md-2 control-label" for="action_customer_participants">客户方参入者</label>
 
-                <div class="col-lg-4">
+                <div class="col-md-4">
                     <form:input path="customerParticipants" cssClass="form-control"
                                 id='action_customer_participants'></form:input>
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-lg-2 control-label" for="action_self_participants">我方参入者</label>
+                <label class="col-md-2 control-label" for="action_self_participants">我方参入者</label>
 
-                <div class="col-lg-4">
+                <div class="col-md-4">
                     <form:input path="selfParticipants" cssClass="form-control"
                                 id='action_self_participants'></form:input>
                 </div>
             </div>
             <div class="form-group">
-                <div class="col-lg-2 col-lg-offset-2">
+                <div class="col-md-2 col-md-offset-2">
                     <div class="checkbox">
                         <label><form:checkbox path="milestone"></form:checkbox>&nbsp;里程碑事件</label>
                     </div>
@@ -90,14 +90,14 @@
             </div>
 
             <div class="form-group">
-                <label class="control-label col-lg-2" for="action_detail">详情</label>
+                <label class="control-label col-md-2" for="action_detail">详情</label>
 
-                <div class="col-lg-8">
+                <div class="col-md-8">
                     <form:textarea path="detail" id='action_detail' cssClass="form-control" rows="7"></form:textarea>
                 </div>
             </div>
             <div class="row controls-row form-action">
-                <div class="col-lg-10 col-lg-offset-2">
+                <div class="col-md-10 col-md-offset-2">
                 <c:if test="${operation == 'add' || operation == 'edit'}">
                     <input class="btn btn-primary" type="submit" value="保存">
                 </c:if>

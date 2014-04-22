@@ -1,6 +1,7 @@
 package org.minispm.security.utils;
 
 import org.apache.shiro.subject.Subject;
+import org.minispm.security.entity.User;
 import org.minispm.security.service.ShiroDbRealm;
 import org.apache.shiro.mgt.SecurityManager;
 
@@ -10,9 +11,8 @@ import org.apache.shiro.mgt.SecurityManager;
  * Time: 下午6:42
  */
 public class SecurityUtils {
-    public static ShiroDbRealm.ShiroUser getCurrentShiroUser(){
-        return  (ShiroDbRealm.ShiroUser ) org.apache.shiro.SecurityUtils.getSubject().getPrincipals().getPrimaryPrincipal();
-
+    public static ShiroUser getCurrentShiroUser(){
+        return  (ShiroUser) org.apache.shiro.SecurityUtils.getSubject().getPrincipals().getPrimaryPrincipal();
     }
 
     public static Subject getCurrentSubject(){

@@ -28,7 +28,7 @@
             <c:forEach items="${users}" var="user">
                 <tr <c:if test="${action.milestone}">class='success'</c:if>>
                     <td>
-                            ${user.jobNumber}
+                            ${user.loginName}
                     </td>
                     <td>
                         <a href="${ctx}/security/user/${user.id}">${user.name}</a>

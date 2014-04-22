@@ -2,12 +2,14 @@ package org.minispm.admin.organization.web;
 
 import org.minispm.admin.organization.service.DepartmentService;
 import org.minispm.admin.organization.entity.Department;
+import org.minispm.core.web.WebUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.ServletRequest;
 import java.util.List;
 
 /**
@@ -16,47 +18,45 @@ import java.util.List;
  * Time: 下午7:38
  */
 @Controller
-@RequestMapping("/admin/org/department/")
+@RequestMapping("/admin/departments")
 public class DepartmentController {
+    @Autowired
     private DepartmentService departmentService;
 
-    @RequestMapping("/index")
-    public String index(Model model){
-        List<Department> departments = departmentService.findAll();
-        model.addAttribute("departments", departments);
-        return "admin/org/departmentList";
+
+    @RequestMapping()
+    public String getAll(@RequestParam(value = "search_condition", defaultValue = "") String condition,
+                         @RequestParam(value = "page", defaultValue = "1") int pageNumber, Model model, ServletRequest request){
+        model.addAttribute("searchParams", WebUtils.transParamsWithPrefix(request, "search_"));
+        model.addAttribute("departments", departmentService.findAll(pageNumber, condition));
+        return "admin/departmentList";
     }
 
     @RequestMapping(value = "/new", method = RequestMethod.GET)
-    public String add(Model model){
+    public String initCreateForm(Model model){
         model.addAttribute("department", new Department());
-        model.addAttribute("updatable", true);
-        return "/admin/org/department";
+        return "/admin/department";
     }
 
     @RequestMapping(value = "/new", method = RequestMethod.POST)
-    public String add(Department department){
+    public String create(Department department){
         departmentService.save(department);
-        return "redirect:index";
+        return "redirect:..";
     }
 
-    @RequestMapping("/view/{id}")
-    public String view(@PathVariable String id, Model model) {
-        return showDepartment(id, model, false);
+    @RequestMapping(value = "/{id}/edit", method = RequestMethod.GET)
+    public String initUpdateForm(@PathVariable String id, Model model) {
+        model.addAttribute(departmentService.findById(id));
+        return "/admin/department";
     }
 
-    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
-    public String edit(@PathVariable String id, Model model) {
-        return showDepartment(id, model, true);
-    }
-
-    @RequestMapping(value = "/edit/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "/{id}/edit", method = RequestMethod.PUT)
     public String update(Department department){
         departmentService.save(department);
         return "redirect:../index";
     }
 
-    @RequestMapping(value = "/del/{id}")
+    @RequestMapping(value = "/{id}/delete")
     public String delete(@PathVariable String id){
         departmentService.removeById(id);
         return "redirect:../index";
@@ -74,18 +74,5 @@ public class DepartmentController {
         mv.setViewName("exception");
         return mv;
     }
-    private String showDepartment(String id, Model model, boolean updatable){
-        Department department = departmentService.findById(id);
-        model.addAttribute("department", department);
-        model.addAttribute("updatable", updatable);
-        return "admin/org/department";
-    }
 
-    public DepartmentService getDepartmentService() {
-        return departmentService;
-    }
-    @Autowired
-    public void setDepartmentService(DepartmentService departmentService) {
-        this.departmentService = departmentService;
-    }
 }

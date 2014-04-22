@@ -5,6 +5,7 @@ import org.minispm.sale.dao.LeadsBaseDao;
 import org.minispm.sale.entity.Action;
 import org.minispm.sale.entity.ClosedReason;
 import org.minispm.sale.entity.LeadsBase;
+import org.minispm.security.dao.UserDao;
 import org.minispm.security.entity.User;
 import org.minispm.security.service.ShiroDbRealm;
 import org.minispm.security.utils.SecurityUtils;
@@ -24,8 +25,13 @@ import java.util.Date;
 @Service
 @Transactional(readOnly = true)
 public class LeadsBaseService {
+    @Autowired
     private LeadsBaseDao leadsBaseDao;
+    @Autowired
     private ClosedReasonDao closedReasonDao;
+    @Autowired
+    private UserDao userDao;
+
     @Transactional(readOnly = false)
     public void updateLastActionBrief(String leadsId, String lastActionInfo){
         leadsBaseDao.updateLastActionInfo(leadsId, lastActionInfo, new Date());
@@ -46,22 +52,19 @@ public class LeadsBaseService {
 
     protected void addEvent(String eventType, LeadsBase leadsBase){
         Action event = new Action(eventType);
-        ShiroDbRealm.ShiroUser shiroUser = SecurityUtils.getCurrentShiroUser();
-        User user = new User();
-        user.setId(shiroUser.getId());
-        event.setOwner(user);
+        event.setOwner(userDao.findByJobNumber(SecurityUtils.getCurrentShiroUser().getLoginName()));
         leadsBase.addAction(event);
         leadsBase.setLastInfo(event.buildActionInfo());
         leadsBase.setLastModifiedDate(new Date());
 
     }
-    @Autowired
-    public void setLeadsBaseDao(LeadsBaseDao leadsBaseDao) {
-        this.leadsBaseDao = leadsBaseDao;
-    }
-
-    @Autowired
-    public void setClosedReasonDao(ClosedReasonDao closedReasonDao) {
-        this.closedReasonDao = closedReasonDao;
-    }
+//    @Autowired
+//    public void setLeadsBaseDao(LeadsBaseDao leadsBaseDao) {
+//        this.leadsBaseDao = leadsBaseDao;
+//    }
+//
+//    @Autowired
+//    public void setClosedReasonDao(ClosedReasonDao closedReasonDao) {
+//        this.closedReasonDao = closedReasonDao;
+//    }
 }

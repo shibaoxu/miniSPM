@@ -6,6 +6,7 @@ package org.minispm.core.persistence;
  * Date: 12-11-27
  * Time: 下午8:46
  */
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -39,6 +40,11 @@ public abstract class IdEntity {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    @Transient
+    public boolean isNew(){
+        return (StringUtils.isBlank(id));
     }
 
     @Column(nullable = false)

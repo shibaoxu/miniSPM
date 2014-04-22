@@ -26,31 +26,31 @@
             <input type="hidden" name="leadsId" value="${leadsId}">
 
             <div class="form-group">
-                <label class="col-lg-2 control-label" for="lowAmount">签约额下限</label>
+                <label class="col-md-2 control-label" for="lowAmount">签约额下限</label>
 
-                <div class="col-lg-4">
+                <div class="col-md-4">
                     <input class="form-control" type="number" min="0" name="lowAmount" id="lowAmount" step="any"
                            value="${lowAmount}">
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-lg-2 control-label" for="highAmount">签约额上限</label>
+                <label class="col-md-2 control-label" for="highAmount">签约额上限</label>
 
-                <div class="col-lg-4">
+                <div class="col-md-4">
                     <input class="form-control" type="number" min="0" name="highAmount" id="highAmount" step="any"
                            value="${highAmount}">
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-lg-2 control-label" for="planDealDate">预计签约时间</label>
+                <label class="col-md-2 control-label" for="planDealDate">预计签约时间</label>
 
-                <div class="col-lg-2">
+                <div class="col-md-2">
                     <input type="text" required="required" name="planDealDate" class="form-control" id='planDealDate'
                            readonly="true" value="${planDealDate}"/>
                 </div>
             </div>
             <div class="row form-action">
-                <div class="col-lg-10 col-lg-offset-2">
+                <div class="col-md-10 col-md-offset-2">
                 <input class="btn btn-primary" type="submit" value="确定">
                 <a class="btn btn-default" href="${ctx}/sale/leads/index">返回</a>
                 </div>

@@ -27,59 +27,59 @@
             <div id='error' class="alert alert-warning hidden">
             </div>
             <div class="form-group">
-                <label class="col-lg-2 control-label" for="action_brief">简述</label>
+                <label class="col-md-2 control-label" for="action_brief">简述</label>
 
-                <div class="col-lg-6">
+                <div class="col-md-6">
                     <form:input id='action_brief' path="brief" cssClass="form-control"></form:input>
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-lg-2 control-label" for="action_type">活动类型</label>
+                <label class="col-md-2 control-label" for="action_type">活动类型</label>
 
-                <div class="col-lg-4">
+                <div class="col-md-4">
                     <form:select id='action_type' path="actionType.id" items="${actionTypes}" itemLabel="name"
                                  itemValue="id" cssClass="form-control"></form:select>
                 </div>
             </div>
             <div class="form-group">
-                <label class="control-label col-lg-2" for="customer_name">客户</label>
+                <label class="control-label col-md-2" for="customer_name">客户</label>
 
-                <div class="col-lg-4">
+                <div class="col-md-4">
                     <div class="input-group">
                         <input id='customer_name' name="customer_name" type="text"
                                class="form-control" readonly="true"
                                value="${action.customer.name}">
                        <span class="input-group-btn" data-toggle="modal" data-target="#cDialog" data-keyboard="false">
-                            <button class="btn btn-default" type="button"><span class="icon-search"/></button>
+                            <button class="btn btn-default" type="button"><i class="fa fa-search fa-fw"></i></button>
                         </span>
                     </div>
                 </div>
             </div>
             <div class="form-group">
-                <label class="control-label col-lg-2" for="datepicker">时间</label>
+                <label class="control-label col-md-2" for="datepicker">时间</label>
 
-                <div class="col-lg-10">
+                <div class="col-md-10">
                     <form:input path="eventDate" cssClass="datepicker" id='datepicker' readonly="true"></form:input>
                 </div>
             </div>
             <div class="form-group">
-                <label class="control-label col-lg-2" for="action_owner">所有者</label>
+                <label class="control-label col-md-2" for="action_owner">所有者</label>
 
-                <div class="col-lg-4">
+                <div class="col-md-4">
                     <form:select path="owner.id" id='action_owner' items="${users}" itemLabel="name"
                                  itemValue="id" cssClass="form-control"></form:select>
                 </div>
             </div>
             <div class="form-group">
-                <label class="control-label col-lg-2" for="action_department">部门</label>
+                <label class="control-label col-md-2" for="action_department">部门</label>
 
-                <div class="col-lg-4">
+                <div class="col-md-4">
                     <form:select path="department.id" id='action_department' items="${departments}" itemLabel="name"
                                  itemValue="id" cssClass="form-control"></form:select>
                 </div>
             </div>
             <div class="form-group">
-                <div class="col-lg-2 col-lg-offset-2">
+                <div class="col-md-2 col-md-offset-2">
                     <div class="checkbox">
                         <label>
                             <form:checkbox path="important"></form:checkbox>重要
@@ -88,16 +88,16 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="control-label col-lg-2" for="action_detail">详情</label>
+                <label class="control-label col-md-2" for="action_detail">详情</label>
 
-                <div class="col-lg-9">
+                <div class="col-md-9">
                     <form:textarea path="detail" id='action_detail' cssClass="form-control" rows="8"></form:textarea>
                 </div>
             </div>
             <div class="form-group">
                 <div class="form-action">
                     <c:if test="${operation=='new'||operation=='edit'}">
-                        <div class="col-lg-10 col-lg-offset-2 ">
+                        <div class="col-md-10 col-md-offset-2 ">
                             <input class="btn btn-primary" type="submit" value="保存">
                             <a class="btn btn-default" href="${ctx}/sale/market_action/index">返回</a>
                         </div>

@@ -2,7 +2,10 @@ package org.minispm.admin.organization.service;
 
 import org.minispm.admin.organization.dao.CompanyDao;
 import org.minispm.admin.organization.entity.Company;
+import org.minispm.core.persistence.BaseDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,7 +14,9 @@ import java.util.List;
 @Service
 @Transactional(readOnly = true)
 public class CompanyService {
-    private CompanyDao companyDao;
+    @Autowired
+    public CompanyDao companyDao;
+//    private BaseDao<Company> companyDao;
 
     public CompanyService() {
     }
@@ -38,12 +43,12 @@ public class CompanyService {
         companyDao.delete(id);
     }//  setter and getter
 
-    public CompanyDao getCompanyDao() {
-        return companyDao;
-    }
+//    public BaseDao<Company> getCompanyDao() {
+//        return companyDao;
+//    }
 
-    @Autowired
-    public void setCompanyDao(CompanyDao companyDao) {
-        this.companyDao = companyDao;
-    }
+//    @Autowired
+//    public void setCompanyDao(BaseDao<Company> companyDao) {
+//        this.companyDao = companyDao;
+//    }
 }

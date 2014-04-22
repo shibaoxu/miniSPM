@@ -75,7 +75,8 @@ public class LeadsController {
     public String add(Model model) {
         initDictionary(model);
         Leads leads = new Leads();
-        leads.setDepartment((Department) organizationService.getBelongOrg(SecurityUtils.getCurrentShiroUser().getStaff().getId(), AccountabilityType.SALE_ORG));
+        User user = userService.findByJobNumber(SecurityUtils.getCurrentShiroUser().getLoginName());
+        leads.setDepartment((Department) organizationService.getBelongOrg(user.getStaff().getId(), AccountabilityType.SALE_ORG));
         User owner = new User();
         owner.setId(SecurityUtils.getCurrentShiroUser().getId());
         leads.setOwner(owner);

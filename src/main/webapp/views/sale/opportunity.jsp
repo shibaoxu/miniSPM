@@ -26,16 +26,16 @@
             <form:hidden id='customer_id' path="customer.id"></form:hidden>
             <form:hidden path="lastInfo"></form:hidden>
             <div class="controls-row body-content row">
-                <label class="col-lg-1 text-right">名称</label>
+                <label class="col-md-1 text-right">名称</label>
 
-                <div class="col-lg-11">
+                <div class="col-md-11">
                     <form:input path="name" id="opportunityName" cssClass="form-control"></form:input>
                 </div>
             </div>
             <div class="controls-row body-content row">
-                <label class="col-lg-1 text-right">客户</label>
+                <label class="col-md-1 text-right">客户</label>
 
-                <div class="col-lg-2">
+                <div class="col-md-2">
                     <div class="input-group">
                         <input id='customer_name' name="customer_name" type="text" class="form-control" readonly="true"
                                value="${opportunity.customer.name}">
@@ -45,74 +45,74 @@
 
                     </div>
                 </div>
-                <label class="col-lg-1 text-right">来源</label>
+                <label class="col-md-1 text-right">来源</label>
 
-                <div class="col-lg-2">
+                <div class="col-md-2">
                     <form:select path="source.id" cssClass="form-control">
                         <form:options items="${sources}" itemLabel="name" itemValue="id"></form:options>
                     </form:select>
                 </div>
-                <label class="col-lg-1 text-right">所有者</label>
+                <label class="col-md-1 text-right">所有者</label>
 
-                <div class="col-lg-2">
+                <div class="col-md-2">
                     <form:select path="owner.id" items="${users}" itemLabel="name" itemValue="id"
                                  cssClass="form-control"></form:select>
                 </div>
-                <label class="col-lg-1 text-right">部门</label>
+                <label class="col-md-1 text-right">部门</label>
 
-                <div class="col-lg-2">
+                <div class="col-md-2">
                     <form:select path="department.id" items="${departments}" itemLabel="name" itemValue="id"
                                  cssClass="form-control"></form:select>
                 </div>
             </div>
             <div class="controls-row body-content row">
-                <label class="col-lg-1 text-right">最低价</label>
+                <label class="col-md-1 text-right">最低价</label>
 
-                <div class="col-lg-2">
+                <div class="col-md-2">
                     <form:input id="lowAmount" path="lowAmount" cssClass="form-control"></form:input>
                 </div>
 
-                <label class="col-lg-1 text-right">最高价</label>
+                <label class="col-md-1 text-right">最高价</label>
 
-                <div class="col-lg-2">
+                <div class="col-md-2">
                     <form:input path="highAmount" cssClass="form-control"></form:input>
                 </div>
 
-                <label class="col-lg-1 text-right">预计签约</label>
+                <label class="col-md-1 text-right">预计签约</label>
 
-                <div class="col-lg-2">
+                <div class="col-md-2">
                     <form:input path="planDealDate" cssClass="datepicker form-control" id='planDealDate' readonly='true' ></form:input>
                 </div>
 
             </div>
             <div class="controls-row body-content row">
-                <label class="col-lg-1 text-right">详情</label>
+                <label class="col-md-1 text-right">详情</label>
 
-                <div class="col-lg-11">
+                <div class="col-md-11">
                     <form:textarea path="des" cssClass="form-control" rows="5"></form:textarea>
                 </div>
             </div>
             <div class="controls-row body-content row">
-                <label class="col-lg-1 text-right">状态</label>
+                <label class="col-md-1 text-right">状态</label>
 
-                <div class="col-lg-2">
+                <div class="col-md-2">
                     <form:input path="status" cssClass="form-control" readonly="true"></form:input>
                 </div>
-                <label class="col-lg-1 text-right">创建日期</label>
+                <label class="col-md-1 text-right">创建日期</label>
 
-                <div class="col-lg-2">
+                <div class="col-md-2">
                     <form:input path="createdDate" readonly="true" cssClass="form-control"></form:input>
                 </div>
                 <c:if test="${opportunity.status == 'CLOSED'}">
-                    <label class="col-lg-1 text-right">关闭原因</label>
+                    <label class="col-md-1 text-right">关闭原因</label>
 
-                    <div class="col-lg-2">
+                    <div class="col-md-2">
                         <form:select path="closedReason.id" items="${closedReasons}" itemValue="id" itemLabel="name"
                                      cssClass="form-control"></form:select>
                     </div>
-                    <label class="col-lg-1">关闭时间</label>
+                    <label class="col-md-1">关闭时间</label>
 
-                    <div class="col-lg-2">
+                    <div class="col-md-2">
                         <form:input path="lastModifiedDate" cssClass="form-control" readonly='true'></form:input>
                     </div>
 
@@ -120,16 +120,16 @@
             </div>
             <c:if test="${opportunity.status == 'CLOSED'}">
                 <div class="controls-row body-content row">
-                    <label class="col-lg-1">关闭详情</label>
+                    <label class="col-md-1">关闭详情</label>
 
-                    <div class="col-lg-11">
+                    <div class="col-md-11">
                         <form:textarea path="closeReasonDetail" cssClass="form-control" rows="5"></form:textarea>
                     </div>
                 </div>
             </c:if>
         </fieldset>
         <div class="row controls-row body-content form-action">
-            <div class="col-lg-11 col-lg-offset-1">
+            <div class="col-md-11 col-md-offset-1">
                 <a href="${ctx}/sale/opportunity/${opportunity.id}/action/index" class="btn btn-primary">查看销售活动</a>
                 <a href="${ctx}/sale/opportunity/index" class="btn btn-default">返回</a>
             </div>
