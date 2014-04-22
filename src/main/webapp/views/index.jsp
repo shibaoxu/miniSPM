@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
-<div class="col-md-10 col-md-offset-1 row">
+<div class="row">
     <div>
         <h2 class="text-center">销售机会管理相关说明</h2>
         <h5 class="text-center">过程决定结果，细节决定成败</h5>

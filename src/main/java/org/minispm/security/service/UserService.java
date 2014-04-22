@@ -50,7 +50,7 @@ public class UserService {
     }
 
     public User findByJobNumber(String jobNumber) {
-//        return userDao.findByJobNumber(jobNumber);
+//        return userDao.findByJobNumber(loginName);
         return userDao.findByJobNumberAndStatus(jobNumber, User.ENABLED);
     }
 

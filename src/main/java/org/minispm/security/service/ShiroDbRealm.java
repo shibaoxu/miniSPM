@@ -12,8 +12,11 @@ import org.apache.shiro.util.ByteSource;
 import org.minispm.core.utils.Encodes;
 import org.minispm.security.entity.User;
 import org.minispm.admin.organization.entity.Staff;
-import org.minispm.security.utils.SecurityUtils;
+import org.minispm.security.utils.ShiroUser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.io.Serializable;
@@ -24,18 +27,22 @@ import java.io.Serializable;
  * Time: 下午5:44
  */
 public class ShiroDbRealm extends AuthorizingRealm {
+    private static Logger logger = LoggerFactory.getLogger(ShiroDbRealm.class);
+
     private UserService accountService;
+
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
         UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
+        logger.info("Token trying to login. username[{}], password[{}]", token.getUsername(), token.getPassword());
         User user = accountService.findByJobNumber(token.getUsername());
+        logger.debug("User's information are : userName[{}], password[{}], salt[{}]", user.getName(), user.getPassword(), user.getSalt());
         if (user != null) {
+            ShiroUser shiroUser = new ShiroUser(user.getId(), user.getLoginName(), user.getName());
             byte[] salt = Encodes.decodeHex(user.getSalt());
-            System.out.println("authentication success!!!");
-            return new SimpleAuthenticationInfo(new ShiroUser(user.getId(), user.getJobNumber(), user.getName(), user.getStaff()),
+            return new SimpleAuthenticationInfo(shiroUser,
                     user.getPassword(), ByteSource.Util.bytes(salt), getName());
         } else {
-            System.out.println("authentication fail!!!");
             return null;
         }
     }
@@ -43,10 +50,10 @@ public class ShiroDbRealm extends AuthorizingRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         ShiroUser shiroUser = (ShiroUser) principals.getPrimaryPrincipal();
-//        User user = accountService.findByJobNumber(shiroUser.jobNumber);
+        User user = accountService.findByJobNumber(shiroUser.getLoginName());
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-        info.addRoles(accountService.getRolesByJobNumber(shiroUser.getJobNumber()));
-        info.addStringPermissions(accountService.getPermissionsByUserId(shiroUser.getId()));
+        info.addRoles(accountService.getRolesByJobNumber(user.getJobNumber()));
+        info.addStringPermissions(accountService.getPermissionsByUserId(user.getId()));
         return info;
     }
 
@@ -75,82 +82,4 @@ public class ShiroDbRealm extends AuthorizingRealm {
         this.accountService = accountService;
     }
 
-    public static class ShiroUser implements Serializable {
-        private static final long serialVersionUID = -1373760761780840081L;
-        public String id;
-        public String jobNumber;
-        public String name;
-        public Staff staff;
-
-        public String getId() {
-            return id;
-        }
-
-        public void setId(String id) {
-            this.id = id;
-        }
-
-        public String getJobNumber() {
-            return jobNumber;
-        }
-
-        public void setJobNumber(String jobNumber) {
-            this.jobNumber = jobNumber;
-        }
-
-        public ShiroUser(String id, String jobNumber, String name, Staff staff) {
-            this.id = id;
-            this.jobNumber = jobNumber;
-            this.name = name;
-            this.staff = staff;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public Staff getStaff() {
-            return staff;
-        }
-
-        public void setStaff(Staff staff) {
-            this.staff = staff;
-        }
-
-        /**
-         * 本函数输出将作为默认的<shiro:principal/>输出.
-         */
-        @Override
-        public String toString() {
-            return jobNumber;
-        }
-
-        /**
-         * 重载hashCode,只计算jobNumber;
-         */
-        @Override
-        public int hashCode() {
-            return Objects.hashCode(jobNumber);
-        }
-
-        /**
-         * 重载equals,只计算loginName;
-         */
-        @Override
-        public boolean equals(Object obj) {
-            if (this == obj)
-                return true;
-            if (obj == null)
-                return false;
-            if (getClass() != obj.getClass())
-                return false;
-            ShiroUser other = (ShiroUser) obj;
-            if (jobNumber == null) {
-                if (other.jobNumber != null)
-                    return false;
-            } else if (!jobNumber.equals(other.jobNumber))
-                return false;
-            return true;
-        }
-    }
 }

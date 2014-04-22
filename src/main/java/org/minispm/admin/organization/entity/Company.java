@@ -1,7 +1,10 @@
 package org.minispm.admin.organization.entity;
 
+
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 /**
  * User: shibaoxu

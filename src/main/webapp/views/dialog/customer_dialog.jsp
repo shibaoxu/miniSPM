@@ -23,8 +23,8 @@
                             <input id='customer_dialog_condition' class="form-control" type="text"
                                    placeholder="请输入客户名称..." autofocus>
                     <span class="input-group-btn">
-                        <button id='customer_dialog_search' type="submit" class="btn btn-default"><span
-                                class="icon-search"/></button>
+                        <button id='customer_dialog_search' type="submit" class="btn btn-default"><i
+                                class="fa fa-search fa-fw"></i></button>
                     </span>
                         </div>
                     </div>

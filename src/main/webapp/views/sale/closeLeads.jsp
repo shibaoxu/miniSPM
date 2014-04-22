@@ -33,9 +33,9 @@
             <input type="hidden" name="leadsId" value="${leadsBaseId}">
 
             <div class="form-group">
-                <label class="col-lg-1 text-right">关闭原因</label>
+                <label class="col-md-1 text-right">关闭原因</label>
 
-                <div class="col-lg-2">
+                <div class="col-md-2">
                     <select name="closeReasonId" class="form-control">
                         <c:forEach items="${closeReasons}" var="reason">
                             <option value="${reason.id}">${reason.name}</option>
@@ -44,14 +44,14 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-lg-1 text-right" for="closeReasonDetail">关闭详情</label>
+                <label class="col-md-1 text-right" for="closeReasonDetail">关闭详情</label>
 
-                <div class="col-lg-6">
+                <div class="col-md-6">
                     <textarea id="closeReasonDetail" name="closeReasonDetail" rows="10" class="form-control"></textarea>
                 </div>
             </div>
             <div class="controls-row form-action row">
-                <div class="col-lg-10 col-lg-offset-1">
+                <div class="col-md-10 col-md-offset-1">
                 <input class="btn btn-primary" type="submit" value="确定">
                 <c:if test='${url == "leads"}'>
                     <a class="btn btn-default" href="${ctx}/sale/leads/index">返回</a>

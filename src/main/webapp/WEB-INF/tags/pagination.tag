@@ -13,7 +13,6 @@ int begin = Math.max(1, current - paginationSize/2);
 int total = page.getTotalPages();
 int end = Math.min(begin + (paginationSize - 1), page.getTotalPages());
 long totalElements = page.getTotalElements();
-
 request.setAttribute("current", current);
 request.setAttribute("begin", begin);
 request.setAttribute("end", end);
@@ -22,7 +21,7 @@ request.setAttribute("totalElements", totalElements);
 %>
 
 	<ul class="pagination pagination-sm">
-        <li class="disabled"><a href="#">共 ${totalPages} 页 , 第 ${current} 页, 共 ${page.totalElements} 条记录</a></li>
+        <li class="disabled"><a href="#">共${totalPages}页,第${current}页, 共${page.totalElements}条记录</a></li>
 		 <% if (page.hasPreviousPage()){%>
                	<li><a href="?page=1&sortType=${sortType}&${searchParams}&${filterParams}">&lt;&lt;</a></li>
                 <li><a href="?page=${current-1}&sortType=${sortType}&${searchParams}&${filterParams}">&lt;</a></li>

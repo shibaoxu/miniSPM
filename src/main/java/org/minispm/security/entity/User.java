@@ -5,6 +5,7 @@ import org.minispm.core.persistence.IdEntity;
 import org.minispm.admin.organization.entity.Staff;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +18,8 @@ import java.util.List;
  */
 @Entity
 @Table(name = "ila_user")
-public class User extends IdEntity {
+public class User extends IdEntity implements Serializable{
+    private static final long serialVersionUID = -1373760761780840081L;
     private String jobNumber;
     private String name;
     private String plainPassword;
@@ -25,8 +27,8 @@ public class User extends IdEntity {
     private String salt;
     private String mail;
     private String status;
-    private Staff staff;
-    private List<Role> roles = new ArrayList<Role>();
+    private transient Staff staff;
+    private transient List<Role> roles = new ArrayList<Role>();
 
     public static final String ENABLED = "正常";
     public static final String LOCKED = "锁定";
@@ -95,13 +97,16 @@ public class User extends IdEntity {
     public String getPlainPassword() {
         return plainPassword;
     }
-
+    @Transient
+    public String getLoginName(){
+        return jobNumber;
+    }
     public void setPlainPassword(String plainPassword) {
         this.plainPassword = plainPassword;
     }
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "users")
+    @ManyToMany(mappedBy = "users", fetch = FetchType.EAGER)
     public List<Role> getRoles() {
         return roles;
     }
@@ -119,4 +124,6 @@ public class User extends IdEntity {
     public void setStaff(Staff staff) {
         this.staff = staff;
     }
+
+
 }

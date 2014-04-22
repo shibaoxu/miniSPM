@@ -23,7 +23,7 @@
             <label class="control-label col-lg-2" for="user_job_number">工号</label>
 
             <div class="col-lg-4">
-                <form:input id='user_job_number' cssClass="form-control" path="jobNumber"></form:input>
+                <form:input id='user_job_number' cssClass="form-control" path="loginName"></form:input>
             </div>
         </div>
         <div class="form-group">

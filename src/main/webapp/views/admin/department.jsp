@@ -18,23 +18,23 @@
 <form:form method="post" commandName="department" cssClass="form-horizontal">
     <fieldset>
         <div class="form-group">
-            <label class="col-lg-2 control-label" for="departmentId">ID</label>
+            <label class="col-md-2 control-label" for="departmentId">ID</label>
 
-            <div class="col-lg-6">
+            <div class="col-md-6">
                 <form:input cssClass="form-control" path="id" id="departmentId" disabled="true"></form:input>
             </div>
         </div>
         <div class="form-group">
-            <label class="col-lg-2 control-label" for="departmentName">名称</label>
+            <label class="col-md-2 control-label" for="departmentName">名称</label>
 
-            <div class="col-lg-6">
+            <div class="col-md-6">
                 <form:input cssClass="form-control" path="name" id="departmentName"></form:input>
 
             </div>
         </div>
         <div class="form-group">
             <div class="form-action">
-                <div class="col-lg-8 col-lg-offset-2">
+                <div class="col-md-8 col-md-offset-2">
                     <c:if test="${updatable}">
                         <input type='submit' class="btn btn-primary" value="保存">
                     </c:if>

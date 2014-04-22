@@ -32,7 +32,9 @@ import java.util.List;
 @Service
 @Transactional(readOnly = true)
 public class SpecificationBuilder {
+    @Autowired
     private UserService userService;
+    @Autowired
     private OrganizationService organizationService;
 
     public <T extends IdEntity> Specification<T> build(final String domainName, final String operationName, final String objId){
@@ -76,10 +78,12 @@ public class SpecificationBuilder {
                 if (curSubject.isPermitted(domainAndOperation + ":ORG")) {
                     predicate = null;
                 } else if (curSubject.isPermitted(domainAndOperation + ":DEPTANDSUB")) {//ok
-                    List<Unit> units = organizationService.getBelongAndDescendantOrg(SecurityUtils.getCurrentShiroUser().getStaff().getId(), AccountabilityType.SALE_ORG);
+                    User user = userService.findByJobNumber(SecurityUtils.getCurrentShiroUser().getLoginName());
+                    List<Unit> units = organizationService.getBelongAndDescendantOrg(user.getStaff().getId(), AccountabilityType.SALE_ORG);
                     predicate =  root.get("department").in(units);
                 } else if (curSubject.isPermitted(domainAndOperation + ":DEPT")) {//OK
-                    Unit dept = organizationService.getBelongOrg(SecurityUtils.getCurrentShiroUser().getStaff().getId(), AccountabilityType.SALE_ORG);
+                    User user = userService.findByJobNumber(SecurityUtils.getCurrentShiroUser().getLoginName());
+                    Unit dept = organizationService.getBelongOrg(user.getStaff().getId(), AccountabilityType.SALE_ORG);
                     predicate =  cb.equal(root.get("department"), dept);
                 } else if (curSubject.isPermitted(domainAndOperation + ":SELF")) {//OK
                     predicate = cb.equal(root.get("owner").get("id"), SecurityUtils.getCurrentShiroUser().getId());
@@ -91,13 +95,4 @@ public class SpecificationBuilder {
         };
     }
 
-    @Autowired
-    public void setUserService(UserService userService) {
-        this.userService = userService;
-    }
-
-    @Autowired
-    public void setOrganizationService(OrganizationService organizationService) {
-        this.organizationService = organizationService;
-    }
 }

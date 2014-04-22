@@ -51,39 +51,39 @@
             <div id='error' class="error alert alert-warning hidden"></div>
             <form:hidden path="id"></form:hidden>
             <div class="form-group">
-                <label class="control-label col-lg-1 text-right" for="customer_name">名称</label>
+                <label class="control-label col-md-1 text-right" for="customer_name">名称</label>
 
-                <div class="col-lg-4">
+                <div class="col-md-4">
                     <form:input id='customer_name' path="name" cssClass="form-control"></form:input>
                 </div>
             </div>
 
             <div class="form-group">
-                <label class="control-label col-lg-1 text-right" for="customer_industry">行业</label>
+                <label class="control-label col-md-1 text-right" for="customer_industry">行业</label>
 
-                <div class="col-lg-4">
+                <div class="col-md-4">
                     <form:select path="industry.id" id='customer_industry' items="${industries}" itemLabel="name"
                                  itemValue="id" cssClass="form-control"></form:select>
                 </div>
             </div>
             <div class="form-group">
-                <label class="control-label col-lg-1 text-right" for="customer_scale">规模</label>
+                <label class="control-label col-md-1 text-right" for="customer_scale">规模</label>
 
-                <div class="col-lg-2">
+                <div class="col-md-2">
                     <form:select path="scale.id" id='customer_scale' items="${scales}" itemLabel="name"
                                  itemValue="id" cssClass="form-control"></form:select>
                 </div>
             </div>
             <div class="form-group">
-                <label class="control-label col-lg-1 text-right" for="customer_ownerShip">所有制</label>
+                <label class="control-label col-md-1 text-right" for="customer_ownerShip">所有制</label>
 
-                <div class="col-lg-2">
+                <div class="col-md-2">
                     <form:select path="ownership.id" id='customer_ownerShip' items="${ownerships}" itemLabel="name"
                                  itemValue="id" cssClass="form-control"></form:select>
                 </div>
             </div>
             <div class="form-group">
-                <div class="col-lg-2 col-lg-offset-1">
+                <div class="col-md-2 col-md-offset-1">
                     <div class="checkbox">
                         <label><form:checkbox path="develop"></form:checkbox>新客户</label>
                     </div>
@@ -91,16 +91,16 @@
             </div>
 
             <div class="form-group">
-                <label class="control-label col-lg-1 text-right" for="customer_des">备注</label>
+                <label class="control-label col-md-1 text-right" for="customer_des">备注</label>
 
-                <div class="col-lg-8">
+                <div class="col-md-8">
                     <form:textarea path="des" id='customer_des' cssClass="form-control" rows="8"></form:textarea>
                 </div>
             </div>
 
         </fieldset>
         <div class="row controls-row body-content form-action">
-            <div class="col-lg-10 col-lg-offset-1">
+            <div class="col-md-10 col-md-offset-1">
                 <div class="form-group">
                     <input class="btn btn-primary" type="submit" value="保存">
                     <a class="btn btn-default" href="${ctx}/sale/customer/index">返回</a>

@@ -29,7 +29,7 @@
         <tbody>
             <c:forEach items="${role.users}" var="user">
                 <tr>
-                    <td user-id=${user.id}>${user.jobNumber}</td>
+                    <td user-id=${user.id}>${user.loginName}</td>
                     <td>${user.staff.name}</td>
                     <td class='text-center'><span style='cursor:pointer' class='icon-remove-circle'/></td>
                 </tr>

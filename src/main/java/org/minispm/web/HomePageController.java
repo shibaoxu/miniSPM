@@ -3,6 +3,8 @@ package org.minispm.web;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpSession;
+
 /**
  * Created with IntelliJ IDEA.
  * User: shibaoxu
@@ -14,7 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class HomePageController {
 
     @RequestMapping("/index")
-    public String index(){
+    public String index(HttpSession session){
+        String id = session.getId();
         return "index";
     }
 }
