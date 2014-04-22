@@ -274,7 +274,6 @@
             <scope>runtime</scope>
         </dependency>
         <!-- WEB end -->
-<<<<<<< HEAD
 
         <!-- jetty -->
         <dependency>
@@ -291,8 +290,6 @@
             <!--<scope>test</scope>-->
         </dependency>
 
-=======
->>>>>>> v2
         <!-- h2 -->
         <dependency>
             <groupId>com.h2database</groupId>

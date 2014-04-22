@@ -4,11 +4,6 @@ import org.minispm.sale.dao.ReportDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.PageSize;
-import com.itextpdf.text.pdf.PdfWriter;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.DocumentException;
 
 import java.io.FileOutputStream;
 import java.util.Date;
@@ -54,21 +49,6 @@ public class ReportService {
         return reportDao.closedLeads();
     }
 
-    public void createWeekReport(Date startDate, Date endDate, String format) throws com.itextpdf.text.DocumentException{
-        Document document = new Document(PageSize.A4, 50, 50, 50, 50);
-        try {
-            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("ITextTest.pdf"));
-        }catch (com.itextpdf.text.DocumentException e){
-            System.out.println("exception");
-        }
-        catch (Exception ex) {
-            System.out.println("exception");
-        }
-
-        document.open();
-        document.add(new Paragraph("Some more text on the first page with different color and font type."));
-        document.close();
-    }
 
     @Autowired
     public void setReportDao(ReportDao reportDao) {
