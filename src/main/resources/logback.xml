@@ -7,8 +7,8 @@
     <logger name="org.hibernate" level="off"/>
     <logger name="org.springframework" level="off"/>
     <!--<logger name="org.springframework.web" level="debug"/>-->
-    <logger name="org.minispm" level="debug"/>
-    <logger name="org.apache.shiro" level="info"/>
+    <logger name="org.minispm" level="info"/>
+    <logger name="org.apache.shiro" level="off"/>
     <root level="info">
         <appender-ref ref="STDOUT"/>
     </root>

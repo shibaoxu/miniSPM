@@ -76,15 +76,15 @@
     <c:forEach items="${leadses.content}" var="leads">
         <tr>
             <td><a href="${ctx}/sale/leads/view/${leads.id}">${leads.name}</a></td>
-            <td style="width: 80px">${leads.customer.name}</td>
+            <td class="grid-customer">${leads.customer.name}</td>
             <td>
                 <a href="${ctx}/sale/leads/${leads.id}/action/index">
                         ${leads.lastInfo}
                 </a>
             </td>
-            <td style="width: 55px">${leads.owner.name}</td>
-            <td class="text-center" style="width: 70px">${leads.department.name}</td>
-            <td class="text-center" style="width: 40px">
+            <td class="grid-owner">${leads.owner.name}</td>
+            <td class="grid-department">${leads.department.name}</td>
+            <td class="grid-action">
                 <div class="dropdown">
                     <a class="btn dropdown-toggle context-menu" data-toggle="dropdown">
                         <i class="fa fa-list fa-fw"></i>

@@ -72,7 +72,7 @@
     <c:forEach items="${opportunities.content}" var="opportunity">
         <tr>
             <td><a href="${ctx}/sale/opportunity/view/${opportunity.id}">${opportunity.name}</a></td>
-            <td style="width: 80px">${opportunity.customer.name}</td>
+            <td class="grid-customer">${opportunity.customer.name}</td>
             <td><fmt:formatNumber value="${opportunity.lowAmount}" type="number"/></td>
             <td><fmt:formatNumber value="${opportunity.highAmount}" type="number"/></td>
             <td>
@@ -80,9 +80,9 @@
                         ${opportunity.lastInfo}
                 </a>
             </td>
-            <td style="width: 55px">${opportunity.owner.name}</td>
-            <td style="width: 70px">${opportunity.department.name}</td>
-            <td style="width: 40px" class="text-center">
+            <td class="grid-owner">${opportunity.owner.name}</td>
+            <td class="grid-department">${opportunity.department.name}</td>
+            <td class="grid-action">
                 <div class="dropdown">
                     <a class="btn dropdown-toggle context-menu" data-toggle="dropdown">
                         <i class="fa fa-list fa-fw"></i>
