@@ -119,3 +119,28 @@ div.toolbar{
 ul.dropdown-menu > li{
     text-align: left;
 }
+
+td.grid-owner{
+    text-align: center;
+    width: 55px;
+}
+td.grid-department{
+    text-align: left;
+    width: 70px;
+}
+td.grid-action{
+    text-align: center;
+    width: 40px;
+}
+td.grid-customer{
+    text-align: left;
+    width: 80px;
+}
+td.grid-flag{
+    text-align: center;
+    width: 40px;
+}
+td.grid-date{
+    text-align: left;
+    width: 55px;
+}

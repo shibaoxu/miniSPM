@@ -55,7 +55,7 @@
         <tbody>
         <c:forEach items="${marketActions.content}" var="action">
             <tr <c:if test="${action.important}">class='success'</c:if>>
-                <td class="text-center" style="width: 40px">
+                <td class="grid-flag">
                     <c:choose>
                     <c:when test="${action.actionType.id=='telephone'}"><i class="fa fa-phone"></c:when>
                     <c:when test="${action.actionType.id=='visit'}"><i class="fa fa-plane"></c:when>
@@ -63,19 +63,19 @@
                             <c:when test="${action.actionType.id=='meeting'}"><i class="fa fa-group"></c:when>
                                 <c:when test="${action.actionType.id=='message'}"><i
                                         class="icon-facebook-sign"></c:when>
-                                    <c:otherwise><i class="fa fa-question-sign"></c:otherwise>
+                                    <c:otherwise><i class="fa fa-question"></c:otherwise>
                                         </c:choose>
                 </td>
                 <td><a href="${ctx}/sale/market_action/view/${action.id}">${action.brief}</a>
                 </td>
                 </td>
-                <td style="width: 80px">${action.customer.name}
+                <td class="grid-customer">${action.customer.name}
                 </td>
-                <td class="text-center" style="width: 85px"><fmt:formatDate value="${action.eventDate}"
+                <td class="grid-date"><fmt:formatDate value="${action.eventDate}"
                                                                             pattern="yyyy-MM-dd"></fmt:formatDate></td>
-                <td style="width: 55px">${action.owner.name}</td>
-                <td class="text-center" style="width: 70px">${action.department.name}</td>
-                <td class="text-center" style="width: 40px">
+                <td class="grid-owner">${action.owner.name}</td>
+                <td class="grid-department" style="width: 70px">${action.department.name}</td>
+                <td class="grid-action" style="width: 40px">
                     <div class="dropdown">
                         <a class="btn dropdown-toggle context-menu" data-toggle="dropdown">
                             <i class="fa fa-list"></i>

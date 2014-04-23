@@ -17,40 +17,26 @@
                 <image alt="logo" src="${ctx}/static/images/login.jpg" class="img-responsive"></image>
             </div>
             <form action="${ctx}/login" method="post">
-                <h3><spring:message code="login.caption"/> </h3>
+                <h3><spring:message code="login.caption"/></h3>
+
                 <div class="form-group">
                     <div class="input-group">
                         <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
-                        <input name="username" class="form-control" placeholder=<spring:message code='login.userName.placeHolder'/> type="text" value="${username}">
+                        <input name="username" class="form-control" placeholder=
+                        <spring:message code='login.userName.placeHolder'/> type="text" value="${username}">
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="input-group">
                         <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
-                        <input name="password" class="form-control" placeholder=<spring:message code="login.password.placeHolder"/> type="password">
+                        <input name="password" class="form-control" placeholder=
+                        <spring:message code="login.password.placeHolder"/> type="password">
                     </div>
                 </div>
-                <input type="submit" class="btn btn-large btn-primary" value=<spring:message code="login.submit"/> >
+                <input type="submit" class="btn btn-large btn-primary" value=
+                <spring:message code="login.submit"/>>
             </form>
         </div>
-<<<<<<< HEAD
-
-        <%--<label class="checkbox">--%>
-            <%--<input type="checkbox" name="rememberMe"/>--%>
-            <%--记住我--%>
-        <%--</label>--%>
         <input type="submit" class="btn btn-large btn-primary" value="登录">
-    </form>
-</div>
-<div class="form-signin">
-    <img src="${ctx}/static/images/chrome.png" width="30px" height="30px" alt="">
-    <img src="${ctx}/static/images/firefox.png" width="30px" height="30px" alt="">
-    <img src="${ctx}/static/images/noIE.png" width="30px" height="30px" alt="">
-</div>
-
-</body>
-</html>
-=======
     </div>
 </div>
->>>>>>> v2

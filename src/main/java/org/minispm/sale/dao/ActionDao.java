@@ -13,6 +13,6 @@ import java.util.List;
  * Time: 下午8:53
  */
 public interface ActionDao extends JpaRepository<Action, String>, JpaSpecificationExecutor<Action> {
-    @Query("select a from Action a where a.leadsBase.id = ?1 order by a.occurDate DESC ")
+    @Query("select a from Action a where a.leadsBase.id = ?1 order by a.lastModifiedDate DESC, a.occurDate DESC ")
     List<Action> findByLeads(String leadsId);
 }

@@ -26,12 +26,12 @@
 <div class="form-group">
     <c:if test="${type == 'leads'}">
         <shiro:hasPermission name="leads:edit:*">
-            <a class="btn btn-primary" href="${ctx}/sale/${type}/${leadsBase.id}/action/new"><i class="icon-plus"></i>增加销售活动</a>
+            <a class="btn btn-primary" href="${ctx}/sale/${type}/${leadsBase.id}/action/new"><i class="fa fa-plus-circle fa-fw"></i> 增加销售活动</a>
         </shiro:hasPermission>
     </c:if>
     <c:if test="${type == 'opportunity'}">
         <shiro:hasPermission name="opportunity:edit:*">
-            <a class="btn btn-primary" href="${ctx}/sale/${type}/${leadsBase.id}/action/new"><i class="icon-plus"></i>增加销售活动</a>
+            <a class="btn btn-primary" href="${ctx}/sale/${type}/${leadsBase.id}/action/new"><i class="fa fa-plus-circle fa-fw"></i> 增加销售活动</a>
         </shiro:hasPermission>
     </c:if>
 </div>
@@ -39,25 +39,25 @@
 <table class="table table-striped table-bordered table-hover table-condensed">
     <thead>
     <tr>
-        <td>类型</td>
+        <td class="grid-flag">类型</td>
         <td>简述</td>
-        <td>时间</td>
+        <td class="grid-date">时间</td>
         <td>参入者</td>
-        <td>所有者</td>
+        <td class="grid-owner">所有者</td>
     </tr>
     </thead>
     <tbody>
     <c:forEach items="${actions}" var="action">
         <tr <c:if test="${action.milestone}">class='success'</c:if>>
-            <td>
+            <td class="grid-flag">
                 <c:choose>
-                <c:when test="${action.actionType.id=='telephone'}"><i class="icon-phone"></c:when>
-                <c:when test="${action.actionType.id=='visit'}"><i class="icon-plane"></c:when>
-                    <c:when test="${action.actionType.id=='mail'}"><i class="icon-envelope"></c:when>
-                        <c:when test="${action.actionType.id=='meeting'}"><i class="icon-group"></c:when>
-                            <c:when test="${action.actionType.id=='message'}"><i class="icon-facebook-sign"></c:when>
-                                <c:when test="${action.actionType.id=='system'}"><i class="icon-lightbulb"></c:when>
-                                    <c:otherwise><i class="icon-question-sign"></c:otherwise>
+                <c:when test="${action.actionType.id=='telephone'}"><i class="fa fa-phone fa-fw"></c:when>
+                <c:when test="${action.actionType.id=='visit'}"><i class="fa fa-plane fa-fw"></c:when>
+                    <c:when test="${action.actionType.id=='mail'}"><i class="fa fa-envelope fa-fw"></c:when>
+                        <c:when test="${action.actionType.id=='meeting'}"><i class="fa fa-group fa-fw"></c:when>
+                            <c:when test="${action.actionType.id=='message'}"><i class="fa fa-facebook fa-fw"></c:when>
+                                <c:when test="${action.actionType.id=='system'}"><i class="fa fa-lightbulb-o fa-fw"></c:when>
+                                    <c:otherwise><i class="fa fa-question fa-fw"></c:otherwise>
                                         </c:choose>
             </td>
             <td><a href="${ctx}/sale/${type}/${leadsBase.id}/action/view/${action.id}">${action.brief}</a>
